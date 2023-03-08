@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F44336"
+    android:background="#D8C3A5"
     android:padding="10dp"
     tools:context="signin.SignInFragment">
 
@@ -41,7 +41,7 @@
             android:id="@+id/loginField"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#C1B5B5"
+            android:background="#FFFFFFFF"
             android:orientation="vertical"
             android:paddingHorizontal="20dp"
             android:paddingTop="10dp"
@@ -61,13 +61,15 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginHorizontal="5dp"
                     android:layout_weight="1"
-                    app:cardCornerRadius="10dp"
-                    app:strokeColor="@color/black"
-                    app:strokeWidth="1dp">
-
+                    app:cardCornerRadius="10dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/temp"
+                        android:contentDescription="image login" />
                 </com.google.android.material.card.MaterialCardView>
 
             </LinearLayout>
@@ -101,7 +103,6 @@
                     android:layout_gravity="end"
                     android:layout_weight="5"
                     android:backgroundTint="#00000000"
-                    android:insetRight="10dp"
                     android:text="Forgot Password ?"
                     android:textAllCaps="false"
                     android:textColor="#673AB7"
@@ -111,7 +112,6 @@
                     android:id="@+id/signInButton"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="right"
                     android:layout_weight="3"
                     android:text="Login"
                     android:textColor="@color/white"
@@ -124,14 +124,11 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/signUpButton"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#00000000"
-        android:elevation="0dp"
-        android:shadowColor="#00000000"
+        android:backgroundTint="@color/design_default_color_primary"
         android:text="Sign Up"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.823"

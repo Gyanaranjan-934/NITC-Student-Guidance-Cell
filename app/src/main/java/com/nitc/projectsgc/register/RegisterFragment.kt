@@ -10,6 +10,7 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.nitc.projectsgc.R
+import com.nitc.projectsgc.booking.BookingFragment
 import com.nitc.projectsgc.databinding.FragmentRegisterBinding
 import com.nitc.projectsgc.signin.SignInFragment
 
@@ -84,6 +85,16 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     "D.O.B = $dateOfBirth\n"+
                     "Gender = $selectedGenderTextView \n"
                 , Toast.LENGTH_LONG).show()
+
+            val fragManager = requireActivity().supportFragmentManager
+            val transaction = fragManager.beginTransaction()
+            transaction.replace(
+                R.id.frameMain,
+                BookingFragment()
+            )
+            transaction.addToBackStack(null) // if u want this fragment to stay in stack specify it
+            transaction.commit()
+
         }
 
         binding.signInButtonInRegisterFragment.setOnClickListener{

@@ -8,18 +8,16 @@
     android:padding="40dp"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/bookAppointmentNameInBookingFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="BOOK APPOINTMENT"
-        android:textSize="20sp"
-        android:textStyle="bold"
+    <ImageView
+        android:layout_width="136dp"
+        android:layout_height="131dp"
+        android:src="@drawable/appointment"
         app:layout_constraintBottom_toTopOf="@+id/bookingCardInBookingFragment"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.114" />
+        app:layout_constraintVertical_bias="0.228" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/bookingCardInBookingFragment"
@@ -28,7 +26,7 @@
         android:padding="10dp"
         app:cardCornerRadius="10dp"
         app:layout_constraintHeight_percent="0.7"
-        app:layout_constraintVertical_bias="0.5"
+        app:layout_constraintVertical_bias="0.55"
         app:layout_constraintVertical_weight="0.7"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
