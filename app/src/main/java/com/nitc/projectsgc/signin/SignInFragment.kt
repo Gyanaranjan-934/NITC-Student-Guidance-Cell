@@ -11,6 +11,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.SignUpActivity
 import com.nitc.projectsgc.booking.BookingFragment
@@ -20,7 +22,8 @@ import com.nitc.projectsgc.register.RegisterFragment
 class SignInFragment : Fragment() {
 
     private lateinit var binding: FragmentSignInBinding
-
+    var database : FirebaseDatabase = FirebaseDatabase.getInstance()
+    var reference : DatabaseReference = database.reference
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -49,14 +52,15 @@ class SignInFragment : Fragment() {
             }
 
             Toast.makeText(requireContext(),"Email entered is $emailInput and password entered is $passwordInput",Toast.LENGTH_LONG).show()
-            val fragManager = requireActivity().supportFragmentManager
-            val transaction = fragManager.beginTransaction()
-            transaction.replace(
-                R.id.frameMain,
-                BookingFragment()
-            )
-            transaction.addToBackStack(null) // if u want this fragment to stay in stack specify it
-            transaction.commit()
+
+//            val fragManager = requireActivity().supportFragmentManager
+//            val transaction = fragManager.beginTransaction()
+//            transaction.replace(
+//                R.id.frameMain,
+//                BookingFragment()
+//            )
+//            transaction.addToBackStack(null) // if u want this fragment to stay in stack specify it
+//            transaction.commit()
         }
 
         binding.signUpButton.setOnClickListener{

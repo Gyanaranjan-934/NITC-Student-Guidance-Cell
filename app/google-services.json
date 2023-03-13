@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1021747245994",
+    "project_id": "project-sgc-ae8ac",
+    "storage_bucket": "project-sgc-ae8ac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1021747245994:android:79054e9bd2c073a13d31d3",
+        "android_client_info": {
+          "package_name": "com.nitc.projectsgc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1021747245994-le2doipsqgh3v5rfm357vak49e9cqgdi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEiCnilzLLwQVpgOhIFJ3Ry9SH2wcxTPI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1021747245994-le2doipsqgh3v5rfm357vak49e9cqgdi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
