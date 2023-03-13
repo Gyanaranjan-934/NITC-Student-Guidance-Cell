@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
@@ -22,7 +23,7 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
     lateinit var studentGender:Spinner
     lateinit var selectedGenderTextView: String
     var database : FirebaseDatabase = FirebaseDatabase.getInstance()
-    val reference : DatabaseReference = database.reference.child("Students")
+    private val reference : DatabaseReference = database.reference.child("students")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,7 +45,7 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
             val emailInput = binding.emailFieldInRegisterFragment.text.toString()
             val passwordInput = binding.passwordFieldInRegisterFragment.text.toString()
             var phoneNumber = binding.phoneNumberInRegisterFragment.text.toString()
-            val dateOfBirth = binding.dateofBirthInRegisterFragment.dayOfMonth.toString()+"/"+binding.dateofBirthInRegisterFragment.month.toString()+"/"+binding.dateofBirthInRegisterFragment.year.toString()
+            val dateOfBirth = binding.dateOfBirthInRegisterFragment.dayOfMonth.toString()+"/"+binding.dateOfBirthInRegisterFragment.month.toString()+"/"+binding.dateOfBirthInRegisterFragment.year.toString()
 
             if(nameInput.isEmpty()){
                 binding.nameFieldInRegisterFragment.error = "Name field cannot be empty"
@@ -92,6 +93,7 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
             reference.child("name").setValue(nameInput)
             reference.child("dateOfBirth").setValue(dateOfBirth)
             reference.child("emailId").setValue(emailInput)
+            reference.child("Student_id").setValue(emailInput.subSequence(0,8).toString())
             reference.child("phoneNumber").setValue(phoneNumber)
             reference.child("gender").setValue(selectedGenderTextView)
             reference.child("password").setValue(passwordInput)
@@ -109,14 +111,19 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
         }
 
         binding.signInButtonInRegisterFragment.setOnClickListener{
-            val fragManager = requireActivity().supportFragmentManager
-            val transaction = fragManager.beginTransaction()
-            transaction.replace(
-                R.id.frameMain,
-                SignInFragment()
-            )
-            transaction.addToBackStack(null) // if u want this fragment to stay in stack specify it
-            transaction.commit()
+//            val fragManager = requireActivity().supportFragmentManager
+//            val transaction = fragManager.beginTransaction()
+//            transaction.replace(
+//                R.id.frameMain,
+//                SignInFragment()
+//            )
+//            transaction.addToBackStack(null) // if u want this fragment to stay in stack specify it
+//            transaction.commit()
+
+            findNavController().navigate(R.id.signInFragment)
+
+
+
         }
         // Inflate the layout for this fragment
         return binding.root

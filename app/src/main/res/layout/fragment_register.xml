@@ -14,14 +14,13 @@
         android:id="@+id/studentAvatarInRegisterFragment"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="24dp"
         android:src="@drawable/graduated"
-        app:layout_constraintBottom_toTopOf="@+id/signUpCardInRegisterFragment"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.02" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/signUpCardInRegisterFragment"
@@ -35,7 +34,7 @@
         app:contentPadding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.6"
+        app:layout_constraintHeight_percent="0.75"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -55,7 +54,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="5"
+                android:layout_weight="4"
                 app:boxBackgroundColor="#E6FFFFFF">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -68,44 +67,73 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="5"
-                app:boxBackgroundColor="#E6FFFFFF">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/emailFieldInRegisterFragment"
-                    android:layout_width="match_parent"
+                android:layout_weight="4"
+                android:orientation="horizontal">
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:hint="Email"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_weight="5"
+                    app:boxBackgroundColor="#E6FFFFFF">
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="5">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/emailFieldInRegisterFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Email"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/phoneNumberInRegisterFragment"
-                    android:layout_width="match_parent"
+                <Spinner
+                    android:id="@+id/gender_spinnerInRegisterFragment"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:hint="Phone"
-                    android:inputType="phone"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_weight="3" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="+91"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/inter_semibold"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_weight="9"
+                    android:layout_height="match_parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/phoneNumberInRegisterFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Phone"
+                        android:inputType="phone"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+            </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="5"
+                android:layout_weight="4"
                 app:boxBackgroundColor="#E6FFFFFF">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -118,48 +146,36 @@
                     android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="5"
-                android:orientation="horizontal"
-                android:weightSum="5">
 
                 <DatePicker
                     android:id="@+id/dateOfBirthInRegisterFragment"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="7"
                     android:calendarTextColor="@color/black"
                     android:calendarViewShown="false"
                     android:datePickerMode="spinner" />
 
-                <Spinner
-                    android:id="@+id/gender_spinnerInRegisterFragment"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
 
 
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/finishingLayoutInRegisterFragment"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="5"
-                android:orientation="horizontal"
-                android:paddingTop="10dp">
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <com.google.android.material.checkbox.MaterialCheckBox
                     android:id="@+id/tncBoxInRegisterFragment"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="20dp"
                     android:layout_weight="4"
                     android:checked="false"
                     android:contentDescription="terms and condition"
-                    android:text="I agreed terms and conditions"
+                    android:text="I agree to terms and conditions"
                     android:textColor="@color/black"
                     android:textColorLink="#009688"
                     android:visibility="visible" />
@@ -170,6 +186,10 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
+                    android:layout_marginVertical="12dp"
+                    app:cornerRadius="10dp"
+                    android:textAllCaps="false"
+                    android:fontFamily="@font/inter_semibold"
                     android:backgroundTint="@color/teal_200"
                     android:text="Sign Up" />
 
@@ -180,15 +200,19 @@
 
     <Button
         android:id="@+id/signInButtonInRegisterFragment"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Sign In"
+        android:text="Sign In instead"
+        android:textAllCaps="false"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:fontFamily="@font/inter_semibold"
+        app:layout_constraintWidth_percent="0.7"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.99"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signUpCardInRegisterFragment"
-        app:layout_constraintVertical_bias="0.303" />
+        app:layout_constraintVertical_bias="0.99" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

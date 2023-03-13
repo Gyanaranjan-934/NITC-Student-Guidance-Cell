@@ -20,11 +20,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val fragmentManager : FragmentManager = supportFragmentManager
-        val fragmentTransaction : FragmentTransaction = fragmentManager.beginTransaction()
-        val signUpFragment = RegisterFragment()
-        fragmentTransaction.add(R.id.frameMain,signUpFragment)
-        fragmentTransaction.commit()
     }
 
 

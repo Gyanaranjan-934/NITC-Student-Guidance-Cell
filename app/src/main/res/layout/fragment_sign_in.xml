@@ -124,10 +124,15 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/signUpButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:backgroundTint="@color/design_default_color_primary"
-        android:text="Sign Up"
+        android:fontFamily="@font/inter_semibold"
+        android:textAllCaps="true"
+        android:letterSpacing="0"
+        android:text="Register instead"
+        app:layout_constraintHeight_percent="0.08"
+        app:layout_constraintWidth_percent="0.7"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
