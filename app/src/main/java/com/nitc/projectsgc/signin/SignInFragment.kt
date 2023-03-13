@@ -67,7 +67,7 @@ class SignInFragment : Fragment() {
             val fragManager = requireActivity().supportFragmentManager
             val transaction = fragManager.beginTransaction()
             transaction.replace(
-                R.id.frameMain,
+                R.id.navHostFragment,
                 RegisterFragment()
             )
             transaction.addToBackStack(null) // if u want this fragment to stay in stack specify it
