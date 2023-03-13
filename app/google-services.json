@@ -1,33 +1,70 @@
 {
   "project_info": {
-    "project_number": "1021747245994",
-    "project_id": "project-sgc-ae8ac",
-    "storage_bucket": "project-sgc-ae8ac.appspot.com"
+    "project_number": "947254615628",
+    "project_id": "nitc-sgc-8e9e3",
+    "storage_bucket": "nitc-sgc-8e9e3.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1021747245994:android:79054e9bd2c073a13d31d3",
+        "mobilesdk_app_id": "1:947254615628:android:e43e8d43245f5060e2dee9",
         "android_client_info": {
           "package_name": "com.nitc.projectsgc"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1021747245994-le2doipsqgh3v5rfm357vak49e9cqgdi.apps.googleusercontent.com",
+          "client_id": "947254615628-j3padpppan3vgpmifubtb1f1832o2bhp.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAEiCnilzLLwQVpgOhIFJ3Ry9SH2wcxTPI"
+          "current_key": "AIzaSyBIsFXCXkDdCJGKynNJv9lNr1k09OWnIZA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1021747245994-le2doipsqgh3v5rfm357vak49e9cqgdi.apps.googleusercontent.com",
+              "client_id": "947254615628-j3padpppan3vgpmifubtb1f1832o2bhp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:947254615628:android:a1d8fb9c03ae70d0e2dee9",
+        "android_client_info": {
+          "package_name": "com.nitc.sgc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "947254615628-rutovnc1jm996usjpu5dgg2m05ovpg5k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nitc.sgc",
+            "certificate_hash": "c829198cb6e27db065c5b1921e564d3c829f4ced"
+          }
+        },
+        {
+          "client_id": "947254615628-j3padpppan3vgpmifubtb1f1832o2bhp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIsFXCXkDdCJGKynNJv9lNr1k09OWnIZA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "947254615628-j3padpppan3vgpmifubtb1f1832o2bhp.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
