@@ -22,8 +22,8 @@ import com.nitc.projectsgc.register.RegisterFragment
 class SignInFragment : Fragment() {
 
     private lateinit var binding: FragmentSignInBinding
-    var database : FirebaseDatabase = FirebaseDatabase.getInstance()
-    var reference : DatabaseReference = database.reference
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
