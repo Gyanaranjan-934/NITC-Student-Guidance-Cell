@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import androidx.navigation.fragment.findNavController
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.nitc.projectsgc.R
@@ -65,15 +64,14 @@ class SignInFragment : Fragment() {
         }
 
         binding.signUpButton.setOnClickListener{
-//            val fragManager = requireActivity().supportFragmentManager
-//            val transaction = fragManager.beginTransaction()
-//            transaction.replace(
-//                R.id.navHostFragment,
-//                RegisterFragment()
-//            )
-//            transaction.addToBackStack(null) // if u want this fragment to stay in stack specify it
-//            transaction.commit()
-            findNavController().navigate(R.id.registerFragment)
+            val fragManager = requireActivity().supportFragmentManager
+            val transaction = fragManager.beginTransaction()
+            transaction.replace(
+                R.id.frameMain,
+                RegisterFragment()
+            )
+            transaction.addToBackStack(null) // if u want this fragment to stay in stack specify it
+            transaction.commit()
 
         }
     }
