@@ -12,11 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.ktx.Firebase
 import com.nitc.projectsgc.R
-import com.nitc.projectsgc.booking.BookingFragment
 import com.nitc.projectsgc.databinding.FragmentRegisterBinding
-import com.nitc.projectsgc.signin.SignInFragment
 
 class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
     lateinit var binding: FragmentRegisterBinding
@@ -93,7 +90,7 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
             reference.child("name").setValue(nameInput)
             reference.child("dateOfBirth").setValue(dateOfBirth)
             reference.child("emailId").setValue(emailInput)
-            reference.child("Student_id").setValue(emailInput.subSequence(0,8).toString())
+            reference.child("Student_id").setValue(emailInput.split("_")[1].subSequence(0,8).toString())
             reference.child("phoneNumber").setValue(phoneNumber)
             reference.child("gender").setValue(selectedGenderTextView)
             reference.child("password").setValue(passwordInput)
@@ -120,7 +117,7 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
 //            transaction.addToBackStack(null) // if u want this fragment to stay in stack specify it
 //            transaction.commit()
 
-            findNavController().navigate(R.id.signInFragment)
+            findNavController().navigate(R.id.loginFragment)
 
 
 

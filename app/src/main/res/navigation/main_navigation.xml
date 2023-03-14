@@ -2,22 +2,22 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/signInFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.nitc.projectsgc.register.RegisterFragment"
         android:label="RegisterFragment" >
         <action
-            android:id="@+id/action_registerFragment_to_signInFragment"
-            app:destination="@id/signInFragment" />
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
-        android:id="@+id/signInFragment"
-        android:name="com.nitc.projectsgc.signin.SignInFragment"
-        android:label="SignInFragment" >
+        android:id="@+id/loginFragment"
+        android:name="com.nitc.projectsgc.Login.LoginFragment"
+        android:label="loginFragment" >
         <action
-            android:id="@+id/action_signInFragment_to_registerFragment"
+            android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
     </fragment>
     <fragment
