@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.Students
 import com.nitc.projectsgc.databinding.FragmentRegisterBinding
+import com.nitc.projectsgc.register.access.RegisterAccess
 
 class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
     lateinit var registerBinding: FragmentRegisterBinding
@@ -22,8 +23,6 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
     lateinit var selectedGenderTextView: String
 
 //    creating database reference object
-    var database : FirebaseDatabase = FirebaseDatabase.getInstance()
-    private var reference : DatabaseReference = database.reference.child("students")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -100,16 +99,17 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
             val student = Students(rollNo,nameInput,dateOfBirth,emailInput,selectedGenderTextView,passwordInput,phoneNumber)
 
-            reference.child(rollNo).setValue(student).addOnCompleteListener{ task ->
-                if(task.isSuccessful){
-                    Toast.makeText(requireContext(),"The student has been added to the database",Toast.LENGTH_SHORT).show()
-                    findNavController().navigate(R.id.bookingFragment)
+            val registerSuccess = context?.let { it1 -> RegisterAccess(it1).register(student) }
+
+            registerSuccess!!.observe(viewLifecycleOwner){success->
+                if(success){
+                    findNavController().navigate(R.id.loginFragment)
                 }else{
-                    Toast.makeText(requireContext(),task.exception.toString(),Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,"Failed",Toast.LENGTH_SHORT).show()
                 }
             }
 
-            findNavController().navigate(R.id.bookingFragment)
+//            findNavController().navigate(R.id.bookingFragment)
 
         }
 
