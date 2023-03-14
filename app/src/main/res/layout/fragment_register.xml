@@ -10,17 +10,21 @@
     android:padding="10dp"
     tools:context="register.RegisterFragment">
 
-    <ImageView
-        android:id="@+id/studentAvatarInRegisterFragment"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/graduated"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Sign Up"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/signUpCardInRegisterFragment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.02" />
+        app:layout_constraintVertical_bias="0.761" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/signUpCardInRegisterFragment"
@@ -72,6 +76,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="4"
                 android:orientation="horizontal">
+
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
@@ -80,11 +85,11 @@
                     app:boxBackgroundColor="#E6FFFFFF">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/emailFieldInRegisterFragment"
+                        android:id="@+id/phoneNumberInRegisterFragment"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint="Email"
-                        android:inputType="textEmailAddress"
+                        android:hint="Phone"
+                        android:inputType="phone"
                         android:textColor="@color/black"
                         android:textColorHint="@color/black" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -102,26 +107,20 @@
                 android:layout_weight="4"
                 android:orientation="horizontal">
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="+91"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/inter_semibold"/>
+
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
-                    android:layout_weight="9"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_weight="9">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/phoneNumberInRegisterFragment"
+                        android:id="@+id/emailFieldInRegisterFragment"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint="Phone"
-                        android:inputType="phone"
+                        android:hint="Email"
+                        android:inputType="textEmailAddress"
                         android:textColor="@color/black"
                         android:textColorHint="@color/black" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -147,24 +146,27 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
-                <DatePicker
-                    android:id="@+id/dateOfBirthInRegisterFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="7"
-                    android:calendarTextColor="@color/black"
-                    android:calendarViewShown="false"
-                    android:datePickerMode="spinner" />
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Date of Birth" />
 
-
+            <DatePicker
+                android:id="@+id/dateOfBirthInRegisterFragment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="7"
+                android:calendarTextColor="@color/black"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner" />
 
 
             <LinearLayout
                 android:id="@+id/finishingLayoutInRegisterFragment"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="5"
                 android:layout_gravity="center"
+                android:layout_weight="5"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -185,13 +187,13 @@
                     android:id="@+id/signUpButtonInRegisterFragment"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2"
                     android:layout_marginVertical="12dp"
-                    app:cornerRadius="10dp"
-                    android:textAllCaps="false"
-                    android:fontFamily="@font/inter_semibold"
+                    android:layout_weight="2"
                     android:backgroundTint="@color/teal_200"
-                    android:text="Sign Up" />
+                    android:fontFamily="@font/inter_semibold"
+                    android:text="Sign Up"
+                    android:textAllCaps="false"
+                    app:cornerRadius="10dp" />
 
             </LinearLayout>
 
