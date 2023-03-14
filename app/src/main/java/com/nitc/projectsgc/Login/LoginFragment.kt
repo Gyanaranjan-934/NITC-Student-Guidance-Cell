@@ -72,6 +72,16 @@ class LoginFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            if(userType == "Student"){
+                val splitEmail = emailInput.split("@")
+                val rollNo = emailInput.substring(splitEmail[0].indexOf("_") + 1,splitEmail[0].length)
+                if(splitEmail[1] != "nitc.ac.in"){
+                    Toast.makeText(context,"User should login with NITC email id",Toast.LENGTH_SHORT).show()
+                }else{
+                    
+                }
+
+            }
             Toast.makeText(requireContext(),"Email entered is $emailInput and password entered is $passwordInput",Toast.LENGTH_LONG).show()
 
 //            val fragManager = requireActivity().supportFragmentManager

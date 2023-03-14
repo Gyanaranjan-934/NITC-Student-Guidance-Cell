@@ -87,14 +87,14 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 return@setOnClickListener
             }
 
-
-            Toast.makeText(context,"Email = $emailInput \n" +
-                    " password = $passwordInput \n"+
-                    "phone = $phoneNumber \n"+
-                    "name = $nameInput \n"+
-                    "D.O.B = $dateOfBirth\n"+
-                    "Gender = $selectedGenderTextView \n"
-                , Toast.LENGTH_LONG).show()
+//
+//            Toast.makeText(context,"Email = $emailInput \n" +
+//                    " password = $passwordInput \n"+
+//                    "phone = $phoneNumber \n"+
+//                    "name = $nameInput \n"+
+//                    "D.O.B = $dateOfBirth\n"+
+//                    "Gender = $selectedGenderTextView \n"
+//                , Toast.LENGTH_LONG).show()
 
             val rollNo = emailInput.substring(emailInput.indexOf("_") + 1, emailInput.indexOf("@"))
 
