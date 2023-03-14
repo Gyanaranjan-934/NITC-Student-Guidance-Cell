@@ -87,14 +87,14 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 return@setOnClickListener
             }
 
-
-            Toast.makeText(context,"Email = $emailInput \n" +
-                    " password = $passwordInput \n"+
-                    "phone = $phoneNumber \n"+
-                    "name = $nameInput \n"+
-                    "D.O.B = $dateOfBirth\n"+
-                    "Gender = $selectedGenderTextView \n"
-                , Toast.LENGTH_LONG).show()
+//
+//            Toast.makeText(context,"Email = $emailInput \n" +
+//                    " password = $passwordInput \n"+
+//                    "phone = $phoneNumber \n"+
+//                    "name = $nameInput \n"+
+//                    "D.O.B = $dateOfBirth\n"+
+//                    "Gender = $selectedGenderTextView \n"
+//                , Toast.LENGTH_LONG).show()
 
             val rollNo = emailInput.substring(emailInput.indexOf("_") + 1, emailInput.indexOf("@"))
 
@@ -103,7 +103,7 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
             reference.child(rollNo).setValue(student).addOnCompleteListener{ task ->
                 if(task.isSuccessful){
                     Toast.makeText(requireContext(),"The student has been added to the database",Toast.LENGTH_SHORT).show()
-                    findNavController().navigate(R.id.loginFragment)
+                    findNavController().navigate(R.id.bookingFragment)
                 }else{
                     Toast.makeText(requireContext(),task.exception.toString(),Toast.LENGTH_SHORT).show()
                 }

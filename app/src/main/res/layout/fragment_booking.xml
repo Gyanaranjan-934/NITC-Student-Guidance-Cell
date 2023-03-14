@@ -6,48 +6,49 @@
     android:layout_height="match_parent"
     android:background="#F5DEB3"
     android:padding="40dp"
+    android:id="@+id/mainLayoutOfBookingFragment"
     tools:context=".MainActivity">
 
     <ImageView
-        android:layout_width="136dp"
-        android:layout_height="131dp"
+        android:layout_width="102dp"
+        android:layout_height="96dp"
         android:src="@drawable/appointment"
         app:layout_constraintBottom_toTopOf="@+id/bookingCardInBookingFragment"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.228" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/bookingCardInBookingFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:layout_height="0dp"
         app:cardCornerRadius="10dp"
-        app:layout_constraintHeight_percent="0.7"
-        app:layout_constraintVertical_bias="0.55"
-        app:layout_constraintVertical_weight="0.7"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.7"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.55"
+        app:layout_constraintVertical_weight="0.7">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/bookingLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp"
-            android:weightSum="35">
+            android:padding="10dp">
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mentorTypeCardInBookingFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="5">
+                app:layout_constraintBottom_toTopOf="@+id/mentorNameCardInBookingFragment"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <Button
-                    android:id="@+id/mentorTypeDropdownInBookingFragment"
+                    android:id="@+id/mentorTypeButtonInBookingFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:backgroundTint="#FAEBD7"
@@ -56,12 +57,17 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mentorNameCardInBookingFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="5">
+                android:layout_weight="5"
+                app:layout_constraintBottom_toTopOf="@+id/dateSlotCardInBookingFragment"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mentorTypeCardInBookingFragment">
 
                 <Button
-                    android:id="@+id/mentorNameDropdownInBookingFragment"
+                    android:id="@+id/mentorNameButtonInBookingFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:backgroundTint="#FAEBD7"
@@ -70,12 +76,17 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/dateSlotCardInBookingFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="5">
+                android:layout_weight="5"
+                app:layout_constraintBottom_toTopOf="@+id/timeSlotCardInBookingFragment"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mentorNameCardInBookingFragment">
 
                 <Button
-                    android:id="@+id/bookingDateInBookingFragment"
+                    android:id="@+id/bookingDateButtonInBookingFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:backgroundTint="#FAEBD7"
@@ -84,12 +95,17 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/timeSlotCardInBookingFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="5">
+                android:layout_weight="5"
+                app:layout_constraintBottom_toTopOf="@+id/problemDescCardInBookingFragment"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dateSlotCardInBookingFragment">
 
                 <Button
-                    android:id="@+id/bookingTimeSlotInBookingFragment"
+                    android:id="@+id/bookingTimeSlotButtonInBookingFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:backgroundTint="#FAEBD7"
@@ -97,17 +113,23 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-
             <com.google.android.material.textfield.TextInputLayout
-
+                android:id="@+id/problemDescCardInBookingFragment"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="5"
-                android:paddingBottom="5dp">
+                android:paddingBottom="5dp"
+                app:layout_constraintHeight_percent="0.4"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintVertical_bias="0.9"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/timeSlotCardInBookingFragment">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
 
-                    android:id="@+id/problemDescriptionInBookingFragment"
+                    android:id="@+id/problemDescriptionInputInBookingFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:backgroundTint="#FAEBD7"
@@ -115,22 +137,22 @@
                     android:hint="PROBLEM DESCRIPTION" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="10">
+            <!--            <com.google.android.material.textfield.TextInputLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="match_parent"-->
+            <!--                android:layout_weight="10">-->
 
-                <EditText
-                    android:id="@+id/appointmentReviewNoteInBookingFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="110dp"
-                    android:backgroundTint="#FAEBD7"
-                    android:gravity="center"
-                    android:hint="REVIEW OF APPOINTMENT" />
-            </com.google.android.material.textfield.TextInputLayout>
+            <!--                <EditText-->
+            <!--                    android:id="@+id/appointmentReviewNoteInBookingFragment"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="110dp"-->
+            <!--                    android:backgroundTint="#FAEBD7"-->
+            <!--                    android:gravity="center"-->
+            <!--                    android:hint="REVIEW OF APPOINTMENT" />-->
+            <!--            </com.google.android.material.textfield.TextInputLayout>-->
 
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
     <Button
