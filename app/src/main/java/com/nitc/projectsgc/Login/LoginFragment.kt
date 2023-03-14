@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.nitc.projectsgc.Login.access.LoginAccess
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.databinding.FragmentLoginBinding
 
@@ -78,7 +79,16 @@ class LoginFragment : Fragment() {
                 if(splitEmail[1] != "nitc.ac.in"){
                     Toast.makeText(context,"User should login with NITC email id",Toast.LENGTH_SHORT).show()
                 }else{
-                    
+                    val loginLive =
+                        context?.let { it1 -> LoginAccess(it1).login(emailInput,passwordInput) }
+
+                    loginLive!!.observe(viewLifecycleOwner){loginSuccess->
+                        if(loginSuccess){
+                            findNavController().navigate(R.id.bookingFragment)
+                        }else{
+                            Toast.makeText(context,"Some error occurred",Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 }
 
             }
