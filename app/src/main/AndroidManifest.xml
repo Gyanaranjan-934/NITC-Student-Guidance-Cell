@@ -12,12 +12,6 @@
         android:theme="@style/Theme.ProjectSGC"
         tools:targetApi="31">
         <activity
-            android:name=".SignUpStudent"
-            android:exported="false" />
-        <activity
-            android:name=".SignUpActivity"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

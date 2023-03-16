@@ -7,25 +7,121 @@
     tools:context=".admin.AdminDashboardFragment">
 
     <!-- TODO: Update blank fragment layout -->
-
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/addMentorButtonInAdminDashboard"
-        app:layout_constraintEnd_toEndOf="parent"
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:cardBackgroundColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/viewTypeCardInLoginFragment"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Admin Dashboard"
-        android:textSize="30dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.1"
+        app:cardElevation="0dp"
+        app:layout_constraintVertical_bias="0.03"
+        app:layout_constraintWidth_percent="0.97"
+        app:cardCornerRadius="25dp">
 
-    </com.google.android.material.textview.MaterialTextView>
-    <Button
-        android:id="@+id/addMentorButtonInAdminDashboard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="add mentor"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="25dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/studentLoginTypeImageInLoginFragment"
+                    android:background="@drawable/login_type_card_blue_bg"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Student"
+                    android:id="@+id/studentLoginTypeButtonInLoginFragment"
+                    android:textAllCaps="false"
+                    android:backgroundTint="#00000000"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:textColor="@color/white"
+                    android:letterSpacing="0"
+                    android:fontFamily="@font/inter_semibold"/>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="25dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/mentorLoginTypeImageInLoginFragment"
+                    android:background="@drawable/login_type_card_transparent_bg"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Mentor"
+                    android:id="@+id/mentorLoginTypeButtonInLoginFragment"
+                    android:textAllCaps="false"
+                    android:backgroundTint="#00000000"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:textColor="@color/black"
+                    android:letterSpacing="0"
+                    android:fontFamily="@font/inter_semibold"/>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+
+        </LinearLayout>
+
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/viewTypeCardInLoginFragment">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_percent="0.9"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addMentorButtonInAdminDashboard"
+            android:hint="Add mentor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

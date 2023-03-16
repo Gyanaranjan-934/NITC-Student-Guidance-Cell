@@ -20,14 +20,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-//        val fragmentManager : FragmentManager  = supportFragmentManager
-//        val fragmentTransaction : FragmentTransaction = fragmentManager.beginTransaction()
-//        val loginFragment = LoginFragment()
-//
-//        fragmentTransaction.add(R.id.navHostFragment,loginFragment)
-//        fragmentTransaction.commit()
-
         binding.root
     }
 
