@@ -20,10 +20,8 @@ class LoginAccess(
         email:String,
         password:String
     ): LiveData<Boolean> {
-
         var loginLive = MutableLiveData<Boolean>()
-        auth.signInWithEmailAndPassword(email,password)
-            .addOnCompleteListener(){task->
+        auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(){ task->
                 if(task.isSuccessful){
                     loginLive.postValue(true)
                 }else{

@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.nitc.projectsgc.Login.LoginFragment
 import com.nitc.projectsgc.databinding.ActivityMainBinding
 import com.nitc.projectsgc.register.RegisterFragment
 
@@ -19,10 +20,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+//        val fragmentManager : FragmentManager  = supportFragmentManager
+//        val fragmentTransaction : FragmentTransaction = fragmentManager.beginTransaction()
+//        val loginFragment = LoginFragment()
+//
+//        fragmentTransaction.add(R.id.navHostFragment,loginFragment)
+//        fragmentTransaction.commit()
+
         binding.root
-
     }
-
-
 
 }

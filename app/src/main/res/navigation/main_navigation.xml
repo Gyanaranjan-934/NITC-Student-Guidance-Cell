@@ -24,4 +24,16 @@
         android:id="@+id/bookingFragment"
         android:name="com.nitc.projectsgc.booking.BookingFragment"
         android:label="BookingFragment" />
+    <fragment
+        android:id="@+id/adminDashboardFragment"
+        android:name="com.nitc.projectsgc.admin.AdminDashboardFragment"
+        android:label="adminDashboardFragment" >
+        <action
+            android:id="@+id/action_adminDashboardFragment_to_addMentorFragment"
+            app:destination="@id/addMentorFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addMentorFragment"
+        android:name="com.nitc.projectsgc.admin.AddMentorFragment"
+        android:label="addMentorFragment" />
 </navigation>

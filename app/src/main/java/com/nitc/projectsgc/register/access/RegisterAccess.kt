@@ -19,12 +19,12 @@ class RegisterAccess(
     fun register(
         student:Students
     ):LiveData<Boolean>{
-        var database : FirebaseDatabase = FirebaseDatabase.getInstance()
-        var reference : DatabaseReference = database.reference.child("students")
-        var auth: FirebaseAuth = FirebaseAuth.getInstance()
-        var registerSuccess = MutableLiveData<Boolean>()
+        val database : FirebaseDatabase = FirebaseDatabase.getInstance()
+        val reference : DatabaseReference = database.reference.child("students")
+        val auth: FirebaseAuth = FirebaseAuth.getInstance()
+        val registerSuccess = MutableLiveData<Boolean>()
 
-        reference.child("m210890ca").setValue(student).addOnCompleteListener{ task ->
+        reference.child(student.rollNo).setValue(student).addOnCompleteListener{ task ->
             if(task.isSuccessful){
 
                 Log.d("accessRegister","here in register access")

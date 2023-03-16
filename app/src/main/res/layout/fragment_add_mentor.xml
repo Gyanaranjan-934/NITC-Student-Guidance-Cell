@@ -2,30 +2,22 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/signUpInRegisterFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D8C3A5"
-    android:backgroundTint="#D8C3A5"
     android:padding="10dp"
-    tools:context="register.RegisterFragment">
+    tools:context=".admin.AddMentorFragment">
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp"
-        android:fontFamily="@font/inter_semibold"
-        android:text="Sign Up"
-        android:textColor="@color/black"
-        android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/addMentorCard"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.761" />
+        android:text="Add Mentors"
+        android:textSize="30dp">
 
+    </com.google.android.material.textview.MaterialTextView>
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/addMentorCard"
         android:layout_width="0dp"
@@ -33,7 +25,7 @@
         android:orientation="vertical"
         android:paddingHorizontal="20dp"
         android:paddingTop="10dp"
-        app:cardBackgroundColor="#E6FFFFFF"
+        app:cardBackgroundColor="#6A2962FF"
         app:cardCornerRadius="10dp"
         app:contentPadding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -46,7 +38,7 @@
 
 
         <LinearLayout
-            android:id="@+id/loginFieldInRegisterFragment"
+            android:id="@+id/addMentorForm"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -62,7 +54,7 @@
                 app:boxBackgroundColor="#E6FFFFFF">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/nameFieldInRegisterFragment"
+                    android:id="@+id/nameFieldInAddMentorFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="Name"
@@ -85,7 +77,7 @@
                     app:boxBackgroundColor="#E6FFFFFF">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/phoneNumberInRegisterFragment"
+                        android:id="@+id/phoneNumberInAddMentorFragment"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="Phone"
@@ -94,11 +86,12 @@
                         android:textColorHint="@color/black" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <Spinner
-                    android:id="@+id/gender_spinnerInRegisterFragment"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mantorTypeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Type"
+                    app:backgroundTint="#2962FF" />
             </LinearLayout>
 
             <LinearLayout
@@ -116,7 +109,7 @@
                     android:layout_weight="9">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/emailFieldInRegisterFragment"
+                        android:id="@+id/emailFieldInAddMentorFragment"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="Email"
@@ -136,7 +129,7 @@
                 app:boxBackgroundColor="#E6FFFFFF">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/passwordFieldInRegisterFragment"
+                    android:id="@+id/passwordFieldInAddMentorFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="Password"
@@ -144,22 +137,6 @@
                     android:textColor="@color/black"
                     android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
-
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Date of Birth" />
-
-            <DatePicker
-                android:id="@+id/dateOfBirthInRegisterFragment"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="7"
-                android:calendarTextColor="@color/black"
-                android:calendarViewShown="false"
-                android:datePickerMode="spinner" />
-
 
             <LinearLayout
                 android:id="@+id/finishingLayoutInRegisterFragment"
@@ -170,51 +147,20 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <com.google.android.material.checkbox.MaterialCheckBox
-                    android:id="@+id/tncBoxInRegisterFragment"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="4"
-                    android:checked="false"
-                    android:contentDescription="terms and condition"
-                    android:text="I agree to terms and conditions"
-                    android:textColor="@color/black"
-                    android:textColorLink="#009688"
-                    android:visibility="visible" />
-
-
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/signUpButtonInRegisterFragment"
+                    android:id="@+id/addButtonInAddMentorFragment"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginVertical="12dp"
                     android:layout_weight="2"
                     android:backgroundTint="@color/teal_200"
                     android:fontFamily="@font/inter_semibold"
-                    android:text="Sign Up"
-                    android:textAllCaps="false"
+                    android:text="Add"
+                    android:textAllCaps="true"
                     app:cornerRadius="10dp" />
 
             </LinearLayout>
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
-
-    <Button
-        android:id="@+id/signInButtonInRegisterFragment"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Sign In instead"
-        android:textAllCaps="false"
-        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-        android:fontFamily="@font/inter_semibold"
-        app:layout_constraintWidth_percent="0.7"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addMentorCard"
-        app:layout_constraintVertical_bias="0.99" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

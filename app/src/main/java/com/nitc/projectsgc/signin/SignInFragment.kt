@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.database.*
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.SignUpActivity
@@ -54,26 +55,19 @@ class SignInFragment : Fragment() {
             }
 
             Toast.makeText(requireContext(),"Email entered is $emailInput and password entered is $passwordInput",Toast.LENGTH_LONG).show()
-            reference.addValueEventListener(object : ValueEventListener{
-                override fun onDataChange(snapshot: DataSnapshot) {
-//                    perform data retrieving in this method
-                    var userName : String = snapshot.child ("students").child("name").value as String
-                    Toast.makeText(requireContext(),"Name is right and name is $userName",Toast.LENGTH_LONG).show()
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-//                    action taken if data not retrieved
-                }
-
-            })
-//            val fragManager = requireActivity().supportFragmentManager
-//            val transaction = fragManager.beginTransaction()
-//            transaction.replace(
-//                R.id.frameMain,
-//                BookingFragment()
-//            )
-//            transaction.addToBackStack(null) // if u want this fragment to stay in stack specify it
-//            transaction.commit()
+//            reference.addValueEventListener(object : ValueEventListener{
+//                override fun onDataChange(snapshot: DataSnapshot) {
+////                    perform data retrieving in this method
+//                    var userName : String = snapshot.child ("students").child("name").value as String
+//                    Toast.makeText(requireContext(),"Name is right and name is $userName",Toast.LENGTH_LONG).show()
+//                }
+//
+//                override fun onCancelled(error: DatabaseError) {
+////                    action taken if data not retrieved
+//                }
+//
+//            })
+            findNavController().navigate(R.id.bookingFragment)
         }
 
         binding.signUpButton.setOnClickListener{

@@ -59,7 +59,7 @@ class LoginFragment : Fragment() {
         }
 
         binding.signInButton.setOnClickListener {
-            val emailInput = requireView().findViewById<EditText>(R.id.editTextTextEmailAddress).text.toString()
+            var emailInput = requireView().findViewById<EditText>(R.id.editTextTextEmailAddress).text.toString()
             val passwordInput = requireView().findViewById<EditText>(R.id.editTextTextPassword).text.toString()
 
             if(emailInput.isEmpty()){
@@ -74,13 +74,12 @@ class LoginFragment : Fragment() {
             }
 
             if(userType == "Student"){
-                val splitEmail = emailInput.split("@")
-                val rollNo = emailInput.substring(splitEmail[0].indexOf("_") + 1,splitEmail[0].length)
-                if(splitEmail[1] != "nitc.ac.in"){
+                val emailDomain = emailInput.substring(emailInput.indexOf("@")+1,emailInput.length)
+                val rollNo = emailInput.substring(emailInput.indexOf("_")+1,emailInput.indexOf("@"))
+                if(emailDomain != "nitc.ac.in"){
                     Toast.makeText(context,"User should login with NITC email id",Toast.LENGTH_SHORT).show()
                 }else{
-                    val loginLive =
-                        context?.let { it1 -> LoginAccess(it1).login(emailInput,passwordInput) }
+                    val loginLive = context?.let { it1 -> LoginAccess(it1).login(emailInput,passwordInput) }
 
                     loginLive!!.observe(viewLifecycleOwner){loginSuccess->
                         if(loginSuccess){
@@ -92,7 +91,32 @@ class LoginFragment : Fragment() {
                 }
 
             }
-            Toast.makeText(requireContext(),"Email entered is $emailInput and password entered is $passwordInput",Toast.LENGTH_LONG).show()
+            else if(userType == "Admin"){
+                Toast.makeText(requireContext(),"Email entered is $emailInput and password entered is $passwordInput",Toast.LENGTH_LONG).show()
+                emailInput = emailInput.trim()
+                if(emailInput=="admin@nitc.ac.in" && passwordInput=="admin@123")
+                    findNavController().navigate(R.id.adminDashboardFragment)
+                else{
+                    Toast.makeText(context,"Some error occurred",Toast.LENGTH_SHORT).show()
+                }
+            }
+            else if(userType == "Mentor"){
+                val emailDomain = emailInput.substring(emailInput.indexOf("@")+1,emailInput.length)
+//                val rollNo = emailInput.substring(emailInput.indexOf("_")+1,emailInput.indexOf("@"))
+                if(emailDomain != "nitc.ac.in"){
+                    Toast.makeText(context,"Mentor should login with NITC email id",Toast.LENGTH_SHORT).show()
+                }else{
+                    val loginLive = context?.let { it1 -> LoginAccess(it1).login(emailInput,passwordInput) }
+
+                    loginLive!!.observe(viewLifecycleOwner){loginSuccess->
+                        if(loginSuccess){
+                            findNavController().navigate(R.id.bookingFragment)
+                        }else{
+                            Toast.makeText(context,"Some error occurred",Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
 
 //            val fragManager = requireActivity().supportFragmentManager
 //            val transaction = fragManager.beginTransaction()
