@@ -14,6 +14,7 @@ import com.nitc.projectsgc.databinding.FragmentBookingBinding
 class BookingFragment : Fragment() {
     lateinit var binding : FragmentBookingBinding
     lateinit var mentorType : String
+    var mentorNameSelected = "NA"
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -22,7 +23,7 @@ class BookingFragment : Fragment() {
 
         var database : FirebaseDatabase = FirebaseDatabase.getInstance()
         var reference : DatabaseReference = database.reference.child("types")
-        val mentorTypes = arrayListOf<ConsultationType>()
+        val mentorTypes = arrayListOf<String>()
         val mentorNames = mutableMapOf<String,Array<String>>()
         mentorNames["carrier"] = arrayOf<String>("Dr. Ram","Dr. Manish","Dr. Raghu")
         mentorNames["relationship"] = arrayOf<String>("Dr. Ramya","Dr. Manisha","Dr. Sasmita")
@@ -34,12 +35,19 @@ class BookingFragment : Fragment() {
             reference.addValueEventListener(object:ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for(typeChild in snapshot.children){
-                        var mentors = typeChild.child("mentors").getValue(object : GenericTypeIndicator<ArrayList<Mentors>>(){})
-                        mentorTypes.add(ConsultationType(
-                            type = typeChild.key,
-                            mentors = mentors
-                        ))
+                        mentorTypes.add(typeChild.key.toString())
                     }
+                    val mentorTypeBuilder = AlertDialog.Builder(context)
+                    mentorTypeBuilder.setTitle("Choose Mentor Type")
+                    mentorTypeBuilder.setSingleChoiceItems(mentorTypes.map{ it}.toTypedArray(),0) { dialog, selectedIndex ->
+                        mentorTypeSelected = mentorTypes[selectedIndex].toString()
+                        dialog.dismiss()
+                    }
+                    mentorTypeBuilder.setPositiveButton("Go"){dialog,which->
+                        mentorTypeSelected = mentorTypes[0].toString()
+                        dialog.dismiss()
+                    }
+                    mentorTypeBuilder.create().show()
 
                 }
 
@@ -48,17 +56,7 @@ class BookingFragment : Fragment() {
                 }
 
             })
-            val mentorTypeBuilder = AlertDialog.Builder(context)
-            mentorTypeBuilder.setTitle("Choose Mentor Type")
-            mentorTypeBuilder.setSingleChoiceItems(mentorTypes,0) { dialog, selectedIndex ->
-                    mentorTypeSelected = mentorTypes[selectedIndex].toString()
-                    dialog.dismiss()
-            }
-            mentorTypeBuilder.setPositiveButton("Go"){dialog,which->
-                    mentorTypeSelected = mentorTypes[0].toString()
-                    dialog.dismiss()
-                }
-            mentorTypeBuilder.create().show()
+
 
         }
         binding.mentorNameButtonInBookingFragment.setOnClickListener{
