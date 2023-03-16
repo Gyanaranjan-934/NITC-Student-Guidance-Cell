@@ -6,5 +6,4 @@ data class Mentors(val name:String = "",
                    val type:String = "",
                    val password:String = "",
                    val userName:String = ""
-) {
-}
+)

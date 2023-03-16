@@ -10,8 +10,12 @@
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/addMentorCard"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.02"
         app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/headingTVInAddMentorFragment"
+        android:textColor="@color/black"
+        android:fontFamily="@font/inter_semibold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:text="Add Mentors"
@@ -19,7 +23,7 @@
 
     </com.google.android.material.textview.MaterialTextView>
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/addMentorCard"
+        android:id="@+id/addMentorCardInAddMentorFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
@@ -30,11 +34,11 @@
         app:contentPadding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.75"
+        app:layout_constraintHeight_percent="0.8"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.50">
+        app:layout_constraintVertical_bias="0.95">
 
 
         <LinearLayout
