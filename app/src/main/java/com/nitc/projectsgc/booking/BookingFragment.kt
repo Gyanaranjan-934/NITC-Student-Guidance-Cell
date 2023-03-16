@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.google.firebase.database.*
 import com.nitc.projectsgc.ConsultationType
 import com.nitc.projectsgc.Mentors
@@ -24,10 +25,12 @@ class BookingFragment : Fragment() {
         var database : FirebaseDatabase = FirebaseDatabase.getInstance()
         var reference : DatabaseReference = database.reference.child("types")
         val mentorTypes = arrayListOf<String>()
-        val mentorNames = mutableMapOf<String,Array<String>>()
-        mentorNames["carrier"] = arrayOf<String>("Dr. Ram","Dr. Manish","Dr. Raghu")
-        mentorNames["relationship"] = arrayOf<String>("Dr. Ramya","Dr. Manisha","Dr. Sasmita")
-        mentorNames["health"] = arrayOf<String>("Dr. Subham","Dr. Lalit","Dr. Malhotra")
+//        var mentorNames = mutableMapOf<String,Array<String>>()
+//        mentorNames["carrier"] = arrayOf<String>("Dr. Ram","Dr. Manish","Dr. Raghu")
+//        mentorNames["relationship"] = arrayOf<String>("Dr. Ramya","Dr. Manisha","Dr. Sasmita")
+//        mentorNames["health"] = arrayOf<String>("Dr. Subham","Dr. Lalit","Dr. Malhotra")
+        var mentorNames = arrayOf<String>()
+        var mentors = arrayListOf<Mentors>()
 
         var mentorTypeSelected = "NA"
         binding = FragmentBookingBinding.inflate(inflater,container,false)
@@ -60,19 +63,45 @@ class BookingFragment : Fragment() {
 
         }
         binding.mentorNameButtonInBookingFragment.setOnClickListener{
-            val mentorNameBuilder = AlertDialog.Builder(context)
-            mentorNameBuilder.setTitle("Choose Mentor Name")
-            mentorNameBuilder.setSingleChoiceItems(mentorNames[mentorTypeSelected],0) { dialog, selectedIndex ->
-                    mentorNameSelected = mentorNames[mentorTypeSelected]!![selectedIndex]
-                    dialog.dismiss()
+            if(mentorTypeSelected != "NA"){
+
+                reference.addValueEventListener(object:ValueEventListener{
+
+
+                    override fun onDataChange(snapshot: DataSnapshot) {
+
+                        var mentorNamesSnapshot = snapshot.child("types/$mentorTypeSelected").children
+                        var i = 0
+                        for(mentor in mentorNamesSnapshot){
+                            mentors.add(mentor.getValue(Mentors::class.java)!!)
+                        }
+                        val mentorNameBuilder = AlertDialog.Builder(context)
+                        mentorNameBuilder.setTitle("Choose Mentor Name")
+                        mentorNameBuilder.setSingleChoiceItems(mentors.map{it.name}.toTypedArray(),0) { dialog, selectedIndex ->
+                            mentorNameSelected = mentors[selectedIndex].name.toString()
+                            dialog.dismiss()
+                        }
+                        mentorNameBuilder.setPositiveButton("Go"){dialog,which->
+                            mentorNameSelected = mentors[0].name.toString()
+                            dialog.dismiss()
+                        }
+                        mentorNameBuilder.create().show()
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+
+                })
+
             }
-            mentorNameBuilder.setPositiveButton("Go"){dialog,which->
-                    mentorNameSelected = mentorNames[mentorTypeSelected]!![0]
-                    dialog.dismiss()
-                }
-            mentorNameBuilder.create().show()
+            else{
+                Toast.makeText(context,"Some error occurred",Toast.LENGTH_SHORT).show()
+            }
 
         }
+
+
         return binding.root
     }
 
