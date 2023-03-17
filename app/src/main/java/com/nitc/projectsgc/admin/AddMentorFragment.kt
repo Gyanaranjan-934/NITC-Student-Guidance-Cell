@@ -32,17 +32,17 @@ class AddMentorFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val mentorTypes = arrayOf<String>("carrier","relationship","health")
         var mentorTypeSelected = "NA"
-        addMentorBinding.mantorTypeButton.setOnClickListener {
+        addMentorBinding.mentorTypeButtonInAddMentorFragment.setOnClickListener {
             val mentorTypeBuilder = AlertDialog.Builder(context)
             mentorTypeBuilder.setTitle("Choose mentor type")
             mentorTypeBuilder.setSingleChoiceItems(mentorTypes,0) { dialog, selectedIndex ->
                 mentorTypeSelected = mentorTypes[selectedIndex].toString()
-                addMentorBinding.mantorTypeButton.hint = mentorTypeSelected
+                addMentorBinding.mentorTypeButtonInAddMentorFragment.hint = mentorTypeSelected
                 dialog.dismiss()
             }
             mentorTypeBuilder.setPositiveButton("Go"){dialog,which->
                 mentorTypeSelected = mentorTypes[0].toString()
-                addMentorBinding.mantorTypeButton.hint = mentorTypeSelected
+                addMentorBinding.mentorTypeButtonInAddMentorFragment.hint = mentorTypeSelected
                 dialog.dismiss()
             }
             mentorTypeBuilder.create().show()

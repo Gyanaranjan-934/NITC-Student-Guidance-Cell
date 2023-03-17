@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="15dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/lavender">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/imageInStudentCard"
+        android:src="@drawable/boy_face"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintHeight_percent="0.3"
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintHorizontal_bias="0.03"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/nameInStudentCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_semibold"
+            android:textColor="@color/black"
+            android:text="Student Name"
+            app:layout_constraintWidth_percent="0.45"
+            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintVertical_bias="0.1"
+            app:layout_constraintBottom_toBottomOf="@+id/imageInStudentCard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageInStudentCard"
+            app:layout_constraintTop_toTopOf="@+id/imageInStudentCard" />
+
+        <LinearLayout
+            android:id="@+id/dobLayoutInStudentCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/nameInStudentCard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/nameInStudentCard"
+            app:layout_constraintTop_toTopOf="@+id/nameInStudentCard">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DOB: "
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:fontFamily="@font/inter_semibold"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="16/01/2002"
+                android:textColor="@color/black"
+                android:fontFamily="@font/inter"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:id="@+id/dobInStudentCard"/>
+
+
+        </LinearLayout>
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter"
+            android:id="@+id/rollNoInStudentCard"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.02"
+            android:text="M210704CA"
+            app:layout_constraintTop_toBottomOf="@id/nameInStudentCard"
+            app:layout_constraintStart_toStartOf="@id/nameInStudentCard"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@id/nameInStudentCard"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="start"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintWidth_percent="0.6"
+            app:layout_constraintTop_toBottomOf="@id/rollNoInStudentCard"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.04">
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phone:     "
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="@color/black"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="9306032860"
+                android:fontFamily="@font/inter"
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:id="@+id/phoneInStudentCard"/>
+
+
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</com.google.android.material.card.MaterialCardView>
