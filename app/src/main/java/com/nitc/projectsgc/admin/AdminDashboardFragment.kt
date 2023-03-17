@@ -11,6 +11,7 @@ import com.nitc.projectsgc.databinding.FragmentAdminDashboardBinding
 
 class AdminDashboardFragment : Fragment() {
     lateinit var adminDashboardBinding : FragmentAdminDashboardBinding
+    var userType = "Student"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -21,14 +22,10 @@ class AdminDashboardFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         adminDashboardBinding =  FragmentAdminDashboardBinding.inflate(inflater, container, false)
-        return adminDashboardBinding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         adminDashboardBinding.addMentorButtonInAdminDashboard.setOnClickListener{
             findNavController().navigate(R.id.addMentorFragment)
         }
+        return adminDashboardBinding.root
     }
 
 
