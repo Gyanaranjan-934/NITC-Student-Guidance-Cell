@@ -18,7 +18,7 @@
         android:fontFamily="@font/inter_semibold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Add Mentors"
+        android:text="Add Mentor"
         android:textSize="30dp">
 
     </com.google.android.material.textview.MaterialTextView>
@@ -41,20 +41,25 @@
         app:layout_constraintVertical_bias="0.95">
 
 
-        <LinearLayout
-            android:id="@+id/addMentorForm"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/addMentorLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingHorizontal="20dp"
-            android:paddingTop="10dp"
             android:weightSum="30">
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_weight="4"
+                android:id="@+id/nameInputLayoutInAddMentorFragment"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.1"
+                app:layout_constraintWidth_percent="0.88"
+                app:layout_constraintVertical_bias="0.07"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:boxBackgroundColor="#E6FFFFFF">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -68,9 +73,16 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_weight="4"
+                android:id="@+id/phoneAndTypeLayoutInAddMentorFragment"
+                app:layout_constraintStart_toStartOf="@id/nameInputLayoutInAddMentorFragment"
+                app:layout_constraintEnd_toEndOf="@id/nameInputLayoutInAddMentorFragment"
+                app:layout_constraintHeight_percent="0.1"
+                app:layout_constraintTop_toBottomOf="@id/nameInputLayoutInAddMentorFragment"
+                app:layout_constraintVertical_bias="0.05"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:orientation="horizontal">
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -78,6 +90,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="5"
+                    android:layout_gravity="center"
                     app:boxBackgroundColor="#E6FFFFFF">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -91,25 +104,36 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/mantorTypeButton"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/mentorTypeButton"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:hint="Type"
+                    android:layout_weight="2.7"
+                    app:cornerRadius="10dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/inter_semibold"
+                    android:text="Type"
+                    android:textAllCaps="false"
+                    android:letterSpacing="0"
                     app:backgroundTint="#2962FF" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="4"
-                android:orientation="horizontal">
 
 
 
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
+                    app:boxBackgroundColor="@color/white"
+                    app:layout_constraintStart_toStartOf="@id/nameInputLayoutInAddMentorFragment"
+                    app:layout_constraintEnd_toEndOf="@id/nameInputLayoutInAddMentorFragment"
+                    app:layout_constraintHeight_percent="0.1"
+                    android:id="@+id/emailInputLayoutInAddMentorFragment"
+                    app:layout_constraintTop_toBottomOf="@id/phoneAndTypeLayoutInAddMentorFragment"
+                    app:layout_constraintVertical_bias="0.07"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_weight="9">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -123,12 +147,18 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
 
-            </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:id="@+id/passwordInputLayoutInAddMentorFragment"
+                app:layout_constraintStart_toStartOf="@id/nameInputLayoutInAddMentorFragment"
+                app:layout_constraintEnd_toEndOf="@id/nameInputLayoutInAddMentorFragment"
+                app:layout_constraintHeight_percent="0.1"
+                app:layout_constraintTop_toBottomOf="@id/emailInputLayoutInAddMentorFragment"
+                app:layout_constraintVertical_bias="0.08"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_weight="4"
                 app:boxBackgroundColor="#E6FFFFFF">
 
@@ -142,29 +172,25 @@
                     android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                android:id="@+id/finishingLayoutInRegisterFragment"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_gravity="center"
-                android:layout_weight="5"
-                android:gravity="center"
-                android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/addButtonInAddMentorFragment"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginVertical="12dp"
-                    android:layout_weight="2"
-                    android:backgroundTint="@color/teal_200"
+                    android:layout_height="0dp"
+                    app:layout_constraintStart_toStartOf="@id/nameInputLayoutInAddMentorFragment"
+                    app:layout_constraintEnd_toEndOf="@id/nameInputLayoutInAddMentorFragment"
+                    app:layout_constraintTop_toBottomOf="@id/passwordInputLayoutInAddMentorFragment"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHeight_percent="0.09"
+                    android:backgroundTint="@color/lavender"
                     android:fontFamily="@font/inter_semibold"
                     android:text="Add"
-                    android:textAllCaps="true"
-                    app:cornerRadius="10dp" />
+                    android:textColor="@color/black"
+                    app:layout_constraintWidth_percent="0.7"
+                    android:textAllCaps="false"
+                    app:cornerRadius="15dp" />
 
-            </LinearLayout>
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
