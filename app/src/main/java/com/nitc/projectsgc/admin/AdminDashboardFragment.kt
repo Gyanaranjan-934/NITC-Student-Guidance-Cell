@@ -6,8 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.nitc.projectsgc.R
+import com.nitc.projectsgc.adapters.StudentsAdapter
+import com.nitc.projectsgc.admin.access.StudentsAccess
 import com.nitc.projectsgc.databinding.FragmentAdminDashboardBinding
 
 class AdminDashboardFragment : Fragment() {
@@ -25,6 +29,9 @@ class AdminDashboardFragment : Fragment() {
         binding =  FragmentAdminDashboardBinding.inflate(inflater, container, false)
 
 
+        binding.studentRecyclerViewInAdminDashboardFragment.layoutManager = LinearLayoutManager(context)
+        binding.mentorRecyclerViewInAdminDashboardFragment.layoutManager = LinearLayoutManager(context)
+        getStudents()
         binding.mentorLoginTypeButtonInAdminDashboardFragment.setOnClickListener {
             binding.mentorLoginTypeImageInAdminDashboardFragment.setBackgroundResource(R.drawable.login_type_card_blue_bg)
             binding.mentorLoginTypeButtonInAdminDashboardFragment.setTextColor(Color.WHITE)
@@ -33,6 +40,7 @@ class AdminDashboardFragment : Fragment() {
             binding.mentorLoginTypeImageInAdminDashboardFragment.setBackgroundResource(R.drawable.login_type_card_transparent_bg)
             binding.mentorLoginTypeButtonInAdminDashboardFragment.setTextColor(Color.BLACK)
             userType = "Mentor"
+            getMentors()
         }
         binding.studentLoginTypeButtonInAdminDashboardFragment.setOnClickListener {
             binding.mentorLoginTypeImageInAdminDashboardFragment.setBackgroundResource(R.drawable.login_type_card_transparent_bg)
@@ -42,7 +50,9 @@ class AdminDashboardFragment : Fragment() {
             binding.mentorLoginTypeImageInAdminDashboardFragment.setBackgroundResource(R.drawable.login_type_card_transparent_bg)
             binding.mentorLoginTypeButtonInAdminDashboardFragment.setTextColor(Color.BLACK)
             userType = "Student"
+            getStudents()
         }
+
 
 
 
@@ -55,6 +65,39 @@ class AdminDashboardFragment : Fragment() {
 
 
         return binding.root
+    }
+
+    private fun getMentors() {
+
+    }
+
+    private fun getStudents() {
+        binding.mentorLayoutInAdminDashboardFragment.visibility = View.GONE
+        binding.studentLayoutInAdminDashboardFragment.visibility = View.VISIBLE
+        var studentsLive = context?.let { StudentsAccess(it).getStudents() }
+        if(studentsLive != null){
+            studentsLive.observe(viewLifecycleOwner){students->
+                if(students == null){
+                    binding.noStudentsTVInAdminDashboardFragment.visibility = View.VISIBLE
+                    binding.studentRecyclerViewInAdminDashboardFragment.visibility = View.GONE
+                }else{
+                    var studentsAdapter = context?.let {
+                        StudentsAdapter(
+                            it,
+                            true,
+                            students = students
+                        )
+                    }
+                    binding.studentRecyclerViewInAdminDashboardFragment.adapter = studentsAdapter
+                    binding.studentRecyclerViewInAdminDashboardFragment.visibility = View.VISIBLE
+                    binding.noStudentsTVInAdminDashboardFragment.visibility = View.GONE
+                }
+            }
+        }else{
+            binding.noStudentsTVInAdminDashboardFragment.visibility = View.GONE
+            binding.studentRecyclerViewInAdminDashboardFragment.visibility = View.GONE
+            Toast.makeText(context,"Some error occurred. Try again later",Toast.LENGTH_SHORT).show()
+        }
     }
 
 
