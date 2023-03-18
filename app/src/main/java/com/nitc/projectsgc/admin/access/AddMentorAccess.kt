@@ -15,7 +15,7 @@ class AddMentorAccess(
         mentors: Mentors
     ): MutableLiveData<Boolean> {
         val database : FirebaseDatabase = FirebaseDatabase.getInstance()
-        val reference : DatabaseReference = database.reference.child("mentors").child(mentors.type)
+        val reference : DatabaseReference = database.reference.child("types").child(mentors.type)
         val auth : FirebaseAuth = FirebaseAuth.getInstance()
         val addMentorSuccess = MutableLiveData<Boolean>()
         reference.child(mentors.userName).setValue(mentors).addOnCompleteListener{task ->

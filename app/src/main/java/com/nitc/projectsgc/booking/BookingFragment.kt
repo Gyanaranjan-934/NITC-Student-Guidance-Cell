@@ -23,13 +23,9 @@ class BookingFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
 
-        var database : FirebaseDatabase = FirebaseDatabase.getInstance()
-        var reference : DatabaseReference = database.reference.child("types")
+        val database : FirebaseDatabase = FirebaseDatabase.getInstance()
+        val reference : DatabaseReference = database.reference.child("types")
         val mentorTypes = arrayListOf<String>()
-//        var mentorNames = mutableMapOf<String,Array<String>>()
-//        mentorNames["carrier"] = arrayOf<String>("Dr. Ram","Dr. Manish","Dr. Raghu")
-//        mentorNames["relationship"] = arrayOf<String>("Dr. Ramya","Dr. Manisha","Dr. Sasmita")
-//        mentorNames["health"] = arrayOf<String>("Dr. Subham","Dr. Lalit","Dr. Malhotra")
         var mentorNames = arrayOf<String>()
         var mentors = arrayListOf<Mentors>()
 

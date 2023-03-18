@@ -30,7 +30,7 @@ class AddMentorFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mentorTypes = arrayOf<String>("carrier","relationship","health")
+        val mentorTypes = arrayOf<String>("Career","Relationship","Health")
         var mentorTypeSelected = "NA"
         addMentorBinding.mentorTypeButtonInAddMentorFragment.setOnClickListener {
             val mentorTypeBuilder = AlertDialog.Builder(context)
