@@ -39,6 +39,8 @@ class AdminDashboardFragment : Fragment() {
             binding.mentorLoginTypeButtonInAdminDashboardFragment.setTextColor(Color.WHITE)
             binding.studentLoginTypeImageInAdminDashboardFragment.setBackgroundResource(R.drawable.login_type_card_transparent_bg)
             binding.studentLoginTypeButtonInAdminDashboardFragment.setTextColor(Color.BLACK)
+            binding.studentLoginTypeImageInAdminDashboardFragment.setBackgroundResource(R.drawable.login_type_card_transparent_bg)
+            binding.studentLoginTypeButtonInAdminDashboardFragment.setTextColor(Color.BLACK)
             userType = "Mentor"
             getMentors()
         }
@@ -47,13 +49,18 @@ class AdminDashboardFragment : Fragment() {
             binding.mentorLoginTypeButtonInAdminDashboardFragment.setTextColor(Color.BLACK)
             binding.studentLoginTypeImageInAdminDashboardFragment.setBackgroundResource(R.drawable.login_type_card_blue_bg)
             binding.studentLoginTypeButtonInAdminDashboardFragment.setTextColor(Color.WHITE)
+            binding.mentorLoginTypeImageInAdminDashboardFragment.setBackgroundResource(R.drawable.login_type_card_transparent_bg)
+            binding.mentorLoginTypeButtonInAdminDashboardFragment.setTextColor(Color.BLACK)
             userType = "Student"
             getStudents()
         }
 
+
         binding.addStudentButtonInAdminDashboard.setOnClickListener {
             findNavController().navigate(R.id.registerFragment)
         }
+
+
 
 
         binding.addMentorButtonInAdminDashboard.setOnClickListener{
@@ -118,6 +125,5 @@ class AdminDashboardFragment : Fragment() {
             Toast.makeText(context,"Some error occurred. Try again later",Toast.LENGTH_SHORT).show()
         }
     }
-
 
 }
