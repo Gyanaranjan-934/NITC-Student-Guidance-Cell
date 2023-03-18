@@ -12,5 +12,16 @@
     <color name="green">#00FF00</color>
     <color name="lightGrey">#CDC1B9</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="light_blue">#E0E1FF</color>
+    <color name="navy_blue">#191970</color>
+    <color name="normal_blue">#80C5C6FF</color>
+    <color name="sky_blue">#BBDEFB</color>
+    <color name="dark_white">#F8F1F1</color>
+    <color name="dark_grey">#333333</color>
+    <color name="mint_cream">#F5FFFA</color>
+    <color name="ivory">#FFFFF0</color>
+    <color name="ivory_beige">#F0ECE8</color>
+    <color name="light_gray">#F5F5F5</color>
+    <color name="very_light_gray">#F8FAFC</color>
     <color name="baby_blue">#D4F1F4</color>
 </resources>

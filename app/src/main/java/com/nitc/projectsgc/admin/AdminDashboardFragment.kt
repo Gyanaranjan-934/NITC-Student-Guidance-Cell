@@ -85,7 +85,8 @@ class AdminDashboardFragment : Fragment() {
                         StudentsAdapter(
                             it,
                             true,
-                            students = students
+                            students = students,
+                            this
                         )
                     }
                     binding.studentRecyclerViewInAdminDashboardFragment.adapter = studentsAdapter

@@ -4,7 +4,9 @@ import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
+import com.google.firebase.ktx.Firebase
 import com.nitc.projectsgc.Students
 
 class StudentsAccess(var context: Context) {
@@ -33,6 +35,16 @@ class StudentsAccess(var context: Context) {
 
         })
         return studentsLive
+    }
+
+    fun deleteStudent(rollNo: String,email:String):Boolean {
+
+        var database : FirebaseDatabase = FirebaseDatabase.getInstance()
+        var reference : DatabaseReference = database.reference.child("students")
+        var auth = Firebase.auth
+        auth.signInWithEmailAndPassword()
+
+
     }
 
 
