@@ -54,7 +54,7 @@ class StudentsAdapter(
             var confirmDeleteBuilder = AlertDialog.Builder(context)
             confirmDeleteBuilder.setTitle("Are you sure ?")
                 .setMessage("You want to delete this student?")
-                .setPositiveButton("Yes"){which,dialog->
+                .setPositiveButton("Yes"){dialog,which->
                     var deletedLive = StudentsAccess(context).deleteStudent(students[position].rollNo.toString(),students[position].emailId.toString())
                     deletedLive.observe(parentFragment.viewLifecycleOwner){deleted->
                         if(deleted){
@@ -63,7 +63,13 @@ class StudentsAdapter(
                             notifyItemChanged(position)
                         }
                     }
+                    dialog.dismiss()
+
                 }
+                .setNegativeButton("No"){dialog,which->
+                    dialog.dismiss()
+                }
+                .create().show()
         }
     }
 
