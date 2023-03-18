@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
+    android:background="@color/sky_blue"
     tools:context=".admin.AddMentorFragment">
 
     <com.google.android.material.textview.MaterialTextView
@@ -22,88 +22,88 @@
         android:textSize="30dp">
 
     </com.google.android.material.textview.MaterialTextView>
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/addMentorCardInAddMentorFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:paddingHorizontal="20dp"
-        android:paddingTop="10dp"
-        app:cardBackgroundColor="#6A2962FF"
-        app:cardCornerRadius="10dp"
-        app:contentPadding="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.8"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.95">
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/addMentorLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="30">
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:id="@+id/nameInputLayoutInAddMentorFragment"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:cardCornerRadius="@dimen/input_card_radius"
                 app:layout_constraintHeight_percent="0.1"
-                app:layout_constraintWidth_percent="0.88"
-                app:layout_constraintVertical_bias="0.07"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:boxBackgroundColor="#E6FFFFFF">
+                app:layout_constraintWidth_percent="0.92"
+                android:id="@+id/nameInputCardInAddMentorFragment"
+                app:layout_constraintVertical_bias="0.15"
+                app:layout_constraintTop_toBottomOf="@id/headingTVInAddMentorFragment"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                android:layout_width="match_parent"
+                app:boxBackgroundColor="@color/white"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                android:textColorHint="@color/black"
+                app:hintTextColor="@color/black"
+                android:hint="Name"
+                android:layout_height="match_parent">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/nameFieldInAddMentorFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="Name"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            </com.google.android.material.card.MaterialCardView>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:id="@+id/phoneAndTypeLayoutInAddMentorFragment"
-                app:layout_constraintStart_toStartOf="@id/nameInputLayoutInAddMentorFragment"
-                app:layout_constraintEnd_toEndOf="@id/nameInputLayoutInAddMentorFragment"
+                app:layout_constraintStart_toStartOf="@id/nameInputCardInAddMentorFragment"
+                app:layout_constraintEnd_toEndOf="@id/nameInputCardInAddMentorFragment"
                 app:layout_constraintHeight_percent="0.1"
-                app:layout_constraintTop_toBottomOf="@id/nameInputLayoutInAddMentorFragment"
+                app:layout_constraintTop_toBottomOf="@id/nameInputCardInAddMentorFragment"
                 app:layout_constraintVertical_bias="0.05"
                 android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="5"
-                    android:layout_gravity="center"
-                    app:boxBackgroundColor="#E6FFFFFF">
+                    app:cardCornerRadius="@dimen/input_card_radius"
+                    android:layout_weight="5">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/phoneNumberInAddMentorFragment"
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:textColorHint="@color/black"
+                        app:hintTextColor="@color/black"
+                        android:layout_gravity="center"
+                        app:boxStrokeWidth="0dp"
                         android:hint="Phone"
-                        android:inputType="phone"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/black" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        app:endIconMode="password_toggle"
+                        app:boxStrokeWidthFocused="0dp"
+                        app:boxBackgroundColor="#E6FFFFFF">
 
-                <com.google.android.material.button.MaterialButton
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/phoneNumberInAddMentorFragment"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:inputType="phone"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+                </com.google.android.material.card.MaterialCardView>
+                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/mentorTypeButtonInAddMentorFragment"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -122,63 +122,84 @@
 
 
 
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="@id/nameInputCardInAddMentorFragment"
+                app:layout_constraintEnd_toEndOf="@id/nameInputCardInAddMentorFragment"
+                app:layout_constraintHeight_percent="0.1"
+                android:id="@+id/emailInputCardInAddMentorFragment"
+                app:layout_constraintTop_toBottomOf="@id/phoneAndTypeLayoutInAddMentorFragment"
+                app:layout_constraintVertical_bias="0.07"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:cardCornerRadius="@dimen/input_card_radius">
+
+
+
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     app:boxBackgroundColor="@color/white"
-                    app:layout_constraintStart_toStartOf="@id/nameInputLayoutInAddMentorFragment"
-                    app:layout_constraintEnd_toEndOf="@id/nameInputLayoutInAddMentorFragment"
-                    app:layout_constraintHeight_percent="0.1"
-                    android:id="@+id/emailInputLayoutInAddMentorFragment"
-                    app:layout_constraintTop_toBottomOf="@id/phoneAndTypeLayoutInAddMentorFragment"
-                    app:layout_constraintVertical_bias="0.07"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:hint="Email"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:boxStrokeWidth="0dp"
+                    android:textColorHint="@color/black"
+                    app:hintTextColor="@color/black"
                     android:layout_weight="9">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/emailFieldInAddMentorFragment"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint="Email"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/black"
                         android:textColorHint="@color/black" />
                 </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.card.MaterialCardView>
 
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/passwordInputLayoutInAddMentorFragment"
+        app:layout_constraintStart_toStartOf="@id/nameInputCardInAddMentorFragment"
+        app:layout_constraintEnd_toEndOf="@id/nameInputCardInAddMentorFragment"
+        app:layout_constraintHeight_percent="0.1"
+        app:cardCornerRadius="@dimen/input_card_radius"
+        app:layout_constraintTop_toBottomOf="@id/emailInputCardInAddMentorFragment"
+        app:layout_constraintVertical_bias="0.08"
+        app:layout_constraintBottom_toBottomOf="parent">
 
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:id="@+id/passwordInputLayoutInAddMentorFragment"
-                app:layout_constraintStart_toStartOf="@id/nameInputLayoutInAddMentorFragment"
-                app:layout_constraintEnd_toEndOf="@id/nameInputLayoutInAddMentorFragment"
-                app:layout_constraintHeight_percent="0.1"
-                app:layout_constraintTop_toBottomOf="@id/emailInputLayoutInAddMentorFragment"
-                app:layout_constraintVertical_bias="0.08"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_weight="4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColorHint="@color/black"
+                app:hintTextColor="@color/black"
+                android:hint="Password"
+                app:boxStrokeWidthFocused="0dp"
+                app:boxStrokeWidth="0dp"
                 app:boxBackgroundColor="#E6FFFFFF">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/passwordFieldInAddMentorFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="Password"
                     android:inputType="textPassword"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
+    </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/addButtonInAddMentorFragment"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintStart_toStartOf="@id/nameInputLayoutInAddMentorFragment"
-                    app:layout_constraintEnd_toEndOf="@id/nameInputLayoutInAddMentorFragment"
+                    app:layout_constraintStart_toStartOf="@id/nameInputCardInAddMentorFragment"
+                    app:layout_constraintEnd_toEndOf="@id/nameInputCardInAddMentorFragment"
                     app:layout_constraintTop_toBottomOf="@id/passwordInputLayoutInAddMentorFragment"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintHeight_percent="0.09"
@@ -191,6 +212,4 @@
                     app:cornerRadius="15dp" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.nitc.projectsgc.admin.access
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -37,13 +38,21 @@ class StudentsAccess(var context: Context) {
         return studentsLive
     }
 
-    fun deleteStudent(rollNo: String,email:String):Boolean {
+    fun deleteStudent(rollNo: String,email:String):LiveData<Boolean>{
 
+        var deleteLive = MutableLiveData<Boolean>(false)
         var database : FirebaseDatabase = FirebaseDatabase.getInstance()
         var reference : DatabaseReference = database.reference.child("students")
-        var auth = Firebase.auth
-        return false
+        Log.d("child",reference.child(rollNo).toString())
+        reference.child(rollNo).removeValue().addOnSuccessListener {
+            deleteLive.postValue(true)
+        }
+            .addOnFailureListener {error->
+                Toast.makeText(context,"Error : $error",Toast.LENGTH_LONG).show()
+                deleteLive.postValue(false)
+            }
 
+        return deleteLive
     }
 
 
