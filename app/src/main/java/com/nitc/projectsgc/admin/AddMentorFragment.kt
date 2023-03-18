@@ -7,18 +7,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.database.FirebaseDatabase
 import com.nitc.projectsgc.Mentors
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.admin.access.AddMentorAccess
+import com.nitc.projectsgc.admin.access.MentorsAccess
 import com.nitc.projectsgc.databinding.FragmentAddMentorBinding
 import com.nitc.projectsgc.register.access.RegisterAccess
 
 class AddMentorFragment : Fragment() {
 //    var database : FirebaseDatabase =
     lateinit var addMentorBinding: FragmentAddMentorBinding
-
+    var mentorNumber = 0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,22 +32,32 @@ class AddMentorFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mentorTypes = arrayOf<String>("Career","Relationship","Health")
         var mentorTypeSelected = "NA"
         addMentorBinding.mentorTypeButtonInAddMentorFragment.setOnClickListener {
-            val mentorTypeBuilder = AlertDialog.Builder(context)
-            mentorTypeBuilder.setTitle("Choose mentor type")
-            mentorTypeBuilder.setSingleChoiceItems(mentorTypes,0) { dialog, selectedIndex ->
-                mentorTypeSelected = mentorTypes[selectedIndex].toString()
-                addMentorBinding.mentorTypeButtonInAddMentorFragment.hint = mentorTypeSelected
-                dialog.dismiss()
+            val mentorTypesLive = context?.let { it1 -> MentorsAccess(it1).getMentorTypes() }
+            if(mentorTypesLive!=null) {
+                mentorTypesLive.observe(viewLifecycleOwner) { mentorTypes ->
+                    if (mentorTypes != null) {
+                        val mentorTypeBuilder = AlertDialog.Builder(context)
+                        mentorTypeBuilder.setTitle("Choose Mentor Type")
+                        mentorTypeBuilder.setSingleChoiceItems(
+                            mentorTypes.map { it }.toTypedArray(),
+                            mentorNumber
+                        ) { dialog, selectedIndex ->
+                            mentorTypeSelected = mentorTypes[selectedIndex].toString()
+                            addMentorBinding.mentorTypeButtonInAddMentorFragment.text = mentorTypeSelected
+                            mentorNumber = selectedIndex
+                            dialog.dismiss()
+                        }
+                        mentorTypeBuilder.setPositiveButton("Go") { dialog, which ->
+                            mentorTypeSelected = mentorTypes[0].toString()
+                            addMentorBinding.mentorTypeButtonInAddMentorFragment.text = mentorTypeSelected
+                            dialog.dismiss()
+                        }
+                        mentorTypeBuilder.create().show()
+                    }
+                }
             }
-            mentorTypeBuilder.setPositiveButton("Go"){dialog,which->
-                mentorTypeSelected = mentorTypes[0].toString()
-                addMentorBinding.mentorTypeButtonInAddMentorFragment.hint = mentorTypeSelected
-                dialog.dismiss()
-            }
-            mentorTypeBuilder.create().show()
         }
         addMentorBinding.addButtonInAddMentorFragment.setOnClickListener{
             val nameOfMentor = addMentorBinding.nameFieldInAddMentorFragment.text.toString()

@@ -47,7 +47,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/mentorTypeButtonInBookingFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

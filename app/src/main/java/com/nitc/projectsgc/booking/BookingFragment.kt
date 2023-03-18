@@ -11,6 +11,7 @@ import android.widget.Toast
 import com.google.firebase.database.*
 import com.nitc.projectsgc.ConsultationType
 import com.nitc.projectsgc.Mentors
+import com.nitc.projectsgc.admin.access.MentorsAccess
 import com.nitc.projectsgc.databinding.FragmentBookingBinding
 
 class BookingFragment : Fragment() {
@@ -25,39 +26,33 @@ class BookingFragment : Fragment() {
 
         val database : FirebaseDatabase = FirebaseDatabase.getInstance()
         val reference : DatabaseReference = database.reference.child("types")
-        val mentorTypes = arrayListOf<String>()
         var mentorNames = arrayOf<String>()
         var mentors = arrayListOf<Mentors>()
 
         var mentorTypeSelected = "NA"
         binding = FragmentBookingBinding.inflate(inflater,container,false)
         binding.mentorTypeButtonInBookingFragment.setOnClickListener{
-            reference.addValueEventListener(object:ValueEventListener{
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    for(typeChild in snapshot.children){
-                        mentorTypes.add(typeChild.key.toString())
+            var mentorTypesLive = context?.let { it1 -> MentorsAccess(it1).getMentorTypes() }
+            if (mentorTypesLive != null) {
+                mentorTypesLive.observe(viewLifecycleOwner) { mentorTypes ->
+                    if(mentorTypes != null) {
+                        val mentorTypeBuilder = AlertDialog.Builder(context)
+                        mentorTypeBuilder.setTitle("Choose Mentor Type")
+                        mentorTypeBuilder.setSingleChoiceItems(
+                            mentorTypes.map { it }.toTypedArray(),
+                            0
+                        ) { dialog, selectedIndex ->
+                            mentorTypeSelected = mentorTypes[selectedIndex].toString()
+                            dialog.dismiss()
+                        }
+                        mentorTypeBuilder.setPositiveButton("Go") { dialog, which ->
+                            mentorTypeSelected = mentorTypes[0].toString()
+                            dialog.dismiss()
+                        }
+                        mentorTypeBuilder.create().show()
                     }
-                    val mentorTypeBuilder = AlertDialog.Builder(context)
-                    mentorTypeBuilder.setTitle("Choose Mentor Type")
-                    mentorTypeBuilder.setSingleChoiceItems(mentorTypes.map{ it}.toTypedArray(),0) { dialog, selectedIndex ->
-                        mentorTypeSelected = mentorTypes[selectedIndex].toString()
-                        dialog.dismiss()
-                    }
-                    mentorTypeBuilder.setPositiveButton("Go"){dialog,which->
-                        mentorTypeSelected = mentorTypes[0].toString()
-                        dialog.dismiss()
-                    }
-                    mentorTypeBuilder.create().show()
-
                 }
-
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-
-            })
-
-
+            }
         }
         binding.mentorNameButtonInBookingFragment.setOnClickListener{
             if(mentorTypeSelected != "NA"){
