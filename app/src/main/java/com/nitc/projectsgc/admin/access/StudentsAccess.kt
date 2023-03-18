@@ -10,19 +10,17 @@ import com.nitc.projectsgc.Students
 class StudentsAccess(var context: Context) {
 
 
-    fun getStudents(): LiveData<Array<Students>> {
-        var studentsLive = MutableLiveData<Array<Students>>(null)
+    fun getStudents(): LiveData<ArrayList<Students>> {
+        var studentsLive = MutableLiveData<ArrayList<Students>>(null)
         var database : FirebaseDatabase = FirebaseDatabase.getInstance()
         var reference : DatabaseReference = database.reference.child("students")
         reference.addValueEventListener(object:ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                var studentsList = arrayOf<Students>()
-                var studentIndex = 0
+                var studentsList = arrayListOf<Students>()
                 for(student in snapshot.children){
                     var thisStudent = student.getValue(Students::class.java)
                     if (thisStudent != null) {
-                        studentsList[studentIndex] = thisStudent
-                        studentIndex++
+                        studentsList.add(thisStudent)
                     }
                 }
                 studentsLive.postValue(studentsList)
