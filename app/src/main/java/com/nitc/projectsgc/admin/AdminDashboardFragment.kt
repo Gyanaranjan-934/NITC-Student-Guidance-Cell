@@ -10,7 +10,9 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nitc.projectsgc.R
+import com.nitc.projectsgc.adapters.MentorsAdapter
 import com.nitc.projectsgc.adapters.StudentsAdapter
+import com.nitc.projectsgc.admin.access.MentorsAccess
 import com.nitc.projectsgc.admin.access.StudentsAccess
 import com.nitc.projectsgc.databinding.FragmentAdminDashboardBinding
 
@@ -68,7 +70,28 @@ class AdminDashboardFragment : Fragment() {
     }
 
     private fun getMentors() {
-
+        binding.mentorLayoutInAdminDashboardFragment.visibility = View.VISIBLE
+        binding.studentLayoutInAdminDashboardFragment.visibility = View.GONE
+        var mentorsLive = context?.let { MentorsAccess(it).getMentors() }
+        if (mentorsLive != null){
+            mentorsLive.observe(viewLifecycleOwner){mentors->
+                if (mentors==null){
+                    binding.noMentorsTVInAdminDashboardFragment.visibility = View.VISIBLE
+                    binding.mentorRecyclerViewInAdminDashboardFragment.visibility = View.GONE
+                }else{
+                    var mentorsAdapter = context?.let {
+                        MentorsAdapter(it,true,mentors = mentors)
+                    }
+                    binding.mentorRecyclerViewInAdminDashboardFragment.adapter = mentorsAdapter
+                    binding.mentorRecyclerViewInAdminDashboardFragment.visibility = View.VISIBLE
+                    binding.noMentorsTVInAdminDashboardFragment.visibility = View.GONE
+                }
+            }
+        }else{
+            binding.noMentorsTVInAdminDashboardFragment.visibility = View.GONE
+            binding.mentorRecyclerViewInAdminDashboardFragment.visibility = View.GONE
+            Toast.makeText(context,"Some error occurred. Try again later",Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun getStudents() {

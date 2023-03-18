@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="15dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/lavender">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/imageInMentorCard"
+            android:src="@drawable/boy_face"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.2"
+            app:layout_constraintHeight_percent="0.37"
+            app:layout_constraintWidth_percent="0.2"
+            app:layout_constraintHorizontal_bias="0.03"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/nameInMentorCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_semibold"
+            android:textColor="@color/black"
+            android:text="Mentor Name"
+            app:layout_constraintWidth_percent="0.45"
+            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintVertical_bias="0.1"
+            app:layout_constraintBottom_toBottomOf="@+id/imageInMentorCard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageInMentorCard"
+            app:layout_constraintTop_toTopOf="@+id/imageInMentorCard" />
+
+        <LinearLayout
+            android:id="@+id/dobLayoutInMentorCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/nameInMentorCard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/nameInMentorCard"
+            app:layout_constraintTop_toTopOf="@+id/nameInMentorCard">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Type: "
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:fontFamily="@font/inter_semibold"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Career"
+                android:textColor="@color/black"
+                android:fontFamily="@font/inter"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:id="@+id/typeInMentorCard"/>
+
+
+        </LinearLayout>
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter"
+            android:id="@+id/emailIdInMentorCard"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.02"
+            android:text="harshit_1_career@nitc.ac.in"
+            app:layout_constraintTop_toBottomOf="@id/nameInMentorCard"
+            app:layout_constraintStart_toStartOf="@id/nameInMentorCard"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@id/nameInMentorCard"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="start"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintWidth_percent="0.6"
+            app:layout_constraintTop_toBottomOf="@id/emailIdInMentorCard"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.04">
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phone:     "
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="@color/black"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="9306032860"
+                android:fontFamily="@font/inter"
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:id="@+id/phoneInMentorCard"/>
+
+
+
+        </LinearLayout>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/deleteButtonInMentorCard"
+            app:layout_constraintHeight_percent="0.25"
+            app:layout_constraintWidth_percent="0.5"
+            android:text="Update Mentor"
+            app:cornerRadius="10dp"
+            android:textAllCaps="false"
+            android:id="@+id/updateMentorButtonInMentorCard"
+            android:letterSpacing="0"
+            app:layout_constraintVertical_bias="0.9"
+            app:layout_constraintHorizontal_bias="0.1"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="@id/updateMentorButtonInMentorCard"
+            app:layout_constraintBottom_toBottomOf="@id/updateMentorButtonInMentorCard"
+            app:layout_constraintStart_toEndOf="@id/updateMentorButtonInMentorCard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.3"
+            android:text="Delete"
+            app:cornerRadius="10dp"
+            android:backgroundTint="@color/baby_blue"
+            android:textColor="@color/black"
+            android:id="@+id/deleteButtonInMentorCard"
+            android:textAllCaps="false"
+            android:letterSpacing="0"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</com.google.android.material.card.MaterialCardView>
