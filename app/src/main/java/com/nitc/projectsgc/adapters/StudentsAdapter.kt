@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -54,8 +55,14 @@ class StudentsAdapter(
             confirmDeleteBuilder.setTitle("Are you sure ?")
                 .setMessage("You want to delete this student?")
                 .setPositiveButton("Yes"){which,dialog->
-                    var deleted = StudentsAccess(context).deleteStudent(students[position].rollNo.toString(),students[position].emailId.toString())
-
+                    var deletedLive = StudentsAccess(context).deleteStudent(students[position].rollNo.toString(),students[position].emailId.toString())
+                    deletedLive.observe(parentFragment.viewLifecycleOwner){deleted->
+                        if(deleted){
+                            Toast.makeText(context,"Student deleted",Toast.LENGTH_SHORT).show()
+                            students.removeAt(position)
+                            notifyItemChanged(position)
+                        }
+                    }
                 }
         }
     }
