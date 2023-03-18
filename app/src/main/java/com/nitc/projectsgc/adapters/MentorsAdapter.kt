@@ -38,6 +38,8 @@ class MentorsAdapter(
     override fun onBindViewHolder(holder: MentorsViewHolder, position: Int) {
         holder.nameText.text = mentors[position].name.toString()
         holder.phoneText.text = mentors[position].phone.toString()
+        holder.emailText.text = mentors[position].email.toString()
+        holder.typeText.text = mentors[position].type.toString()
     }
 
 }
