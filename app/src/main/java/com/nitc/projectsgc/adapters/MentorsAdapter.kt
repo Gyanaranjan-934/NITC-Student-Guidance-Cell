@@ -36,7 +36,8 @@ class MentorsAdapter(
     }
 
     override fun onBindViewHolder(holder: MentorsViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        holder.nameText.text = mentors[position].name.toString()
+        holder.phoneText.text = mentors[position].phone.toString()
     }
 
 }

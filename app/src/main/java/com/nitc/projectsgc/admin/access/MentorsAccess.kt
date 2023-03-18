@@ -17,7 +17,7 @@ class MentorsAccess(var context: Context) {
                 var typeList = arrayListOf<String>()
                 var mentorList = arrayListOf<Mentors>()
                 for (typeOfMentor in snapshot.children){
-                    typeList.add(typeOfMentor.toString())
+                    typeList.add(typeOfMentor.key.toString())
                 }
                 for (typeOfMentor in typeList){
                     for (mentor in snapshot.child(typeOfMentor).children){

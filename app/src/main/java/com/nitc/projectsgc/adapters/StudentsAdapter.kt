@@ -54,7 +54,7 @@ class StudentsAdapter(
             confirmDeleteBuilder.setTitle("Are you sure ?")
                 .setMessage("You want to delete this student?")
                 .setPositiveButton("Yes"){which,dialog->
-                    var deleted = StudentsAccess(context).deleteStudent(students[position].rollNo.toString())
+                    var deleted = StudentsAccess(context).deleteStudent(students[position].rollNo.toString(),students[position].emailId.toString())
 
                 }
         }

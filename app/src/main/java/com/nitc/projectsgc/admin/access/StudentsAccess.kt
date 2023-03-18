@@ -42,8 +42,7 @@ class StudentsAccess(var context: Context) {
         var database : FirebaseDatabase = FirebaseDatabase.getInstance()
         var reference : DatabaseReference = database.reference.child("students")
         var auth = Firebase.auth
-        auth.signInWithEmailAndPassword()
-
+        return false
 
     }
 
