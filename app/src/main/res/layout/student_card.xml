@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="250dp"
+    android:layout_height="200dp"
     android:layout_margin="5dp"
     app:cardCornerRadius="15dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -22,7 +22,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_bias="0.2"
-        app:layout_constraintHeight_percent="0.3"
+        app:layout_constraintHeight_percent="0.37"
         app:layout_constraintWidth_percent="0.2"
         app:layout_constraintHorizontal_bias="0.03"/>
 
@@ -123,6 +123,41 @@
 
 
         </LinearLayout>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/deleteButtonInStudentCard"
+            app:layout_constraintHeight_percent="0.25"
+            app:layout_constraintWidth_percent="0.5"
+            android:text="View appointments"
+            app:cornerRadius="10dp"
+            android:textAllCaps="false"
+            android:id="@+id/viewAppointmentsButtonInStudentCard"
+            android:letterSpacing="0"
+            app:layout_constraintVertical_bias="0.9"
+            app:layout_constraintHorizontal_bias="0.1"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="@id/viewAppointmentsButtonInStudentCard"
+            app:layout_constraintBottom_toBottomOf="@id/viewAppointmentsButtonInStudentCard"
+            app:layout_constraintStart_toEndOf="@id/viewAppointmentsButtonInStudentCard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.3"
+            android:text="Delete"
+            app:cornerRadius="10dp"
+            android:backgroundTint="@color/baby_blue"
+            android:textColor="@color/black"
+            android:id="@+id/deleteButtonInStudentCard"
+            android:textAllCaps="false"
+            android:letterSpacing="0"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
