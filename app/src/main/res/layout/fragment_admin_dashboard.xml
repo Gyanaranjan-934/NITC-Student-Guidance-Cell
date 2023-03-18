@@ -125,11 +125,29 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="gone"
             android:text="No Mentors found"
             android:id="@+id/noMentorsTVInAdminDashboardFragment"
             android:textColor="@color/black"
             android:fontFamily="@font/inter"/>
 
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/addMentorButtonInAdminDashboard"
+            android:text="Add Mentor"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/lavender"
+            android:fontFamily="@font/inter_semibold"
+            android:textColor="@color/black"
+            app:cornerRadius="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.4"
+            app:layout_constraintHeight_percent="0.08"
+            app:layout_constraintVertical_bias="0.99"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -147,6 +165,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="gone"
             android:text="No Students found"
             android:id="@+id/noStudentsTVInAdminDashboardFragment"
             android:textColor="@color/black"
@@ -162,23 +181,24 @@
             app:layout_constraintVertical_bias="0.1" />
 
 
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/addStudentButtonInAdminDashboard"
+            android:text="Add Student"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/lavender"
+            android:fontFamily="@font/inter_semibold"
+            android:textColor="@color/black"
+            app:cornerRadius="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.4"
+            app:layout_constraintHeight_percent="0.08"
+            app:layout_constraintVertical_bias="0.99"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:id="@+id/addMentorButtonInAdminDashboard"
-        android:text="Add Mentor"
-        android:textAllCaps="false"
-        android:backgroundTint="@color/lavender"
-        android:fontFamily="@font/inter_semibold"
-        android:textColor="@color/black"
-        app:cornerRadius="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.4"
-        app:layout_constraintHeight_percent="0.07"
-        app:layout_constraintVertical_bias="0.99"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
