@@ -1,6 +1,7 @@
 package com.nitc.projectsgc.booking
 
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,11 +14,13 @@ import com.nitc.projectsgc.ConsultationType
 import com.nitc.projectsgc.Mentors
 import com.nitc.projectsgc.admin.access.MentorsAccess
 import com.nitc.projectsgc.databinding.FragmentBookingBinding
+import java.util.*
 
 class BookingFragment : Fragment() {
     lateinit var binding : FragmentBookingBinding
     lateinit var mentorType : String
     var mentorNameSelected = "NA"
+    var selectedDate = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -26,7 +29,6 @@ class BookingFragment : Fragment() {
 
         val database : FirebaseDatabase = FirebaseDatabase.getInstance()
         val reference : DatabaseReference = database.reference.child("types")
-        var mentorNames = arrayOf<String>()
         var mentors = arrayListOf<Mentors>()
 
         var mentorTypeSelected = "NA"
@@ -55,43 +57,52 @@ class BookingFragment : Fragment() {
             }
         }
         binding.mentorNameButtonInBookingFragment.setOnClickListener{
-            if(mentorTypeSelected != "NA"){
-
-                reference.addValueEventListener(object:ValueEventListener{
-
-
-                    override fun onDataChange(snapshot: DataSnapshot) {
-
-                        var mentorNamesSnapshot = snapshot.child("$mentorTypeSelected/mentors").children
-
-                        for(mentor in mentorNamesSnapshot){
-                            mentors.add(mentor.getValue(Mentors::class.java)!!)
+            if(mentorTypeSelected != "NA") {
+                var mentorNamesLive =
+                    context?.let { it1 -> MentorsAccess(it1).getMentorNames(mentorTypeSelected) }
+                if (mentorNamesLive != null) {
+                    mentorNamesLive.observe(viewLifecycleOwner) { mentorNames ->
+                        if (mentorNames != null) {
+                            val mentorNameBuilder = AlertDialog.Builder(context)
+                            mentorNameBuilder.setTitle("Choose Mentor Name")
+                            mentorNameBuilder.setSingleChoiceItems(
+                                mentorNames.map { it }.toTypedArray(),
+                                0
+                            ) { dialog, selectedIndex ->
+                                mentorNameSelected = mentorNames[selectedIndex].toString()
+                                binding.mentorNameButtonInBookingFragment.text = mentorTypeSelected
+                                dialog.dismiss()
+                            }
+                            mentorNameBuilder.setPositiveButton("Go") { dialog, which ->
+                                mentorNameSelected = mentorNames[0].toString()
+                                binding.mentorNameButtonInBookingFragment.text = mentorTypeSelected
+                                dialog.dismiss()
+                            }
+                            mentorNameBuilder.create().show()
                         }
-                        val mentorNameBuilder = AlertDialog.Builder(context)
-                        mentorNameBuilder.setTitle("Choose Mentor Name")
-                        mentorNameBuilder.setSingleChoiceItems(mentors.map{it.name}.toTypedArray(),0) { dialog, selectedIndex ->
-                            mentorNameSelected = mentors[selectedIndex].name.toString()
-                            dialog.dismiss()
-                        }
-                        mentorNameBuilder.setPositiveButton("Go"){dialog,which->
-                            mentorNameSelected = mentors[0].name.toString()
-                            dialog.dismiss()
-                        }
-                        mentorNameBuilder.create().show()
                     }
-
-                    override fun onCancelled(error: DatabaseError) {
-                        TODO("Not yet implemented")
-                    }
-
-                })
-
+                }
             }
             else{
                 Toast.makeText(context,"Some error occurred",Toast.LENGTH_SHORT).show()
             }
 
         }
+        binding.bookingDateButtonInBookingFragment.setOnClickListener{
+            val calendar = Calendar.getInstance()
+
+            val datePickerDialog = context?.let { it1 ->
+                DatePickerDialog(it1, { _, year, month, day ->
+                    selectedDate = "$day-${month + 1}-$year"
+                    binding.bookingDateButtonInBookingFragment.text = selectedDate
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
+            }
+            if (datePickerDialog != null) {
+                datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
+            }
+            datePickerDialog?.show()
+        }
+
 
 
         return binding.root
