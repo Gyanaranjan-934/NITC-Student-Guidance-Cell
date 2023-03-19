@@ -13,27 +13,27 @@
 
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageInUpcomingAppointmentCard"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:id="@+id/imageInUpcomingAppointmentCard"
             android:src="@drawable/boy_face"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_bias="0.2"
             app:layout_constraintHeight_percent="0.37"
-            app:layout_constraintWidth_percent="0.2"
-            app:layout_constraintHorizontal_bias="0.03"/>
+            app:layout_constraintHorizontal_bias="0.031"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.301"
+            app:layout_constraintWidth_percent="0.2" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/nameInMentorCard"
+            android:id="@+id/mentorNameInUpcomingAppointmentCard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
             android:textColor="@color/black"
             android:text="Mentor Name"
-            app:layout_constraintWidth_percent="0.45"
+            app:layout_constraintWidth_percent="0.3"
             app:layout_constraintHorizontal_bias="0.05"
             app:layout_constraintVertical_bias="0.1"
             app:layout_constraintBottom_toBottomOf="@+id/imageInUpcomingAppointmentCard"
@@ -42,20 +42,20 @@
             app:layout_constraintTop_toTopOf="@+id/imageInUpcomingAppointmentCard" />
 
         <LinearLayout
-            android:id="@+id/dobLayoutInMentorCard"
+            android:id="@+id/appointmentDateLayoutInUpcomingAppointmentCard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="@+id/nameInMentorCard"
+            app:layout_constraintBottom_toBottomOf="@+id/mentorNameInUpcomingAppointmentCard"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/nameInMentorCard"
-            app:layout_constraintTop_toTopOf="@+id/nameInMentorCard">
+            app:layout_constraintStart_toEndOf="@+id/mentorNameInUpcomingAppointmentCard"
+            app:layout_constraintTop_toTopOf="@+id/mentorNameInUpcomingAppointmentCard">
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Type: "
+                android:text="Date: "
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textColor="@color/black"
@@ -64,65 +64,88 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Career"
+                android:text="31-08-2023"
                 android:textColor="@color/black"
                 android:fontFamily="@font/inter"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:id="@+id/typeInMentorCard"/>
+                android:id="@+id/dateOfAppointmentInUpcomingAppointmentCard"/>
 
 
         </LinearLayout>
-
-
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/inter"
-            android:id="@+id/emailIdInMentorCard"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.02"
-            android:text="harshit_1_career@nitc.ac.in"
-            app:layout_constraintTop_toBottomOf="@id/nameInMentorCard"
-            app:layout_constraintStart_toStartOf="@id/nameInMentorCard"/>
 
         <LinearLayout
+            android:id="@+id/timeLayoutInUpcomingAppointmentCard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@id/nameInMentorCard"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:gravity="start"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintWidth_percent="0.6"
-            app:layout_constraintTop_toBottomOf="@id/emailIdInMentorCard"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.04">
-
+            app:layout_constraintBottom_toBottomOf="@+id/imageInUpcomingAppointmentCard"
+            app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+            app:layout_constraintHorizontal_bias="0.285"
+            app:layout_constraintStart_toEndOf="@+id/imageInUpcomingAppointmentCard"
+            app:layout_constraintTop_toTopOf="@+id/imageInUpcomingAppointmentCard"
+            app:layout_constraintVertical_bias="0.962"
+            app:layout_constraintWidth_percent="0.3">
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Phone:     "
                 android:layout_gravity="center"
-                android:gravity="center"
                 android:fontFamily="@font/inter_semibold"
-                android:textColor="@color/black"/>
+                android:gravity="center"
+                android:text="Time:   "
+                android:textColor="@color/black" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/timeOfAppointmentInUpcomingAppointmentCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter"
+                android:text="9-10"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/mentorNameInUpcomingAppointmentCard"
+                app:layout_constraintTop_toBottomOf="@id/timeOfAppointmentInUpcomingAppointmentCard"
+                app:layout_constraintVertical_bias="0.02" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/timeLayoutInUpcomingAppointmentCard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.901"
+            app:layout_constraintStart_toStartOf="@id/mentorNameInUpcomingAppointmentCard"
+            app:layout_constraintTop_toTopOf="@+id/timeLayoutInUpcomingAppointmentCard"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintWidth_percent="0.35">
+
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="9306032860"
-                android:fontFamily="@font/inter"
-                android:textColor="@color/black"
                 android:layout_gravity="center"
+                android:fontFamily="@font/inter_semibold"
                 android:gravity="center"
-                android:id="@+id/phoneInMentorCard"/>
+                android:text="Type:   "
+                android:textColor="@color/black" />
 
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/phoneInMentorCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/inter"
+                android:gravity="center"
+                android:text="Career"
+                android:textColor="@color/black" />
 
 
         </LinearLayout>
+
 
 
         <com.google.android.material.button.MaterialButton
@@ -131,13 +154,13 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/deleteButtonInMentorCard"
+            app:layout_constraintEnd_toStartOf="@id/deleteAppointmentInUpcomingAppointmentCard"
             app:layout_constraintHeight_percent="0.25"
-            app:layout_constraintWidth_percent="0.5"
-            android:text="Update Mentor"
+            app:layout_constraintWidth_percent="0.4"
+            android:text="Reschedule"
             app:cornerRadius="10dp"
             android:textAllCaps="false"
-            android:id="@+id/updateMentorButtonInMentorCard"
+            android:id="@+id/rescheduleButtonInUpcomingCard"
             android:letterSpacing="0"
             app:layout_constraintVertical_bias="0.9"
             app:layout_constraintHorizontal_bias="0.1"/>
@@ -145,16 +168,16 @@
         <com.google.android.material.button.MaterialButton
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="@id/updateMentorButtonInMentorCard"
-            app:layout_constraintBottom_toBottomOf="@id/updateMentorButtonInMentorCard"
-            app:layout_constraintStart_toEndOf="@id/updateMentorButtonInMentorCard"
+            app:layout_constraintTop_toTopOf="@id/rescheduleButtonInUpcomingCard"
+            app:layout_constraintBottom_toBottomOf="@id/rescheduleButtonInUpcomingCard"
+            app:layout_constraintStart_toEndOf="@id/rescheduleButtonInUpcomingCard"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintWidth_percent="0.3"
+            app:layout_constraintWidth_percent="0.4"
             android:text="Delete"
             app:cornerRadius="10dp"
             android:backgroundTint="@color/baby_blue"
             android:textColor="@color/black"
-            android:id="@+id/deleteButtonInMentorCard"
+            android:id="@+id/deleteAppointmentInUpcomingAppointmentCard"
             android:textAllCaps="false"
             android:letterSpacing="0"/>
 
