@@ -185,6 +185,7 @@ class BookingFragment : Fragment() {
                 timeSlot = selectedTimeSlot,
                 mentorID = mentorSelected.userName,
                 studentID = sharedViewModel.currentUserID,
+                completed = false,
                 mentorType = mentorTypeSelected,
                 problemDescription = problemDescription
             )).addOnCompleteListener { task->
