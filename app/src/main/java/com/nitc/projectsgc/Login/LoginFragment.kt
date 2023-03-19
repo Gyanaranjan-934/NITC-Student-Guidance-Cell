@@ -162,29 +162,10 @@ class LoginFragment : Fragment() {
                     }
                 }
             }
-
-//            val fragManager = requireActivity().supportFragmentManager
-//            val transaction = fragManager.beginTransaction()
-//            transaction.replace(
-//                R.id.frameMain,
-//                BookingFragment()
-//            )
-//            transaction.addToBackStack(null) // if u want this fragment to stay in stack specify it
-//            transaction.commit()
         }
 
         binding.signUpButton.setOnClickListener{
-//            val fragManager = requireActivity().supportFragmentManager
-//            val transaction = fragManager.beginTransaction()
-//            transaction.replace(
-//                R.id.frameMain,
-//                RegisterFragment()
-//            )
-//            transaction.addToBackStack(null) // if u want this fragment to stay in stack specify it
-//            transaction.commit()
-
             findNavController().navigate(R.id.registerFragment)
-
         }
         val backCallback = object : OnBackPressedCallback(true /* enabled by default */) {
             override fun handleOnBackPressed() {
