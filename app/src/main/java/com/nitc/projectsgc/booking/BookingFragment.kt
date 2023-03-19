@@ -3,15 +3,18 @@ package com.nitc.projectsgc.booking
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.*
-import com.nitc.projectsgc.ConsultationType
+import com.nitc.projectsgc.Appointment
+import com.nitc.projectsgc.R
 import com.nitc.projectsgc.Mentors
+import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.admin.access.MentorsAccess
 import com.nitc.projectsgc.databinding.FragmentBookingBinding
 import java.util.*
@@ -20,6 +23,8 @@ class BookingFragment : Fragment() {
     lateinit var binding : FragmentBookingBinding
     lateinit var mentorType : String
     var mentorNameSelected = "NA"
+    lateinit var mentorSelected:Mentors
+    private val sharedViewModel:SharedViewModel by activityViewModels()
     var selectedDate = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,8 +33,7 @@ class BookingFragment : Fragment() {
         // Inflate the layout for this fragment
 
         val database : FirebaseDatabase = FirebaseDatabase.getInstance()
-        val reference : DatabaseReference = database.reference.child("types")
-        var mentors = arrayListOf<Mentors>()
+        var reference : DatabaseReference = database.reference.child("types")
 
         var mentorTypeSelected = "NA"
         binding = FragmentBookingBinding.inflate(inflater,container,false)
@@ -58,24 +62,26 @@ class BookingFragment : Fragment() {
         }
         binding.mentorNameButtonInBookingFragment.setOnClickListener{
             if(mentorTypeSelected != "NA") {
-                var mentorNamesLive =
+                var mentorsLive =
                     context?.let { it1 -> MentorsAccess(it1).getMentorNames(mentorTypeSelected) }
-                if (mentorNamesLive != null) {
-                    mentorNamesLive.observe(viewLifecycleOwner) { mentorNames ->
-                        if (mentorNames != null) {
+                if (mentorsLive != null) {
+                    mentorsLive.observe(viewLifecycleOwner) { mentors ->
+                        if (mentors != null) {
                             val mentorNameBuilder = AlertDialog.Builder(context)
                             mentorNameBuilder.setTitle("Choose Mentor Name")
                             mentorNameBuilder.setSingleChoiceItems(
-                                mentorNames.map { it }.toTypedArray(),
+                                mentors.map { it.name }.toTypedArray(),
                                 0
                             ) { dialog, selectedIndex ->
-                                mentorNameSelected = mentorNames[selectedIndex].toString()
-                                binding.mentorNameButtonInBookingFragment.text = mentorTypeSelected
+                                mentorSelected = mentors[selectedIndex]
+                                binding.mentorNameButtonInBookingFragment.text = mentorSelected.name
+                                mentorNameSelected = mentorSelected.name
                                 dialog.dismiss()
                             }
                             mentorNameBuilder.setPositiveButton("Go") { dialog, which ->
-                                mentorNameSelected = mentorNames[0].toString()
-                                binding.mentorNameButtonInBookingFragment.text = mentorTypeSelected
+                                mentorSelected = mentors[0]
+                                binding.mentorNameButtonInBookingFragment.text = mentorSelected.name
+                                mentorNameSelected = mentorSelected.name
                                 dialog.dismiss()
                             }
                             mentorNameBuilder.create().show()
@@ -101,6 +107,97 @@ class BookingFragment : Fragment() {
                 datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
             }
             datePickerDialog?.show()
+        }
+        var mentorTimeSlots = arrayListOf<String>()
+        var totalTimeSlots = arrayListOf<String>("9-10","10-11","11-12","1-2","2-3","3-4","4-5")
+        var availableTimeSlots = arrayListOf<String>()
+        var selectedTimeSlot = "NA"
+        var foundDate = MutableLiveData<Boolean>(false)
+        binding.bookingTimeSlotButtonInBookingFragment.setOnClickListener {
+            if (selectedDate != "NA") {
+                reference = reference.child(mentorTypeSelected+"/"+mentorSelected.userName).child("appointments").child(selectedDate)
+                reference.addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.exists()) {
+                                for (timeSlots in snapshot.children) {
+                                    mentorTimeSlots.add(timeSlots.key.toString())
+                                }
+                                for (timeslot in totalTimeSlots) {
+                                    if (!mentorTimeSlots.contains(timeslot)) {
+                                        availableTimeSlots.add(timeslot)
+                                    }
+                                }
+                            foundDate.postValue(true)
+
+                        }else{
+                            availableTimeSlots = totalTimeSlots
+                        }
+                        var timeSlotDialog = AlertDialog.Builder(context)
+                        timeSlotDialog.setTitle("Select the Time")
+
+                        timeSlotDialog.setSingleChoiceItems(
+                            availableTimeSlots.toTypedArray(),
+                            0
+                        ) { dialog, selectedIndex ->
+                            selectedTimeSlot = availableTimeSlots[selectedIndex]
+                            binding.bookingTimeSlotButtonInBookingFragment.text = selectedTimeSlot
+                            dialog.dismiss()
+                        }
+                        timeSlotDialog.setPositiveButton("Ok") { dialog, which ->
+                            selectedTimeSlot = availableTimeSlots[0]
+                            binding.bookingTimeSlotButtonInBookingFragment.text = selectedTimeSlot
+                            dialog.dismiss()
+                        }
+                        timeSlotDialog.create().show()
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+
+                })
+
+            } else {
+                Toast.makeText(context, "Select the date first", Toast.LENGTH_SHORT).show()
+            }
+        }
+        binding.confirmBookingInBookingFragment.setOnClickListener {
+            var problemDescription = binding.problemDescriptionInputInBookingFragment.text.toString()
+            mentorNameSelected = mentorSelected.name.toString()
+            if(mentorTypeSelected == "NA"){
+                binding.mentorTypeButtonInBookingFragment.error = "Select type"
+                binding.mentorTypeButtonInBookingFragment.requestFocus()
+                return@setOnClickListener
+            }
+            if(mentorNameSelected == "NA" || mentorNameSelected.isEmpty()){
+                binding.mentorNameButtonInBookingFragment.error = "Select mentor"
+                binding.mentorNameButtonInBookingFragment.requestFocus()
+                return@setOnClickListener
+            }
+
+            if(problemDescription.isEmpty()){
+                binding.problemDescriptionInputInBookingFragment.error = "Write problem description first"
+                binding.problemDescriptionInputInBookingFragment.requestFocus()
+                return@setOnClickListener
+            }
+            reference.child(selectedTimeSlot).setValue(Appointment(
+                date = selectedDate,
+                timeSlot = selectedTimeSlot,
+                mentorID = mentorSelected.userName,
+                studentID = sharedViewModel.currentUserID,
+                mentorType = mentorTypeSelected,
+                problemDescription = problemDescription
+            )).addOnCompleteListener { task->
+                if(task.isSuccessful){
+                    Toast.makeText(context,"Booked",Toast.LENGTH_SHORT).show()
+                    var ft = parentFragmentManager.beginTransaction()
+                        .remove(this)
+                        .add(R.id.navHostFragment,BookingFragment())
+                        .commit()
+                }else{
+                    Toast.makeText(context,"Some error occurred. Try again later",Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
 

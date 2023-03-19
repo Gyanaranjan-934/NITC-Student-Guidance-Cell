@@ -24,6 +24,7 @@ class MentorsAccess(var context: Context) {
                 }
                 for (typeOfMentor in typeList){
                     for (mentor in snapshot.child(typeOfMentor).children){
+                        Log.d("mentorCheck",mentor.toString())
                         var thisMentor = mentor.getValue(Mentors::class.java)
                         if (thisMentor != null) {
                             mentorList.add(thisMentor)
@@ -41,9 +42,9 @@ class MentorsAccess(var context: Context) {
         return mentorsLive
     }
 
-    fun getMentorNames(mentorType:String):LiveData<ArrayList<String>>{
-        var mentorNamesLive = MutableLiveData<ArrayList<String>>(null)
-        var mentors = arrayListOf<String>()
+    fun getMentorNames(mentorType:String):LiveData<ArrayList<Mentors>>{
+        var mentorNamesLive = MutableLiveData<ArrayList<Mentors>>(null)
+        var mentors = arrayListOf<Mentors>()
         var database : FirebaseDatabase = FirebaseDatabase.getInstance()
         var reference : DatabaseReference = database.reference.child("types")
 
@@ -52,10 +53,10 @@ class MentorsAccess(var context: Context) {
 
             override fun onDataChange(snapshot: DataSnapshot) {
 
-                var mentorNamesSnapshot = snapshot.child("$mentorType/mentors").children
+                var mentorsSnapshot = snapshot.child(mentorType).children
 
-                for(mentor in mentorNamesSnapshot){
-                    mentors.add(mentor.getValue(Mentors::class.java)!!.name)
+                for(mentor in mentorsSnapshot){
+                    mentors.add(mentor.getValue(Mentors::class.java)!!)
                 }
                 mentorNamesLive.postValue(mentors)
 
@@ -88,7 +89,7 @@ class MentorsAccess(var context: Context) {
         })
         return mentorTypeLive
     }
-    fun deletementor(userName: String,email:String):LiveData<Boolean>{
+    fun deleteMentor(userName: String):LiveData<Boolean>{
 
         var deleteLive = MutableLiveData<Boolean>(false)
         var database : FirebaseDatabase = FirebaseDatabase.getInstance()

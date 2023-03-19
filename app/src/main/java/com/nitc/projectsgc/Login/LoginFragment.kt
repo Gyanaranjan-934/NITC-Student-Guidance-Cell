@@ -8,15 +8,19 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.nitc.projectsgc.Login.access.LoginAccess
 import com.nitc.projectsgc.R
+import com.nitc.projectsgc.SharedViewModel
+import com.nitc.projectsgc.Students
 import com.nitc.projectsgc.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
     var userType = "Student"
+    private val sharedViewModel:SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -81,8 +85,10 @@ class LoginFragment : Fragment() {
                 }else{
                     val loginLive = context?.let { it1 -> LoginAccess(it1).login(emailInput,passwordInput) }
 
-                    loginLive!!.observe(viewLifecycleOwner){loginSuccess->
-                        if(loginSuccess){
+                    loginLive!!.observe(viewLifecycleOwner){loginID->
+                        if(loginID != "NA"){
+                            sharedViewModel.currentUserID = loginID
+                            sharedViewModel.userType = "Student"
                             findNavController().navigate(R.id.bookingFragment)
                         }else{
                             Toast.makeText(context,"Some error occurred",Toast.LENGTH_SHORT).show()
@@ -94,8 +100,10 @@ class LoginFragment : Fragment() {
             else if(userType == "Admin"){
                 Toast.makeText(requireContext(),"Email entered is $emailInput and password entered is $passwordInput",Toast.LENGTH_LONG).show()
                 emailInput = emailInput.trim()
-                if(emailInput=="admin@nitc.ac.in" && passwordInput=="admin@123")
+                if(emailInput=="admin@nitc.ac.in" && passwordInput=="admin@123"){
+                    sharedViewModel.userType = "Admin"
                     findNavController().navigate(R.id.adminDashboardFragment)
+                }
                 else{
                     Toast.makeText(context,"Some error occurred",Toast.LENGTH_SHORT).show()
                 }
@@ -108,8 +116,10 @@ class LoginFragment : Fragment() {
                 }else{
                     val loginLive = context?.let { it1 -> LoginAccess(it1).login(emailInput,passwordInput) }
 
-                    loginLive!!.observe(viewLifecycleOwner){loginSuccess->
-                        if(loginSuccess){
+                    loginLive!!.observe(viewLifecycleOwner){loginID->
+                        if(loginID != "NA"){
+                            sharedViewModel.currentUserID = loginID
+                            sharedViewModel.userType = "Mentor"
                             findNavController().navigate(R.id.bookingFragment)
                         }else{
                             Toast.makeText(context,"Some error occurred",Toast.LENGTH_SHORT).show()

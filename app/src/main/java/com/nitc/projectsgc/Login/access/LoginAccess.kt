@@ -19,13 +19,14 @@ class LoginAccess(
     fun login(
         email:String,
         password:String
-    ): LiveData<Boolean> {
-        var loginLive = MutableLiveData<Boolean>()
+    ): LiveData<String> {
+        var loginLive = MutableLiveData<String>("NA")
         auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(){ task->
                 if(task.isSuccessful){
-                    loginLive.postValue(true)
+                    var userID = auth.currentUser!!.uid.toString()
+                    loginLive.postValue(userID)
                 }else{
-                    loginLive.postValue(false)
+                    loginLive.postValue("NA")
                 }
             }
         return loginLive
