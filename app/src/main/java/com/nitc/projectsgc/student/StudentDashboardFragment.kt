@@ -32,12 +32,12 @@ class StudentDashboardFragment: Fragment() {
             }
         }
         binding.logoutButtonInStudentDashboardFragment.setOnClickListener {
-            var logoutLive = context?.let { it1 -> LoginAccess(it1,this,sharedViewModel).logout() }
-            logoutLive!!.observe(viewLifecycleOwner){logoutSuccess->
-                if(logoutSuccess){
+            var logoutSuccess = context?.let { it1 -> LoginAccess(it1,this,sharedViewModel).logout() }
+//            logoutLive!!.observe(viewLifecycleOwner){logoutSuccess->
+                if(logoutSuccess == true){
                     findNavController().navigate(R.id.loginFragment)
                 }
-            }
+//            }
 
         }
 

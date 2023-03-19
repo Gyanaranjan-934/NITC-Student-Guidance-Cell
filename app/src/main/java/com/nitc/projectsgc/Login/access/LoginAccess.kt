@@ -51,9 +51,9 @@ class LoginAccess(
 
     }
 
-    fun logout():LiveData<Boolean>{
-        auth.signOut()
-        var logoutLive = MutableLiveData<Boolean>(false)
+    fun logout():Boolean{
+//        auth.signOut()
+        var logoutLive = false
         var sharedPreferences = parentFragment.activity?.getSharedPreferences("sgcLogin",Context.MODE_PRIVATE)
         val editor = sharedPreferences?.edit()
         if (editor != null) {
@@ -62,8 +62,9 @@ class LoginAccess(
             editor.remove("userType")
             editor.remove("username")
             editor.remove("email")
+            editor.putBoolean("loggedIn",false)
             editor.apply()
-            logoutLive.postValue(true)
+            logoutLive = true
             sharedViewModel.userType = "NA"
             sharedViewModel.currentUserID = "NA"
         }
