@@ -56,7 +56,7 @@ class MentorsAdapter(
             confirmDeleteBuilder.setTitle("Are you sure ?")
                 .setMessage("You want to delete this mentor?")
                 .setPositiveButton("Yes"){dialog,which->
-                    var deletedLive = MentorsAccess(context).deletementor(mentors[position].userName.toString(),mentors[position].type.toString())
+                    var deletedLive = MentorsAccess(context).deleteMentor(mentors[position].userName.toString(),mentors[position].type.toString())
                     deletedLive.observe(parentFragment.viewLifecycleOwner){deleted->
                         if(deleted){
                             Toast.makeText(context,"Mentor deleted", Toast.LENGTH_SHORT).show()

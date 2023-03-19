@@ -17,16 +17,16 @@ class LoginAccess(
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     fun login(
-        email:String,
+        username:String,
         password:String
-    ): LiveData<String> {
-        var loginLive = MutableLiveData<String>("NA")
-        auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(){ task->
+    ): LiveData<Boolean> {
+        var loginLive = MutableLiveData<Boolean>()
+        auth.signInWithEmailAndPassword(username,password).addOnCompleteListener(){ task->
                 if(task.isSuccessful){
-                    var userID = auth.currentUser!!.uid.toString()
-                    loginLive.postValue(userID)
+                    loginLive.postValue(true)
+                    var user = auth.currentUser!!.uid.toString()
                 }else{
-                    loginLive.postValue("NA")
+                    loginLive.postValue(false)
                 }
             }
         return loginLive

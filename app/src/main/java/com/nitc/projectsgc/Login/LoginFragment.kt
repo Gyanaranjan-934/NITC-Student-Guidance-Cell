@@ -2,6 +2,7 @@ package com.nitc.projectsgc.Login
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -85,10 +86,11 @@ class LoginFragment : Fragment() {
                 }else{
                     val loginLive = context?.let { it1 -> LoginAccess(it1).login(emailInput,passwordInput) }
 
-                    loginLive!!.observe(viewLifecycleOwner){loginID->
-                        if(loginID != "NA"){
-                            sharedViewModel.currentUserID = loginID
+                    loginLive!!.observe(viewLifecycleOwner){loginSuccess->
+                        if(loginSuccess){
+                            sharedViewModel.currentUserID = rollNo
                             sharedViewModel.userType = "Student"
+                            Log.d("loginSuccess",loginSuccess.toString())
                             findNavController().navigate(R.id.bookingFragment)
                         }else{
                             Toast.makeText(context,"Some error occurred",Toast.LENGTH_SHORT).show()
@@ -110,15 +112,15 @@ class LoginFragment : Fragment() {
             }
             else if(userType == "Mentor"){
                 val emailDomain = emailInput.substring(emailInput.indexOf("@")+1,emailInput.length)
-//                val rollNo = emailInput.substring(emailInput.indexOf("_")+1,emailInput.indexOf("@"))
+                val userName = emailInput.substring(emailInput.indexOf("_")+1,emailInput.indexOf("@"))
                 if(emailDomain != "nitc.ac.in"){
                     Toast.makeText(context,"Mentor should login with NITC email id",Toast.LENGTH_SHORT).show()
                 }else{
                     val loginLive = context?.let { it1 -> LoginAccess(it1).login(emailInput,passwordInput) }
 
-                    loginLive!!.observe(viewLifecycleOwner){loginID->
-                        if(loginID != "NA"){
-                            sharedViewModel.currentUserID = loginID
+                    loginLive!!.observe(viewLifecycleOwner){loginSuccess->
+                        if(loginSuccess){
+                            sharedViewModel.currentUserID = userName
                             sharedViewModel.userType = "Mentor"
                             findNavController().navigate(R.id.bookingFragment)
                         }else{

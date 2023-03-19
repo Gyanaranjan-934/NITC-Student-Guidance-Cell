@@ -7,11 +7,11 @@ import androidx.lifecycle.MutableLiveData
 class DateTimeAccess(var context: Context) {
 
 
-    fun getTimeSlots(date:String):LiveData<ArrayList<String>>{
-
-        var timeSlotsLive = MutableLiveData<ArrayList<String>>(null)
-
-    }
+//    fun getTimeSlots(date:String):LiveData<ArrayList<String>>{
+//
+//        var timeSlotsLive = MutableLiveData<ArrayList<String>>(null)
+//
+//    }
 
 
 }

@@ -190,10 +190,10 @@ class BookingFragment : Fragment() {
             )).addOnCompleteListener { task->
                 if(task.isSuccessful){
                     Toast.makeText(context,"Booked",Toast.LENGTH_SHORT).show()
-                    var ft = parentFragmentManager.beginTransaction()
-                        .remove(this)
-                        .add(R.id.navHostFragment,BookingFragment())
-                        .commit()
+//                    var ft = parentFragmentManager.beginTransaction()
+//                        .remove(this)
+//                        .add(R.id.navHostFragment,BookingFragment())
+//                        .commit()
                 }else{
                     Toast.makeText(context,"Some error occurred. Try again later",Toast.LENGTH_SHORT).show()
                 }

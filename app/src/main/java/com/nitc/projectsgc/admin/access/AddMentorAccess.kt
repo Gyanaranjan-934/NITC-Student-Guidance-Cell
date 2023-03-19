@@ -22,7 +22,7 @@ class AddMentorAccess(
             if (task.isSuccessful){
                 Log.d("accessAddMentor","here in addMentor access")
                 auth.createUserWithEmailAndPassword(
-                    mentors.email,
+                    mentors.userName,
                     mentors.password
                 ).addOnCompleteListener{authTask->
                     if(authTask.isSuccessful){
