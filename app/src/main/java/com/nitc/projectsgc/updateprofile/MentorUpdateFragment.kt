@@ -35,11 +35,11 @@ class MentorUpdateFragment : Fragment() {
 
         mentorUpdateBinding = FragmentMentorUpdateBinding.inflate(inflater,container,false)
 
-        mentorUpdateBinding.nameFieldInUpdateMentorFragment.setText(sharedViewModel.updateMentor.name)
-        mentorUpdateBinding.emailFieldInUpdateMentorFragment.setText(sharedViewModel.updateMentor.email)
-        mentorUpdateBinding.mentorTypeButtonInUpdateMentorFragment.text = sharedViewModel.updateMentor.type
-        mentorUpdateBinding.passwordFieldInUpdateMentorFragment.setText(sharedViewModel.updateMentor.password)
-        mentorUpdateBinding.phoneNumberInUpdateMentorFragment.setText(sharedViewModel.updateMentor.phone)
+        mentorUpdateBinding.nameFieldInUpdateMentorFragment.setText(sharedViewModel.currentMentor.name)
+        mentorUpdateBinding.emailFieldInUpdateMentorFragment.setText(sharedViewModel.currentMentor.email)
+        mentorUpdateBinding.mentorTypeButtonInUpdateMentorFragment.text = sharedViewModel.currentMentor.type
+        mentorUpdateBinding.passwordFieldInUpdateMentorFragment.setText(sharedViewModel.currentMentor.password)
+        mentorUpdateBinding.phoneNumberInUpdateMentorFragment.setText(sharedViewModel.currentMentor.phone)
 
 
         mentorUpdateBinding.updateButtonInUpdateMentorFragment.setOnClickListener {
@@ -49,9 +49,9 @@ class MentorUpdateFragment : Fragment() {
             var newPassword = mentorUpdateBinding.passwordFieldInUpdateMentorFragment.text.toString()
             var newType = mentorUpdateBinding.mentorTypeButtonInUpdateMentorFragment.text.toString()
 
-            val oldEmail = sharedViewModel.updateMentor.email
+            val oldEmail = sharedViewModel.currentMentor.email
             var oldUserName = oldEmail.substring(0,oldEmail.indexOf("@"))
-            if(newEmail != sharedViewModel.updateMentor.email){
+            if(newEmail != sharedViewModel.currentMentor.email){
 //              new email verification will be applied
                 var newUserName = newEmail.substring(0,newEmail.indexOf("@"))
                 reference.child(newType).child(oldUserName).removeValue()

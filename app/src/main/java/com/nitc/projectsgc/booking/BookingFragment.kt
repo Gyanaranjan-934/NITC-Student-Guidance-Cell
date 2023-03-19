@@ -117,10 +117,9 @@ class BookingFragment : Fragment() {
         var foundDate = MutableLiveData<Boolean>(false)
         binding.bookingTimeSlotButtonInBookingFragment.setOnClickListener {
             if (selectedDate != "NA") {
-                var timeReference = reference.child(mentorTypeSelected+"/"+mentorSelected.userName).child("appointments").child(selectedDate)
-                timeReference.addValueEventListener(object : ValueEventListener {
+                reference.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        if (snapshot.exists()) {
+                        if (snapshot.hasChild(mentorTypeSelected+"/"+mentorSelected.userName+"appointments"+selectedDate)) {
                                 for (timeSlots in snapshot.children) {
                                     mentorTimeSlots.add(timeSlots.key.toString())
                                 }

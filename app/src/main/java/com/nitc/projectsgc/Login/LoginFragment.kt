@@ -1,5 +1,6 @@
 package com.nitc.projectsgc.Login
 
+import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -14,12 +15,15 @@ import androidx.navigation.fragment.findNavController
 import com.nitc.projectsgc.Login.access.LoginAccess
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.SharedViewModel
+import com.nitc.projectsgc.admin.access.MentorsAccess
 import com.nitc.projectsgc.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
     var userType = "Student"
+    var mentorNumber = 0
+    var mentorTypeSelected = "NA"
     private val sharedViewModel:SharedViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -39,6 +43,7 @@ class LoginFragment : Fragment() {
             binding.adminLoginTypeButtonInLoginFragment.setTextColor(Color.WHITE)
             binding.studentLoginTypeImageInLoginFragment.setBackgroundResource(R.drawable.login_type_card_transparent_bg)
             binding.studentLoginTypeButtonInLoginFragment.setTextColor(Color.BLACK)
+            binding.mentorTypeButtonInLoginFragment.visibility = View.GONE
             binding.mentorLoginTypeImageInLoginFragment.setBackgroundResource(R.drawable.login_type_card_transparent_bg)
             binding.mentorLoginTypeButtonInLoginFragment.setTextColor(Color.BLACK)
             userType = "Admin"
@@ -48,6 +53,7 @@ class LoginFragment : Fragment() {
             binding.adminLoginTypeButtonInLoginFragment.setTextColor(Color.BLACK)
             binding.studentLoginTypeImageInLoginFragment.setBackgroundResource(R.drawable.login_type_card_blue_bg)
             binding.studentLoginTypeButtonInLoginFragment.setTextColor(Color.WHITE)
+            binding.mentorTypeButtonInLoginFragment.visibility = View.GONE
             binding.mentorLoginTypeImageInLoginFragment.setBackgroundResource(R.drawable.login_type_card_transparent_bg)
             binding.mentorLoginTypeButtonInLoginFragment.setTextColor(Color.BLACK)
             userType = "Student"
@@ -57,11 +63,38 @@ class LoginFragment : Fragment() {
             binding.adminLoginTypeButtonInLoginFragment.setTextColor(Color.BLACK)
             binding.studentLoginTypeImageInLoginFragment.setBackgroundResource(R.drawable.login_type_card_transparent_bg)
             binding.studentLoginTypeButtonInLoginFragment.setTextColor(Color.BLACK)
+            binding.mentorTypeButtonInLoginFragment.visibility = View.VISIBLE
             binding.mentorLoginTypeImageInLoginFragment.setBackgroundResource(R.drawable.login_type_card_blue_bg)
             binding.mentorLoginTypeButtonInLoginFragment.setTextColor(Color.WHITE)
             userType = "Mentor"
         }
 
+        binding.mentorTypeButtonInLoginFragment.setOnClickListener {
+            val mentorTypesLive = context?.let { it1 -> MentorsAccess(it1).getMentorTypes() }
+            mentorTypesLive?.observe(viewLifecycleOwner) { mentorTypes ->
+                if (mentorTypes != null) {
+                    val mentorTypeBuilder = AlertDialog.Builder(context)
+                    mentorTypeBuilder.setTitle("Choose Mentor Type")
+                    mentorTypeBuilder.setSingleChoiceItems(
+                        mentorTypes.map { it }.toTypedArray(),
+                        mentorNumber
+                    ) { dialog, selectedIndex ->
+                        mentorTypeSelected = mentorTypes[selectedIndex].toString()
+                        binding.mentorTypeButtonInLoginFragment.text = mentorTypeSelected
+                        mentorNumber = selectedIndex
+                        mentorTypes.clear()
+                        dialog.dismiss()
+                    }
+                    mentorTypeBuilder.setPositiveButton("Go") { dialog, which ->
+                        mentorTypeSelected = mentorTypes[0].toString()
+                        binding.mentorTypeButtonInLoginFragment.text = mentorTypeSelected
+                        mentorTypes.clear()
+                        dialog.dismiss()
+                    }
+                    mentorTypeBuilder.create().show()
+                }
+            }
+        }
         binding.signInButton.setOnClickListener {
             var emailInput = requireView().findViewById<EditText>(R.id.editTextTextEmailAddress).text.toString()
             val passwordInput = requireView().findViewById<EditText>(R.id.editTextTextPassword).text.toString()
@@ -83,7 +116,7 @@ class LoginFragment : Fragment() {
                 if(emailDomain != "nitc.ac.in"){
                     Toast.makeText(context,"User should login with NITC email id",Toast.LENGTH_SHORT).show()
                 }else{
-                    val loginLive = context?.let { it1 -> LoginAccess(it1).login(emailInput,passwordInput) }
+                    val loginLive = context?.let { it1 -> LoginAccess(it1,this).login(emailInput,passwordInput,userType,rollNo,"NA") }
 
                     loginLive!!.observe(viewLifecycleOwner){loginSuccess->
                         if(loginSuccess){
@@ -115,7 +148,7 @@ class LoginFragment : Fragment() {
                 if(emailDomain != "nitc.ac.in"){
                     Toast.makeText(context,"Mentor should login with NITC email id",Toast.LENGTH_SHORT).show()
                 }else{
-                    val loginLive = context?.let { it1 -> LoginAccess(it1).login(emailInput,passwordInput) }
+                    val loginLive = context?.let { it1 -> LoginAccess(it1,this).login(emailInput,passwordInput,userType,emailInput,mentorTypeSelected) }
 
                     loginLive!!.observe(viewLifecycleOwner){loginSuccess->
                         if(loginSuccess){
