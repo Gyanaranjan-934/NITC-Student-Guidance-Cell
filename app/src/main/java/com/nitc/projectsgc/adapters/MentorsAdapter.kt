@@ -70,7 +70,7 @@ class MentorsAdapter(
         }
 
         holder.updateMentorButton.setOnClickListener {
-            sharedViewModel.updateMentor = mentors[position]
+            sharedViewModel.currentMentor = mentors[position]
             parentFragment.findNavController().navigate(R.id.mentorUpdateFragment)
         }
     }
