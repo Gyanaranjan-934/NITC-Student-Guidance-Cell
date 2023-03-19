@@ -2,11 +2,13 @@ package com.nitc.projectsgc.admin.access
 
 import android.app.AlertDialog
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.*
 import com.nitc.projectsgc.Mentors
+import com.nitc.projectsgc.databinding.FragmentMentorUpdateBinding
 
 class MentorsAccess(var context: Context) {
     fun getMentors():LiveData<ArrayList<Mentors>>{
@@ -57,5 +59,21 @@ class MentorsAccess(var context: Context) {
 
         })
         return mentorTypeLive
+    }
+    fun deletementor(userName: String,email:String):LiveData<Boolean>{
+
+        var deleteLive = MutableLiveData<Boolean>(false)
+        var database : FirebaseDatabase = FirebaseDatabase.getInstance()
+        var reference : DatabaseReference = database.reference.child("types")
+        Log.d("child",reference.child(userName).toString())
+        reference.child(userName).removeValue().addOnSuccessListener {
+            deleteLive.postValue(true)
+        }
+            .addOnFailureListener {error->
+                Toast.makeText(context,"Error : $error",Toast.LENGTH_LONG).show()
+                deleteLive.postValue(false)
+            }
+
+        return deleteLive
     }
 }

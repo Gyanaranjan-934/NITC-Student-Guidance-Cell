@@ -38,4 +38,19 @@
         tools:layout="@layout/fragment_add_mentor"
         android:name="com.nitc.projectsgc.admin.AddMentorFragment"
         android:label="addMentorFragment" />
+    <fragment
+        android:id="@+id/mentorUpdateFragment"
+        android:name="com.nitc.projectsgc.updateprofile.MentorUpdateFragment"
+        android:label="fragment_mentor_update"
+        tools:layout="@layout/fragment_mentor_update" />
+    <fragment
+        android:id="@+id/studentDashBoardFragment"
+        android:name="com.nitc.projectsgc.StudentDashBoardFragment"
+        android:label="fragment_student_dash_board"
+        tools:layout="@layout/fragment_student_dash_board" />
+    <fragment
+        android:id="@+id/studentUpdateFragment"
+        android:name="com.nitc.projectsgc.updateprofile.StudentUpdateFragment"
+        android:label="fragment_student_update"
+        tools:layout="@layout/fragment_student_update" />
 </navigation>

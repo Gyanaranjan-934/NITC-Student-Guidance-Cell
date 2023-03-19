@@ -6,15 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.nitc.projectsgc.Mentors
 import com.nitc.projectsgc.R
+import com.nitc.projectsgc.SharedViewModel
+import com.nitc.projectsgc.admin.access.MentorsAccess
+import com.nitc.projectsgc.updateprofile.MentorUpdateFragment
 import org.w3c.dom.Text
 
 class MentorsAdapter(
     var context: Context,
     var isAdmin : Boolean,
-    var mentors:ArrayList<Mentors>
+    var mentors:ArrayList<Mentors>,
+    var parentFragment: Fragment,
+    var sharedViewModel: SharedViewModel
 ): RecyclerView.Adapter<MentorsAdapter.MentorsViewHolder>() {
     class MentorsViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
         var nameText = itemView.findViewById<TextView>(R.id.nameInMentorCard)
@@ -42,6 +50,11 @@ class MentorsAdapter(
         holder.emailText.text = mentors[position].email
         holder.deleteButton.setOnClickListener {
 
+        }
+
+        holder.updateMentorButton.setOnClickListener {
+            sharedViewModel.updateMentor = mentors[position]
+            parentFragment.findNavController().navigate(R.id.mentorUpdateFragment)
         }
     }
 

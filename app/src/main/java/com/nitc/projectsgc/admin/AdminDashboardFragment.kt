@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nitc.projectsgc.R
+import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.adapters.MentorsAdapter
 import com.nitc.projectsgc.adapters.StudentsAdapter
 import com.nitc.projectsgc.admin.access.MentorsAccess
@@ -19,6 +21,7 @@ import com.nitc.projectsgc.databinding.FragmentAdminDashboardBinding
 class AdminDashboardFragment : Fragment() {
     lateinit var binding : FragmentAdminDashboardBinding
     var userType = "Student"
+    private val sharedViewModel:SharedViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -82,7 +85,7 @@ class AdminDashboardFragment : Fragment() {
                     binding.mentorRecyclerViewInAdminDashboardFragment.visibility = View.GONE
                 }else{
                     var mentorsAdapter = context?.let {
-                        MentorsAdapter(it,true,mentors = mentors)
+                        MentorsAdapter(it,true,mentors = mentors,this,sharedViewModel)
                     }
                     binding.mentorRecyclerViewInAdminDashboardFragment.adapter = mentorsAdapter
                     binding.mentorRecyclerViewInAdminDashboardFragment.visibility = View.VISIBLE

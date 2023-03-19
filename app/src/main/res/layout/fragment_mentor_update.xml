@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/sky_blue"
+    tools:context=".updateprofile.MentorUpdateFragment">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.02"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/headingTVinUpdateMentorFragment"
+        android:textColor="@color/black"
+        android:fontFamily="@font/inter_semibold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Update Mentor"
+        android:textSize="30dp">
+
+    </com.google.android.material.textview.MaterialTextView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:cardCornerRadius="@dimen/input_card_radius"
+        app:layout_constraintHeight_percent="0.09"
+        app:layout_constraintWidth_percent="0.85"
+        android:id="@+id/nameInputCardInUpdateMentorFragment"
+        app:layout_constraintVertical_bias="0.15"
+        app:layout_constraintTop_toBottomOf="@id/headingTVinUpdateMentorFragment"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:layout_width="match_parent"
+            app:boxBackgroundColor="@color/white"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            android:textColorHint="@color/black"
+            app:hintTextColor="@color/black"
+            android:hint="Name"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nameFieldInUpdateMentorFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/phoneAndTypeLayoutInUpdateMentorFragment"
+        app:layout_constraintStart_toStartOf="@id/nameInputCardInUpdateMentorFragment"
+        app:layout_constraintEnd_toEndOf="@id/nameInputCardInUpdateMentorFragment"
+        app:layout_constraintHeight_percent="0.09"
+        app:layout_constraintTop_toBottomOf="@id/nameInputCardInUpdateMentorFragment"
+        app:layout_constraintVertical_bias="0.05"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="@dimen/input_card_radius"
+            android:layout_weight="5">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColorHint="@color/black"
+                app:hintTextColor="@color/black"
+                android:layout_gravity="center"
+                app:boxStrokeWidth="0dp"
+                android:hint="Phone"
+                app:boxStrokeWidthFocused="0dp"
+                app:boxBackgroundColor="#E6FFFFFF">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phoneNumberInUpdateMentorFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="phone"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mentorTypeButtonInUpdateMentorFragment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2.7"
+            app:cornerRadius="10dp"
+            android:layout_gravity="center"
+            android:layout_marginVertical="6dp"
+            android:layout_marginStart="5dp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/inter_semibold"
+            android:text="Type"
+            android:textAllCaps="false"
+            android:letterSpacing="0"
+            app:backgroundTint="#2962FF" />
+    </LinearLayout>
+
+
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/nameInputCardInUpdateMentorFragment"
+        app:layout_constraintEnd_toEndOf="@id/nameInputCardInUpdateMentorFragment"
+        app:layout_constraintHeight_percent="0.09"
+        android:id="@+id/emailInputCardInAddMentorFragment"
+        app:layout_constraintTop_toBottomOf="@id/phoneAndTypeLayoutInUpdateMentorFragment"
+        app:layout_constraintVertical_bias="0.07"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:cardCornerRadius="@dimen/input_card_radius">
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:boxBackgroundColor="@color/white"
+            android:hint="Email"
+            app:boxStrokeWidthFocused="0dp"
+            app:boxStrokeWidth="0dp"
+            android:textColorHint="@color/black"
+            app:hintTextColor="@color/black"
+            android:layout_weight="9">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailFieldInUpdateMentorFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/passwordInputLayoutInAddMentorFragment"
+        app:layout_constraintStart_toStartOf="@id/nameInputCardInUpdateMentorFragment"
+        app:layout_constraintEnd_toEndOf="@id/nameInputCardInUpdateMentorFragment"
+        app:layout_constraintHeight_percent="0.09"
+        app:cardCornerRadius="@dimen/input_card_radius"
+        app:layout_constraintTop_toBottomOf="@id/emailInputCardInAddMentorFragment"
+        app:layout_constraintVertical_bias="0.08"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColorHint="@color/black"
+            app:hintTextColor="@color/black"
+            android:hint="Password"
+            app:boxStrokeWidthFocused="0dp"
+            app:boxStrokeWidth="0dp"
+            app:boxBackgroundColor="#E6FFFFFF">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordFieldInUpdateMentorFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textPassword"
+                app:endIconMode="password_toggle"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/updateButtonInUpdateMentorFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/nameInputCardInUpdateMentorFragment"
+        app:layout_constraintEnd_toEndOf="@id/nameInputCardInUpdateMentorFragment"
+        app:layout_constraintTop_toBottomOf="@id/passwordInputLayoutInAddMentorFragment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.09"
+        android:backgroundTint="@color/lavender"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Update"
+        android:textColor="@color/black"
+        app:layout_constraintWidth_percent="0.7"
+        android:textAllCaps="false"
+        app:cornerRadius="15dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
