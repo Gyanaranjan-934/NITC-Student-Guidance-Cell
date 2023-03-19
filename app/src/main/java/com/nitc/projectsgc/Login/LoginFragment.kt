@@ -117,7 +117,7 @@ class LoginFragment : Fragment() {
                 if(emailDomain != "nitc.ac.in"){
                     Toast.makeText(context,"User should login with NITC email id",Toast.LENGTH_SHORT).show()
                 }else{
-                    val loginLive = context?.let { it1 -> LoginAccess(it1,this).login(emailInput,passwordInput,userType,rollNo,"NA") }
+                    val loginLive = context?.let { it1 -> LoginAccess(it1,this,sharedViewModel).login(emailInput,passwordInput,userType,rollNo,"NA") }
 
                     loginLive!!.observe(viewLifecycleOwner){loginSuccess->
                         if(loginSuccess){
@@ -149,7 +149,7 @@ class LoginFragment : Fragment() {
                 if(emailDomain != "nitc.ac.in"){
                     Toast.makeText(context,"Mentor should login with NITC email id",Toast.LENGTH_SHORT).show()
                 }else{
-                    val loginLive = context?.let { it1 -> LoginAccess(it1,this).login(emailInput,passwordInput,userType,emailInput,mentorTypeSelected) }
+                    val loginLive = context?.let { it1 -> LoginAccess(it1,this,sharedViewModel).login(emailInput,passwordInput,userType,emailInput,mentorTypeSelected) }
 
                     loginLive!!.observe(viewLifecycleOwner){loginSuccess->
                         if(loginSuccess){
