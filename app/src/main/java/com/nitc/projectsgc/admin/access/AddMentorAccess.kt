@@ -6,29 +6,29 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.nitc.projectsgc.Mentors
+import com.nitc.projectsgc.Mentor
 
 class AddMentorAccess(
     var context : Context
 ) {
     fun addMentor(
-        mentors: Mentors
+        mentor: Mentor
     ): MutableLiveData<Boolean> {
         val database : FirebaseDatabase = FirebaseDatabase.getInstance()
-        val reference : DatabaseReference = database.reference.child("types").child(mentors.type)
+        val reference : DatabaseReference = database.reference.child("types").child(mentor.type)
         val auth : FirebaseAuth = FirebaseAuth.getInstance()
         val addMentorSuccess = MutableLiveData<Boolean>()
-        reference.child(mentors.userName).setValue(mentors).addOnCompleteListener{task ->
+        reference.child(mentor.userName).setValue(mentor).addOnCompleteListener{ task ->
             if (task.isSuccessful){
                 Log.d("accessAddMentor","here in addMentor access")
                 auth.createUserWithEmailAndPassword(
-                    mentors.userName,
-                    mentors.password
+                    mentor.userName,
+                    mentor.password
                 ).addOnCompleteListener{authTask->
                     if(authTask.isSuccessful){
                         addMentorSuccess.postValue(true)
                     }else{
-                        reference.child(mentors.userName).removeValue()
+                        reference.child(mentor.userName).removeValue()
                         addMentorSuccess.postValue(false)
                     }
                 }

@@ -9,21 +9,17 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.nitc.projectsgc.Mentors
+import com.nitc.projectsgc.Mentor
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.admin.access.MentorsAccess
-import com.nitc.projectsgc.admin.access.StudentsAccess
-import com.nitc.projectsgc.updateprofile.MentorUpdateFragment
-import org.w3c.dom.Text
 
 class MentorsAdapter(
     var context: Context,
     var isAdmin : Boolean,
-    var mentors:ArrayList<Mentors>,
+    var mentors:ArrayList<Mentor>,
     var parentFragment: Fragment,
     var sharedViewModel: SharedViewModel
 ): RecyclerView.Adapter<MentorsAdapter.MentorsViewHolder>() {

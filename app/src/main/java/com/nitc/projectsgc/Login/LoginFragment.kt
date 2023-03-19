@@ -14,7 +14,6 @@ import androidx.navigation.fragment.findNavController
 import com.nitc.projectsgc.Login.access.LoginAccess
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.SharedViewModel
-import com.nitc.projectsgc.Students
 import com.nitc.projectsgc.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {

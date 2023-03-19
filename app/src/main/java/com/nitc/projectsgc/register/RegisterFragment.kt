@@ -10,10 +10,8 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import com.nitc.projectsgc.R
-import com.nitc.projectsgc.Students
+import com.nitc.projectsgc.Student
 import com.nitc.projectsgc.databinding.FragmentRegisterBinding
 import com.nitc.projectsgc.register.access.RegisterAccess
 
@@ -97,7 +95,7 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
             val rollNo = emailInput.substring(emailInput.indexOf("_") + 1, emailInput.indexOf("@"))
 
-            val student = Students(rollNo,nameInput,dateOfBirth,emailInput,selectedGenderTextView,passwordInput,phoneNumber)
+            val student = Student(rollNo,nameInput,dateOfBirth,emailInput,selectedGenderTextView,passwordInput,phoneNumber)
 
             val registerSuccess = context?.let { it1 -> RegisterAccess(it1).register(student) }
 

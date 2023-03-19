@@ -1,37 +1,35 @@
 package com.nitc.projectsgc.admin.access
 
-import android.app.AlertDialog
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.*
-import com.nitc.projectsgc.Mentors
-import com.nitc.projectsgc.databinding.FragmentMentorUpdateBinding
+import com.nitc.projectsgc.Mentor
 
 class MentorsAccess(var context: Context) {
-    fun getMentors():LiveData<ArrayList<Mentors>>{
-        var mentorsLive = MutableLiveData<ArrayList<Mentors>>(null)
+    fun getMentors():LiveData<ArrayList<Mentor>>{
+        var mentorLive = MutableLiveData<ArrayList<Mentor>>(null)
         var database : FirebaseDatabase = FirebaseDatabase.getInstance()
         var reference : DatabaseReference = database.reference.child("types")
         reference.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 var typeList = arrayListOf<String>()
-                var mentorList = arrayListOf<Mentors>()
+                var mentorList = arrayListOf<Mentor>()
                 for (typeOfMentor in snapshot.children){
                     typeList.add(typeOfMentor.key.toString())
                 }
                 for (typeOfMentor in typeList){
                     for (mentor in snapshot.child(typeOfMentor).children){
                         Log.d("mentorCheck",mentor.toString())
-                        var thisMentor = mentor.getValue(Mentors::class.java)
+                        var thisMentor = mentor.getValue(Mentor::class.java)
                         if (thisMentor != null) {
                             mentorList.add(thisMentor)
                         }
                     }
                 }
-                mentorsLive.postValue(mentorList)
+                mentorLive.postValue(mentorList)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -39,12 +37,12 @@ class MentorsAccess(var context: Context) {
             }
 
         })
-        return mentorsLive
+        return mentorLive
     }
 
-    fun getMentorNames(mentorType:String):LiveData<ArrayList<Mentors>>{
-        var mentorNamesLive = MutableLiveData<ArrayList<Mentors>>(null)
-        var mentors = arrayListOf<Mentors>()
+    fun getMentorNames(mentorType:String):LiveData<ArrayList<Mentor>>{
+        var mentorNamesLive = MutableLiveData<ArrayList<Mentor>>(null)
+        var mentors = arrayListOf<Mentor>()
         var database : FirebaseDatabase = FirebaseDatabase.getInstance()
         var reference : DatabaseReference = database.reference.child("types")
 
@@ -56,7 +54,7 @@ class MentorsAccess(var context: Context) {
                 var mentorsSnapshot = snapshot.child(mentorType).children
 
                 for(mentor in mentorsSnapshot){
-                    mentors.add(mentor.getValue(Mentors::class.java)!!)
+                    mentors.add(mentor.getValue(Mentor::class.java)!!)
                 }
                 mentorNamesLive.postValue(mentors)
 

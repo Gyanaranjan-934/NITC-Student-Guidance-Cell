@@ -53,4 +53,8 @@
         android:name="com.nitc.projectsgc.updateprofile.StudentUpdateFragment"
         android:label="fragment_student_update"
         tools:layout="@layout/fragment_student_update" />
+    <fragment
+        android:id="@+id/studentDashboardFragment"
+        android:name="com.nitc.projectsgc.student.StudentDashboardFragment"
+        android:label="StudentDashboardFragment" />
 </navigation>

@@ -1,7 +1,6 @@
 package com.nitc.projectsgc.updateprofile
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,12 +11,9 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.nitc.projectsgc.Mentors
+import com.nitc.projectsgc.Mentor
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.SharedViewModel
-import com.nitc.projectsgc.admin.access.AddMentorAccess
-import com.nitc.projectsgc.admin.access.MentorsAccess
-import com.nitc.projectsgc.admin.access.StudentsAccess
 import com.nitc.projectsgc.databinding.FragmentMentorUpdateBinding
 
 class MentorUpdateFragment : Fragment() {
@@ -59,7 +55,7 @@ class MentorUpdateFragment : Fragment() {
 //              new email verification will be applied
                 var newUserName = newEmail.substring(0,newEmail.indexOf("@"))
                 reference.child(newType).child(oldUserName).removeValue()
-                val mentor = Mentors(newName,newPhone,newEmail,newType,newPassword,newUserName)
+                val mentor = Mentor(newName,newPhone,newEmail,newType,newPassword,newUserName)
                 reference.child(newType).child(newUserName).setValue(mentor).addOnCompleteListener{task->
                     auth.createUserWithEmailAndPassword(
                         mentor.email,
@@ -74,7 +70,7 @@ class MentorUpdateFragment : Fragment() {
                     }
                 }
             }else{
-                val mentor = Mentors(newName,newPhone,newEmail,newType,newPassword,oldUserName)
+                val mentor = Mentor(newName,newPhone,newEmail,newType,newPassword,oldUserName)
                 reference.child(newType).child(oldUserName).setValue(mentor)
                 findNavController().navigate(R.id.adminDashboardFragment)
             }

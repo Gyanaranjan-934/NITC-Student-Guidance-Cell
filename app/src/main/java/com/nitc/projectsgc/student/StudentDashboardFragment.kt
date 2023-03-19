@@ -8,8 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.databinding.FragmentStudentDashBoardBinding
+import com.nitc.projectsgc.student.access.BasicStudentAccess
 
-class StudentDashboard: Fragment() {
+class StudentDashboardFragment: Fragment() {
     private val sharedViewModel:SharedViewModel by activityViewModels()
 
     lateinit var binding:FragmentStudentDashBoardBinding
@@ -20,6 +21,12 @@ class StudentDashboard: Fragment() {
     ): View {
         binding = FragmentStudentDashBoardBinding.inflate(inflater,container,false)
 
+        var studentLive = context?.let { BasicStudentAccess(it,sharedViewModel).getStudent() }
+        studentLive!!.observe(viewLifecycleOwner){student->
+            if(student != null){
+                sharedViewModel.currentStudent = student
+            }
+        }
 
 
         return binding.root

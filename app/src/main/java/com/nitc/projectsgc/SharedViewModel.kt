@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 
 class SharedViewModel:ViewModel() {
 
-    lateinit var updateMentor:Mentors
-    lateinit var currentStudent: Students
+    lateinit var updateMentor:Mentor
+    lateinit var currentStudent: Student
     var currentUserID = "NA"
     var userType = "Student"
 }

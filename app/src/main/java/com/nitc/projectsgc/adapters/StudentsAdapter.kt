@@ -9,16 +9,15 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.nitc.projectsgc.R
-import com.nitc.projectsgc.Students
+import com.nitc.projectsgc.Student
 import com.nitc.projectsgc.admin.access.StudentsAccess
 
 class StudentsAdapter(
     var context: Context,
     var isAdmin:Boolean,
-    var students:ArrayList<Students>,
+    var students:ArrayList<Student>,
     var parentFragment: Fragment
 ): RecyclerView.Adapter<StudentsAdapter.StudentsViewHolder>() {
     class StudentsViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {

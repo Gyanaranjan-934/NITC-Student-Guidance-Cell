@@ -10,20 +10,22 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.database.*
 import com.nitc.projectsgc.Appointment
-import com.nitc.projectsgc.R
-import com.nitc.projectsgc.Mentors
+import com.nitc.projectsgc.Mentor
 import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.admin.access.MentorsAccess
+import com.nitc.projectsgc.booking.access.BookingAccess
 import com.nitc.projectsgc.databinding.FragmentBookingBinding
 import java.util.*
+import com.nitc.projectsgc.R
 
 class BookingFragment : Fragment() {
     lateinit var binding : FragmentBookingBinding
     lateinit var mentorType : String
     var mentorNameSelected = "NA"
-    lateinit var mentorSelected:Mentors
+    lateinit var mentorSelected:Mentor
     private val sharedViewModel:SharedViewModel by activityViewModels()
     var selectedDate = ""
     override fun onCreateView(
@@ -115,8 +117,8 @@ class BookingFragment : Fragment() {
         var foundDate = MutableLiveData<Boolean>(false)
         binding.bookingTimeSlotButtonInBookingFragment.setOnClickListener {
             if (selectedDate != "NA") {
-                reference = reference.child(mentorTypeSelected+"/"+mentorSelected.userName).child("appointments").child(selectedDate)
-                reference.addValueEventListener(object : ValueEventListener {
+                var timeReference = reference.child(mentorTypeSelected+"/"+mentorSelected.userName).child("appointments").child(selectedDate)
+                timeReference.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         if (snapshot.exists()) {
                                 for (timeSlots in snapshot.children) {
@@ -180,23 +182,22 @@ class BookingFragment : Fragment() {
                 binding.problemDescriptionInputInBookingFragment.requestFocus()
                 return@setOnClickListener
             }
-            reference.child(selectedTimeSlot).setValue(Appointment(
-                date = selectedDate,
-                timeSlot = selectedTimeSlot,
-                mentorID = mentorSelected.userName,
-                studentID = sharedViewModel.currentUserID,
-                completed = false,
-                mentorType = mentorTypeSelected,
-                problemDescription = problemDescription
-            )).addOnCompleteListener { task->
-                if(task.isSuccessful){
+
+            var bookingLive = context?.let { it1 ->
+                BookingAccess(it1,sharedViewModel).bookAppointment(Appointment(
+                    date = selectedDate,
+                    timeSlot = selectedTimeSlot,
+                    mentorID = mentorSelected.userName,
+                    studentID = sharedViewModel.currentUserID,
+                    completed = false,
+                    mentorType = mentorTypeSelected,
+                    problemDescription = problemDescription
+                ))
+            }
+            bookingLive!!.observe(viewLifecycleOwner){bookingSuccess->
+                if(bookingSuccess){
                     Toast.makeText(context,"Booked",Toast.LENGTH_SHORT).show()
-//                    var ft = parentFragmentManager.beginTransaction()
-//                        .remove(this)
-//                        .add(R.id.navHostFragment,BookingFragment())
-//                        .commit()
-                }else{
-                    Toast.makeText(context,"Some error occurred. Try again later",Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.studentDashBoardFragment)
                 }
             }
         }

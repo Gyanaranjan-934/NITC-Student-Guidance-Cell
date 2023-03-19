@@ -7,15 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.database.FirebaseDatabase
-import com.nitc.projectsgc.Mentors
+import com.nitc.projectsgc.Mentor
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.admin.access.AddMentorAccess
 import com.nitc.projectsgc.admin.access.MentorsAccess
 import com.nitc.projectsgc.databinding.FragmentAddMentorBinding
-import com.nitc.projectsgc.register.access.RegisterAccess
 
 class AddMentorFragment : Fragment() {
 //    var database : FirebaseDatabase =
@@ -102,7 +99,7 @@ class AddMentorFragment : Fragment() {
 
 
             val userName = emailOfMentor.substring(0,emailOfMentor.indexOf("@"))
-            val mentor = Mentors(nameOfMentor,phoneNumberOfMentor,emailOfMentor,mentorTypeSelected,passwordOfMentor,userName)
+            val mentor = Mentor(nameOfMentor,phoneNumberOfMentor,emailOfMentor,mentorTypeSelected,passwordOfMentor,userName)
             val addMentorSuccess = context?.let { it1 -> AddMentorAccess(it1).addMentor(mentor) }
 
             addMentorSuccess!!.observe(viewLifecycleOwner){success->
