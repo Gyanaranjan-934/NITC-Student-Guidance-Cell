@@ -7,10 +7,12 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.nitc.projectsgc.SharedViewModel
 
 class LoginAccess(
     var context: Context,
-    var parentFragment: Fragment
+    var parentFragment: Fragment,
+    var sharedViewModel: SharedViewModel
 ) {
 
 
@@ -47,6 +49,25 @@ class LoginAccess(
             }
         return loginLive
 
+    }
+
+    fun logout():LiveData<Boolean>{
+        auth.signOut()
+        var logoutLive = MutableLiveData<Boolean>(false)
+        var sharedPreferences = parentFragment.activity?.getSharedPreferences("sgcLogin",Context.MODE_PRIVATE)
+        val editor = sharedPreferences?.edit()
+        if (editor != null) {
+            editor.remove("password")
+            editor.remove("mentorType")
+            editor.remove("userType")
+            editor.remove("username")
+            editor.remove("email")
+            editor.apply()
+            logoutLive.postValue(true)
+            sharedViewModel.userType = "NA"
+            sharedViewModel.currentUserID = "NA"
+        }
+        return logoutLive
     }
 
 }
