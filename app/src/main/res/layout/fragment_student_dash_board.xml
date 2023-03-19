@@ -7,7 +7,6 @@
     android:background="@color/light_gray"
     tools:context=".StudentDashBoardFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/viewTypeCardInStudentDashboardFragment"
         android:layout_width="0dp"
@@ -91,23 +90,36 @@
 
 
     </com.google.android.material.card.MaterialCardView>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/completedRecyclerViewInStudentDashboard"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/bookAppointmentButtonInStudentDashboard"
-        app:layout_constraintHeight_percent="0.8"
-        app:layout_constraintTop_toBottomOf="@+id/viewTypeCardInStudentDashboardFragment"
-        app:layout_constraintVertical_bias="0.5" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/bookRecyclerViewStudentDashboard"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cardLayoutInStudentDashboard"
+        app:layout_constraintHeight_percent="0.8"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/bookAppointmentButtonInStudentDashboard"
-        app:layout_constraintHeight_percent="0.8"
-        app:layout_constraintTop_toBottomOf="@+id/viewTypeCardInStudentDashboardFragment"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewTypeCardInStudentDashboardFragment">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/completedAppointmentsRecyclerViewInStudentDashboard"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_percent="0.8"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/bookedAppointmentsRecyclerViewStudentDashboard"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_percent="0.8"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.button.MaterialButton
         android:layout_width="0dp"
@@ -125,7 +137,7 @@
         app:layout_constraintHeight_percent="0.08"
         app:layout_constraintWidth_percent="0.5"
         app:cornerRadius="15dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardLayoutInStudentDashboard"
         app:layout_constraintVertical_bias="0.98"/>
 
 

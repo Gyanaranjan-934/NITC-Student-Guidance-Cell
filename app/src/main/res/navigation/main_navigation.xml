@@ -63,7 +63,7 @@
         android:label="fragment_splash_screen"
         tools:layout="@layout/fragment_splash_screen" >
         <action
-            android:id="@+id/action_splashScreenFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            android:id="@+id/action_splashScreenFragment_to_loginFragment" />
     </fragment>
 </navigation>
