@@ -58,7 +58,7 @@ class MentorUpdateFragment : Fragment() {
             if(newEmail != sharedViewModel.updateMentor.email){
 //              new email verification will be applied
                 var newUserName = newEmail.substring(0,newEmail.indexOf("@"))
-                reference.child(oldUserName).removeValue()
+                reference.child(newType).child(oldUserName).removeValue()
                 val mentor = Mentors(newName,newPhone,newEmail,newType,newPassword,newUserName)
                 reference.child(newType).child(newUserName).setValue(mentor).addOnCompleteListener{task->
                     auth.createUserWithEmailAndPassword(
@@ -67,19 +67,18 @@ class MentorUpdateFragment : Fragment() {
                     ).addOnCompleteListener{authTask->
                         if(authTask.isSuccessful){
                             Toast.makeText(context,"Update Successful",Toast.LENGTH_SHORT).show()
+                            findNavController().navigate(R.id.adminDashboardFragment)
                         }else{
                             Toast.makeText(context,"Update Unsuccessful",Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
-
             }else{
                 val mentor = Mentors(newName,newPhone,newEmail,newType,newPassword,oldUserName)
                 reference.child(newType).child(oldUserName).setValue(mentor)
+                findNavController().navigate(R.id.adminDashboardFragment)
             }
         }
-
-
 
         return mentorUpdateBinding.root
     }
