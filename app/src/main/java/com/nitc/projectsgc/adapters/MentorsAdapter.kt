@@ -1,11 +1,13 @@
 package com.nitc.projectsgc.adapters
 
+import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -14,6 +16,7 @@ import com.nitc.projectsgc.Mentors
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.admin.access.MentorsAccess
+import com.nitc.projectsgc.admin.access.StudentsAccess
 import com.nitc.projectsgc.updateprofile.MentorUpdateFragment
 import org.w3c.dom.Text
 
@@ -49,7 +52,25 @@ class MentorsAdapter(
         holder.typeText.text = mentors[position].type
         holder.emailText.text = mentors[position].email
         holder.deleteButton.setOnClickListener {
+            var confirmDeleteBuilder = AlertDialog.Builder(context)
+            confirmDeleteBuilder.setTitle("Are you sure ?")
+                .setMessage("You want to delete this mentor?")
+                .setPositiveButton("Yes"){dialog,which->
+                    var deletedLive = MentorsAccess(context).deletementor(mentors[position].userName.toString(),mentors[position].type.toString())
+                    deletedLive.observe(parentFragment.viewLifecycleOwner){deleted->
+                        if(deleted){
+                            Toast.makeText(context,"Mentor deleted", Toast.LENGTH_SHORT).show()
+                            mentors.removeAt(position)
+                            notifyItemChanged(position)
+                        }
+                    }
+                    dialog.dismiss()
 
+                }
+                .setNegativeButton("No"){dialog,which->
+                    dialog.dismiss()
+                }
+                .create().show()
         }
 
         holder.updateMentorButton.setOnClickListener {

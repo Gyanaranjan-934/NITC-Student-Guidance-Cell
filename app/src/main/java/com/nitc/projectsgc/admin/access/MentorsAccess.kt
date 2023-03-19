@@ -88,11 +88,11 @@ class MentorsAccess(var context: Context) {
         })
         return mentorTypeLive
     }
-    fun deletementor(userName: String,email:String):LiveData<Boolean>{
+    fun deletementor(userName: String,type:String):LiveData<Boolean>{
 
         var deleteLive = MutableLiveData<Boolean>(false)
         var database : FirebaseDatabase = FirebaseDatabase.getInstance()
-        var reference : DatabaseReference = database.reference.child("types")
+        var reference : DatabaseReference = database.reference.child("types").child(type)
         Log.d("child",reference.child(userName).toString())
         reference.child(userName).removeValue().addOnSuccessListener {
             deleteLive.postValue(true)

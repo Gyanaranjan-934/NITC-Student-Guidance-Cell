@@ -35,28 +35,29 @@ class AddMentorFragment : Fragment() {
         var mentorTypeSelected = "NA"
         addMentorBinding.mentorTypeButtonInAddMentorFragment.setOnClickListener {
             val mentorTypesLive = context?.let { it1 -> MentorsAccess(it1).getMentorTypes() }
-            if(mentorTypesLive!=null) {
-                mentorTypesLive.observe(viewLifecycleOwner) { mentorTypes ->
-                    if (mentorTypes != null) {
-                        val mentorTypeBuilder = AlertDialog.Builder(context)
-                        mentorTypeBuilder.setTitle("Choose Mentor Type")
-                        mentorTypeBuilder.setSingleChoiceItems(
-                            mentorTypes.map { it }.toTypedArray(),
-                            mentorNumber
-                        ) { dialog, selectedIndex ->
-                            mentorTypeSelected = mentorTypes[selectedIndex].toString()
-                            addMentorBinding.mentorTypeButtonInAddMentorFragment.text = mentorTypeSelected
-                            mentorNumber = selectedIndex
-                            dialog.dismiss()
-                        }
-                        mentorTypeBuilder.setPositiveButton("Go") { dialog, which ->
-                            mentorTypeSelected = mentorTypes[0].toString()
-                            addMentorBinding.mentorTypeButtonInAddMentorFragment.text = mentorTypeSelected
-                            dialog.dismiss()
-                        }
-                        mentorTypeBuilder.create().show()
+            mentorTypesLive?.observe(viewLifecycleOwner) { mentorTypes ->
+                if (mentorTypes != null) {
+                    val mentorTypeBuilder = AlertDialog.Builder(context)
+                    mentorTypeBuilder.setTitle("Choose Mentor Type")
+                    mentorTypeBuilder.setSingleChoiceItems(
+                        mentorTypes.map { it }.toTypedArray(),
+                        mentorNumber
+                    ) { dialog, selectedIndex ->
+                        mentorTypeSelected = mentorTypes[selectedIndex].toString()
+                        addMentorBinding.mentorTypeButtonInAddMentorFragment.text = mentorTypeSelected
+                        mentorNumber = selectedIndex
+                        mentorTypes.clear()
+                        dialog.dismiss()
                     }
+                    mentorTypeBuilder.setPositiveButton("Go") { dialog, which ->
+                        mentorTypeSelected = mentorTypes[0].toString()
+                        addMentorBinding.mentorTypeButtonInAddMentorFragment.text = mentorTypeSelected
+                        mentorTypes.clear()
+                        dialog.dismiss()
+                    }
+                    mentorTypeBuilder.create().show()
                 }
+
             }
         }
         addMentorBinding.addButtonInAddMentorFragment.setOnClickListener{
