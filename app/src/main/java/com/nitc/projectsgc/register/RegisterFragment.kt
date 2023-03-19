@@ -8,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.nitc.projectsgc.R
@@ -114,6 +115,13 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
         registerBinding.signInButtonInRegisterFragment.setOnClickListener{
             findNavController().navigate(R.id.loginFragment)
         }
+    val backCallback = object : OnBackPressedCallback(true /* enabled by default */) {
+        override fun handleOnBackPressed() {
+            // Call a method in your Fragment to handle the navigation
+            requireActivity().finish()
+        }
+    }
+    requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,backCallback)
         // Inflate the layout for this fragment
         return registerBinding.root
     }
@@ -145,4 +153,5 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onNothingSelected(parent: AdapterView<*>?) {
         TODO("Not yet implemented")
     }
+
 }

@@ -54,16 +54,18 @@
         android:label="fragment_student_update"
         tools:layout="@layout/fragment_student_update" />
     <fragment
-        android:id="@+id/studentDashboardFragment"
-        android:name="com.nitc.projectsgc.student.StudentDashboardFragment"
-        android:label="StudentDashboardFragment" />
-    <fragment
         android:id="@+id/splashScreenFragment"
-        android:name="com.nitc.projectsgc.SplashScreenFragment"
+        android:name="com.nitc.projectsgc.IntroductoryFragment"
         android:label="fragment_splash_screen"
         tools:layout="@layout/fragment_splash_screen" >
         <action
             android:id="@+id/action_splashScreenFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_splashScreenFragment_to_adminDashboardFragment"
+            app:destination="@id/adminDashboardFragment" />
+        <action
+            android:id="@+id/action_splashScreenFragment_to_studentDashBoardFragment"
+            app:destination="@id/studentDashBoardFragment" />
     </fragment>
 </navigation>
