@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.nitc.projectsgc.Login.access.LoginAccess
+import com.nitc.projectsgc.R
 import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.databinding.FragmentStudentDashBoardBinding
 import com.nitc.projectsgc.student.access.BasicStudentAccess
@@ -31,6 +33,11 @@ class StudentDashboardFragment: Fragment() {
         }
         binding.logoutButtonInStudentDashboardFragment.setOnClickListener {
             var logoutLive = context?.let { it1 -> LoginAccess(it1,this,sharedViewModel).logout() }
+            logoutLive!!.observe(viewLifecycleOwner){logoutSuccess->
+                if(logoutSuccess){
+                    findNavController().navigate(R.id.loginFragment)
+                }
+            }
 
         }
 
