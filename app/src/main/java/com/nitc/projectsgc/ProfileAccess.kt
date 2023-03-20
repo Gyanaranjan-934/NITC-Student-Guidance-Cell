@@ -56,6 +56,7 @@ class ProfileAccess(var context: Context,var sharedViewModel: SharedViewModel,va
                                                                 sharedViewModel.userType = userType
                                                                 sharedViewModel.currentStudent =
                                                                     snapshot.getValue(Student::class.java)!!
+                                                                sharedViewModel.currentUserID = username
                                                                 profileLive.postValue(true)
                                                                 Log.d("sharedP", "return statement")
 //                                                                callback(true)
@@ -95,6 +96,7 @@ class ProfileAccess(var context: Context,var sharedViewModel: SharedViewModel,va
                                                                     sharedViewModel.currentMentor =
                                                                         snapshot.getValue(Mentor::class.java)!!
                                                                     profileLive.postValue(true)
+                                                                    sharedViewModel.currentUserID = username
 //                                                                    callback(true)
                                                                     continuation.resume(true)
                                                                     return

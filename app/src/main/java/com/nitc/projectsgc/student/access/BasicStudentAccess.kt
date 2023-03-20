@@ -13,14 +13,13 @@ class BasicStudentAccess(
     var sharedViewModel: SharedViewModel
 ) {
 
-    fun getStudent():LiveData<Student>{
+    fun getStudent(studentID:String):LiveData<Student>{
         var studentsLive = MutableLiveData<Student>(null)
         val database : FirebaseDatabase = FirebaseDatabase.getInstance()
         val reference : DatabaseReference = database.reference.child("students")
         reference.addValueEventListener(object:ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                var student = snapshot.child("m210676ca").getValue(Student::class.java)!!
-
+                var student = snapshot.child(studentID).getValue(Student::class.java)!!
                 studentsLive.postValue(student)
             }
 

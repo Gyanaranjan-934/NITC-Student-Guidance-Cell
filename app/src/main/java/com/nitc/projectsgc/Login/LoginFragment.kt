@@ -124,7 +124,7 @@ class LoginFragment : Fragment() {
                             sharedViewModel.currentUserID = rollNo
                             sharedViewModel.userType = "Student"
                             Log.d("loginSuccess",loginSuccess.toString())
-                            findNavController().navigate(R.id.bookingFragment)
+                            findNavController().navigate(R.id.studentDashBoardFragment)
                         }else{
                             Toast.makeText(context,"Some error occurred",Toast.LENGTH_SHORT).show()
                         }
