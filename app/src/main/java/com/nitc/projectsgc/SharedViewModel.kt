@@ -8,4 +8,7 @@ class SharedViewModel:ViewModel() {
     lateinit var currentStudent: Student
     var currentUserID = "NA"
     var userType = "Student"
+    var rescheduling:Boolean = false
+    var reschedulingMentorName = "NA"
+    lateinit var reschedulingAppointment:Appointment
 }

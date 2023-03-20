@@ -77,9 +77,9 @@ class AppointmentsAccess(
         var database = FirebaseDatabase.getInstance()
         var studentReference = database.reference.child("students")
         var typeReference = database.reference.child("types")
-        studentReference.child(sharedViewModel.currentUserID+"/appointments").child(appointment.id.toString()).removeValue().addOnCompleteListener { studentTask->
+        studentReference.child(sharedViewModel.currentUserID+"/appointments").child(appointment.id.toString()).setValue(appointment).addOnCompleteListener { studentTask->
             if(studentTask.isSuccessful){
-                typeReference.child(appointment.mentorType.toString()+"/${appointment.mentorID}/appointments/${appointment.date}/${appointment.timeSlot}").removeValue().addOnCompleteListener {mentorTask->
+                typeReference.child(appointment.mentorType.toString()+"/${appointment.mentorID}/appointments/${appointment.date}/${appointment.timeSlot}").setValue(appointment).addOnCompleteListener {mentorTask->
                     if(mentorTask.isSuccessful) deletedLive.postValue(true)
                     else deletedLive.postValue(false)
                 }

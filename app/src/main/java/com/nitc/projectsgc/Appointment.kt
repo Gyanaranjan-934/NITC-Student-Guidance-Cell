@@ -6,6 +6,7 @@ data class Appointment(
     var mentorType:String? = null,
     var mentorID:String? = null,
     var studentID:String? = null,
+    var mentorName:String? = null,
     var completed:Boolean = false,
     var status:String? = null,
     var cancelled:Boolean = false,

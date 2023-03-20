@@ -168,8 +168,8 @@
         app:layout_constraintTop_toBottomOf="@+id/bookingCardInBookingFragment"
         app:layout_constraintVertical_bias="0.3" />
 
-    <Button
-        android:id="@+id/cancelButton"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/cancelButtonInBookingFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#FF4500"

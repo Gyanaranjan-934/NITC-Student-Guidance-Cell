@@ -13,7 +13,7 @@
 
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imageInUpcomingAppointmentCard"
+            android:id="@+id/imageInBookedAppointmentCard"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:src="@drawable/boy_face"
@@ -27,7 +27,7 @@
             app:layout_constraintWidth_percent="0.2" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/mentorNameInUpcomingAppointmentCard"
+            android:id="@+id/mentorNameInBookedAppointmentCard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
@@ -36,21 +36,21 @@
             app:layout_constraintWidth_percent="0.3"
             app:layout_constraintHorizontal_bias="0.05"
             app:layout_constraintVertical_bias="0.1"
-            app:layout_constraintBottom_toBottomOf="@+id/imageInUpcomingAppointmentCard"
+            app:layout_constraintBottom_toBottomOf="@+id/imageInBookedAppointmentCard"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageInUpcomingAppointmentCard"
-            app:layout_constraintTop_toTopOf="@+id/imageInUpcomingAppointmentCard" />
+            app:layout_constraintStart_toEndOf="@+id/imageInBookedAppointmentCard"
+            app:layout_constraintTop_toTopOf="@+id/imageInBookedAppointmentCard" />
 
         <LinearLayout
-            android:id="@+id/appointmentDateLayoutInUpcomingAppointmentCard"
+            android:id="@+id/appointmentDateLayoutInBookedAppointmentCard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="@+id/mentorNameInUpcomingAppointmentCard"
+            app:layout_constraintBottom_toBottomOf="@+id/mentorNameInBookedAppointmentCard"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/mentorNameInUpcomingAppointmentCard"
-            app:layout_constraintTop_toTopOf="@+id/mentorNameInUpcomingAppointmentCard">
+            app:layout_constraintStart_toEndOf="@+id/mentorNameInBookedAppointmentCard"
+            app:layout_constraintTop_toTopOf="@+id/mentorNameInBookedAppointmentCard">
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
@@ -69,20 +69,19 @@
                 android:fontFamily="@font/inter"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:id="@+id/dateOfAppointmentInUpcomingAppointmentCard"/>
+                android:id="@+id/dateOfAppointmentInBookedAppointmentCard"/>
 
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/timeLayoutInUpcomingAppointmentCard"
+            android:id="@+id/timeLayoutInBookedAppointmentCard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/imageInUpcomingAppointmentCard"
-            app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+            app:layout_constraintBottom_toBottomOf="@+id/imageInBookedAppointmentCard"
             app:layout_constraintHorizontal_bias="0.285"
-            app:layout_constraintStart_toEndOf="@+id/imageInUpcomingAppointmentCard"
-            app:layout_constraintTop_toTopOf="@+id/imageInUpcomingAppointmentCard"
+            app:layout_constraintStart_toStartOf="@+id/mentorNameInBookedAppointmentCard"
+            app:layout_constraintTop_toTopOf="@+id/imageInBookedAppointmentCard"
             app:layout_constraintVertical_bias="0.962"
             app:layout_constraintWidth_percent="0.3">
 
@@ -96,7 +95,7 @@
                 android:textColor="@color/black" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/timeOfAppointmentInUpcomingAppointmentCard"
+                android:id="@+id/timeOfAppointmentInBookedAppointmentCard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter"
@@ -104,22 +103,22 @@
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/mentorNameInUpcomingAppointmentCard"
-                app:layout_constraintTop_toBottomOf="@id/timeOfAppointmentInUpcomingAppointmentCard"
+                app:layout_constraintStart_toStartOf="@id/mentorNameInBookedAppointmentCard"
+                app:layout_constraintTop_toBottomOf="@id/timeOfAppointmentInBookedAppointmentCard"
                 app:layout_constraintVertical_bias="0.02" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/typeLayoutInBookedAppointmentCard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="start"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="@+id/timeLayoutInUpcomingAppointmentCard"
+            app:layout_constraintBottom_toBottomOf="@+id/timeLayoutInBookedAppointmentCard"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.901"
-            app:layout_constraintStart_toStartOf="@id/mentorNameInUpcomingAppointmentCard"
-            app:layout_constraintTop_toTopOf="@+id/timeLayoutInUpcomingAppointmentCard"
+            app:layout_constraintStart_toStartOf="@id/mentorNameInBookedAppointmentCard"
+            app:layout_constraintTop_toTopOf="@+id/timeLayoutInBookedAppointmentCard"
             app:layout_constraintVertical_bias="0.0"
             app:layout_constraintWidth_percent="0.35">
 
@@ -134,7 +133,7 @@
                 android:textColor="@color/black" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/phoneInMentorCard"
+                android:id="@+id/typeInBookedAppointmentCard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -149,7 +148,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/timeLayoutInUpcomingAppointmentCard"
+            app:layout_constraintTop_toBottomOf="@+id/timeLayoutInBookedAppointmentCard"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -178,7 +177,7 @@
             app:layout_constraintTop_toBottomOf="@+id/statusCardInBookedAppointmentsCard"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/cancelAppointmentInUpcomingAppointmentCard"
+            app:layout_constraintEnd_toStartOf="@id/cancelAppointmentInBookedAppointmentCard"
             app:layout_constraintHeight_percent="0.24"
             app:layout_constraintWidth_percent="0.35"
             android:text="Reschedule"
@@ -203,7 +202,7 @@
             app:cornerRadius="15dp"
             android:backgroundTint="@color/navy_blue"
             android:textColor="@color/white"
-            android:id="@+id/cancelAppointmentInUpcomingAppointmentCard"
+            android:id="@+id/cancelAppointmentInBookedAppointmentCard"
             android:textAllCaps="false"
             android:letterSpacing="0"/>
 

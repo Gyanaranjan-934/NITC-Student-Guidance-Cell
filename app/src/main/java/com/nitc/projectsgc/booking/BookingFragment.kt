@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
@@ -36,8 +37,21 @@ class BookingFragment : Fragment() {
 
         val database : FirebaseDatabase = FirebaseDatabase.getInstance()
         var reference : DatabaseReference = database.reference.child("types")
-
         var mentorTypeSelected = "NA"
+
+        if(sharedViewModel.rescheduling){
+            mentorTypeSelected = sharedViewModel.reschedulingAppointment.mentorType.toString()
+            mentorNameSelected = sharedViewModel.reschedulingMentorName
+            binding.mentorTypeButtonInBookingFragment.text = mentorTypeSelected
+            binding.mentorNameButtonInBookingFragment.text = mentorNameSelected
+            binding.problemDescriptionInputInBookingFragment.isEnabled = false
+            binding.mentorTypeButtonInBookingFragment.isEnabled = false
+            binding.mentorNameButtonInBookingFragment.isEnabled = false
+            binding.problemDescriptionInputInBookingFragment.setText(sharedViewModel.reschedulingAppointment.problemDescription)
+            binding.cancelButtonInBookingFragment.setOnClickListener {
+                findNavController().navigate(R.id.studentDashBoardFragment)
+            }
+        }
         binding = FragmentBookingBinding.inflate(inflater,container,false)
         binding.mentorTypeButtonInBookingFragment.setOnClickListener{
             var mentorTypesLive = context?.let { it1 -> MentorsAccess(it1).getMentorTypes() }
@@ -188,8 +202,11 @@ class BookingFragment : Fragment() {
                     timeSlot = selectedTimeSlot,
                     mentorID = mentorSelected.userName,
                     studentID = sharedViewModel.currentUserID,
+                    mentorName = mentorNameSelected,
                     completed = false,
                     mentorType = mentorTypeSelected,
+                    cancelled = false,
+                    status = "Booked",
                     problemDescription = problemDescription
                 ))
             }
