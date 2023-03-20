@@ -26,7 +26,6 @@ class MentorDashboardFragment : Fragment() {
     ): View? {
         mentorDashboardBinding = FragmentMentorDashboardBinding.inflate(inflater,container,false)
 
-        var mentorLive = context?.let {  }
 
         return mentorDashboardBinding.root
     }
