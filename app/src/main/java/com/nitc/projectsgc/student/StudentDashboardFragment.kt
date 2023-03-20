@@ -1,9 +1,11 @@
 package com.nitc.projectsgc.student
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -29,6 +31,7 @@ class StudentDashboardFragment: Fragment() {
         studentLive!!.observe(viewLifecycleOwner){student->
             if(student != null){
                 sharedViewModel.currentStudent = student
+                Log.d("student",student.name)
             }
         }
         binding.logoutButtonInStudentDashboardFragment.setOnClickListener {
@@ -36,11 +39,16 @@ class StudentDashboardFragment: Fragment() {
 //            logoutLive!!.observe(viewLifecycleOwner){logoutSuccess->
                 if(logoutSuccess == true){
                     findNavController().navigate(R.id.loginFragment)
+                }else{
+                    Toast.makeText(context,"Some error occurred. Try again",Toast.LENGTH_SHORT).show()
                 }
 //            }
 
         }
 
+        binding.bookAppointmentButtonInStudentDashboard.setOnClickListener {
+            findNavController().navigate(R.id.bookingFragment)
+        }
         val backCallback = object : OnBackPressedCallback(true /* enabled by default */) {
             override fun handleOnBackPressed() {
                 // Call a method in your Fragment to handle the navigation

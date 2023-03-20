@@ -1,6 +1,7 @@
 package com.nitc.projectsgc.Login.access
 
 import android.content.Context
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -68,6 +69,7 @@ class LoginAccess(
             sharedViewModel.userType = "NA"
             sharedViewModel.currentUserID = "NA"
         }
+        Log.d("logout",logoutLive.toString())
         return logoutLive
     }
 

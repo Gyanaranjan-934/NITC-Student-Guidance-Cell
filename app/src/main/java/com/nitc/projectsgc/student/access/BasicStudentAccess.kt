@@ -19,7 +19,8 @@ class BasicStudentAccess(
         val reference : DatabaseReference = database.reference.child("students")
         reference.addValueEventListener(object:ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                var student = snapshot.child(sharedViewModel.currentUserID).getValue(Student::class.java)!!
+                var student = snapshot.child("m210676ca").getValue(Student::class.java)!!
+
                 studentsLive.postValue(student)
             }
 
