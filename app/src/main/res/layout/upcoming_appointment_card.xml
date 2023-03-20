@@ -5,7 +5,7 @@
     android:layout_margin="5dp"
     app:cardCornerRadius="15dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardBackgroundColor="@color/lavender">
+    app:cardBackgroundColor="@color/light_blue">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -19,11 +19,11 @@
             android:src="@drawable/boy_face"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.37"
+            app:layout_constraintHeight_percent="0.33"
             app:layout_constraintHorizontal_bias="0.031"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.301"
+            app:layout_constraintVertical_bias="0.2"
             app:layout_constraintWidth_percent="0.2" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -154,11 +154,13 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/deleteAppointmentInUpcomingAppointmentCard"
+            app:layout_constraintEnd_toStartOf="@id/cancelAppointmentInUpcomingAppointmentCard"
             app:layout_constraintHeight_percent="0.25"
-            app:layout_constraintWidth_percent="0.4"
+            app:layout_constraintWidth_percent="0.35"
             android:text="Reschedule"
+            android:backgroundTint="@color/light_gray"
             app:cornerRadius="10dp"
+            android:textColor="@color/black"
             android:textAllCaps="false"
             android:id="@+id/rescheduleButtonInUpcomingCard"
             android:letterSpacing="0"
@@ -172,12 +174,12 @@
             app:layout_constraintBottom_toBottomOf="@id/rescheduleButtonInUpcomingCard"
             app:layout_constraintStart_toEndOf="@id/rescheduleButtonInUpcomingCard"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintWidth_percent="0.4"
+            app:layout_constraintWidth_percent="0.35"
             android:text="Delete"
             app:cornerRadius="10dp"
-            android:backgroundTint="@color/baby_blue"
-            android:textColor="@color/black"
-            android:id="@+id/deleteAppointmentInUpcomingAppointmentCard"
+            android:backgroundTint="@color/navy_blue"
+            android:textColor="@color/white"
+            android:id="@+id/cancelAppointmentInUpcomingAppointmentCard"
             android:textAllCaps="false"
             android:letterSpacing="0"/>
 

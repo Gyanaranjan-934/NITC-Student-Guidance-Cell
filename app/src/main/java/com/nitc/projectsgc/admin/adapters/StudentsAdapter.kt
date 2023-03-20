@@ -1,4 +1,4 @@
-package com.nitc.projectsgc.adapters
+package com.nitc.projectsgc.admin.adapters
 
 import android.app.AlertDialog
 import android.content.Context

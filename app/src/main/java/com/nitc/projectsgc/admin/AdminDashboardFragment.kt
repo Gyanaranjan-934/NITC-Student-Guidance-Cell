@@ -13,8 +13,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.SharedViewModel
-import com.nitc.projectsgc.adapters.MentorsAdapter
-import com.nitc.projectsgc.adapters.StudentsAdapter
+import com.nitc.projectsgc.admin.adapters.MentorsAdapter
+import com.nitc.projectsgc.admin.adapters.StudentsAdapter
 import com.nitc.projectsgc.admin.access.MentorsAccess
 import com.nitc.projectsgc.admin.access.StudentsAccess
 import com.nitc.projectsgc.databinding.FragmentAdminDashboardBinding
