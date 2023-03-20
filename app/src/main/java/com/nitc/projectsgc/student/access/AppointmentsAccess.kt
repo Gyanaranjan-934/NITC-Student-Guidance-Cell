@@ -1,6 +1,7 @@
 package com.nitc.projectsgc.student.access
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
@@ -19,13 +20,16 @@ class AppointmentsAccess(
 ) {
 
     fun getBookedAppointments(today:String):LiveData<ArrayList<Appointment>>{
+        Log.d("appointment","class called")
         var bookedLive = MutableLiveData<ArrayList<Appointment>>(null)
         var appointments = arrayListOf<Appointment>()
         var database = FirebaseDatabase.getInstance()
         var studentReference = database.reference.child("students")
+        Log.d("appointment",sharedViewModel.currentUserID.toString())
         studentReference.child(sharedViewModel.currentUserID).addValueEventListener(object:ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 for(ds in snapshot.child("appointments").children){
+                    Log.d("appointment",ds.toString())
                     var appointment = ds.getValue(Appointment::class.java)
                     if (appointment != null) {
                         appointments.add(appointment)
@@ -42,5 +46,30 @@ class AppointmentsAccess(
 
         return bookedLive
     }
+
+    fun getCompletedAppointments():LiveData<ArrayList<Appointment>>{
+        var completedLive = MutableLiveData<ArrayList<Appointment>>(null)
+        var appointments = arrayListOf<Appointment>()
+        var database = FirebaseDatabase.getInstance()
+        var studentReference = database.reference.child("students")
+        studentReference.child(sharedViewModel.currentUserID).addValueEventListener(object:ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for(ds in snapshot.child("appointments").children){
+                    var appointment = ds.getValue(Appointment::class.java)
+                    if(appointment != null){
+                        if(appointment.completed) appointments.add(appointment)
+                    }
+                }
+                completedLive.postValue(appointments)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context,"Error : $error",Toast.LENGTH_LONG).show()
+            }
+
+        })
+        return completedLive
+    }
+
 
 }

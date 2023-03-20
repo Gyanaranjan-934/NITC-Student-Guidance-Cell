@@ -8,11 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.fragment.findNavController
 import com.nitc.projectsgc.Login.LoginFragment
 import com.nitc.projectsgc.booking.BookingFragment
 import com.nitc.projectsgc.student.StudentDashboardFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
 
@@ -31,6 +33,7 @@ class IntroductoryFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_splash_screen, container, false)
         var pSuccessLive = MutableLiveData<Boolean?>(false)
+        var userTypeLive = MutableLiveData<String>("NA")
         coroutineScope.launch {
             val pSuccess = context?.let {
                 ProfileAccess(
@@ -44,16 +47,20 @@ class IntroductoryFragment : Fragment() {
             // Move the code that needs to execute after getProfile() inside the coroutine block
             Log.d("profile","backIn Profile")
             if (pSuccessLive.value == true) {
+                val studentDashboard = StudentDashboardFragment()
                 when (sharedViewModel.userType) {
                     "Student" -> {
-                        var ft = parentFragmentManager.beginTransaction()
-                        ft.replace(R.id.navHostFragment,StudentDashboardFragment())
-                        ft.addToBackStack(null)
-                        ft.commit()
+                        coroutineScope.cancel()
+//                        var ft = parentFragmentManager.beginTransaction()
+//                        ft.replace(R.id.navHostFragment,studentDashboard)
+////                        ft.addToBackStack(null)
+//                        ft.commitNow()
+                        findNavController().navigate(R.id.studentDashBoardFragment)
                     }
                     "Mentor" -> {
+                        coroutineScope.cancel()
                         var ft = parentFragmentManager.beginTransaction()
-                        ft.replace(R.id.navHostFragment,BookingFragment())
+                        ft.add(R.id.navHostFragment,BookingFragment())
                         ft.addToBackStack(null)
                         ft.commit()
                     }
@@ -61,7 +68,7 @@ class IntroductoryFragment : Fragment() {
             } else {
                 Log.d("profile","false")
                 var ft = parentFragmentManager.beginTransaction()
-                ft.replace(R.id.navHostFragment, LoginFragment())
+                ft.add(R.id.navHostFragment, LoginFragment())
                 ft.addToBackStack(null)
                 ft.commit()
             }
@@ -69,6 +76,15 @@ class IntroductoryFragment : Fragment() {
 
 
         Log.d("profile","backIn Profile")
+//        userTypeLive.observe(viewLifecycleOwner){userType->
+//            if(userType == "Student"){
+//                findNavController().navigate()
+//            }else if(userType == "Mentor"){
+//                findNavController().navigate(R.id.mentorUpdateFragment)
+//            }else{
+//                findNavController().navigate(R.id.loginFragment)
+//            }
+//        }
 
         val backgroundExecutor = Executors.newSingleThreadScheduledExecutor()
 

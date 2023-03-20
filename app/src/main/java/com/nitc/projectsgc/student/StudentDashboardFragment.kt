@@ -1,5 +1,6 @@
 package com.nitc.projectsgc.student
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,30 +11,54 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.nitc.projectsgc.Login.access.LoginAccess
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.databinding.FragmentStudentDashBoardBinding
+import com.nitc.projectsgc.student.access.AppointmentsAccess
 import com.nitc.projectsgc.student.access.BasicStudentAccess
+import com.nitc.projectsgc.student.adapters.BookedAppointmentsAdapter
+import java.text.SimpleDateFormat
+import java.util.*
 
 class StudentDashboardFragment: Fragment() {
-    private val sharedViewModel:SharedViewModel by activityViewModels()
-
     lateinit var binding:FragmentStudentDashBoardBinding
+    var selectedType = "Booked"
+    private val sharedViewModel:SharedViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentStudentDashBoardBinding.inflate(inflater,container,false)
-
-        var studentLive = context?.let { BasicStudentAccess(it,sharedViewModel).getStudent() }
-        studentLive!!.observe(viewLifecycleOwner){student->
-            if(student != null){
-                sharedViewModel.currentStudent = student
-                Log.d("student",student.name)
-            }
+        binding.bookedAppointmentsRecyclerViewStudentDashboard.layoutManager = LinearLayoutManager(context)
+        binding.completedAppointmentsRecyclerViewInStudentDashboard.layoutManager = LinearLayoutManager(context)
+        getBookedAppointments()
+        binding.bookedAppointmentTypeButtonInStudentDashboardFragment.setOnClickListener {
+            binding.bookedAppointmentTypeImageInStudentDashboardFragment.setBackgroundResource(R.drawable.login_type_card_blue_bg)
+            binding.bookedAppointmentTypeButtonInStudentDashboardFragment.setTextColor(Color.WHITE)
+            binding.completedAppointmentTypeImageInStudentDashboardFragment.setBackgroundResource(R.drawable.login_type_card_transparent_bg)
+            binding.completedAppointmentTypeButtonInStudentDashboardFragment.setTextColor(Color.BLACK)
+            selectedType = "Booked"
+            getBookedAppointments()
         }
+        binding.completedAppointmentTypeButtonInStudentDashboardFragment.setOnClickListener {
+            binding.bookedAppointmentTypeImageInStudentDashboardFragment.setBackgroundResource(R.drawable.login_type_card_transparent_bg)
+            binding.bookedAppointmentTypeButtonInStudentDashboardFragment.setTextColor(Color.BLACK)
+            binding.completedAppointmentTypeImageInStudentDashboardFragment.setBackgroundResource(R.drawable.login_type_card_blue_bg)
+            binding.completedAppointmentTypeButtonInStudentDashboardFragment.setTextColor(Color.WHITE)
+            selectedType = "Completed"
+            getCompletedAppointments()
+        }
+//        var studentLive = context?.let { BasicStudentAccess(it,sharedViewModel).getStudent() }
+//        studentLive!!.observe(viewLifecycleOwner){student->
+//            if(student != null){
+//                sharedViewModel.currentStudent = student
+//                Log.d("student",student.name)
+//            }
+//        }
+
         binding.logoutButtonInStudentDashboardFragment.setOnClickListener {
             var logoutSuccess = context?.let { it1 -> LoginAccess(it1,this,sharedViewModel).logout() }
 //            logoutLive!!.observe(viewLifecycleOwner){logoutSuccess->
@@ -49,6 +74,8 @@ class StudentDashboardFragment: Fragment() {
         binding.bookAppointmentButtonInStudentDashboard.setOnClickListener {
             findNavController().navigate(R.id.bookingFragment)
         }
+
+
         val backCallback = object : OnBackPressedCallback(true /* enabled by default */) {
             override fun handleOnBackPressed() {
                 // Call a method in your Fragment to handle the navigation
@@ -58,6 +85,62 @@ class StudentDashboardFragment: Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,backCallback)
 
         return binding.root
+    }
+    private fun getCompletedAppointments() {
+        var appointmentAccess = context?.let { AppointmentsAccess(it,this,sharedViewModel) }
+        var completedLive = appointmentAccess?.getCompletedAppointments()
+        if (completedLive != null) {
+            completedLive.observe(viewLifecycleOwner){appointments->
+                if(appointments != null && appointments.size != 0){
+                    var bookedAppointmentsAdapter = context?.let {
+                        BookedAppointmentsAdapter(
+                            it,
+                            this,
+                            sharedViewModel,
+                            appointments
+                        )
+                    }
+                    binding.bookedAppointmentsRecyclerViewStudentDashboard.adapter = bookedAppointmentsAdapter
+                    binding.completedAppointmentsRecyclerViewInStudentDashboard.visibility = View.GONE
+                    binding.bookedAppointmentsRecyclerViewStudentDashboard.visibility = View.VISIBLE
+                }else{
+                    binding.noBookingsTVInStudentDashboardFragment.visibility = View.VISIBLE
+                    binding.bookedAppointmentsRecyclerViewStudentDashboard.visibility = View.GONE
+                    binding.completedAppointmentsRecyclerViewInStudentDashboard.visibility = View.GONE
+                    binding.noCompletedTVInStudentDashboardFragment.visibility = View.GONE
+                }
+            }
+        }
+    }
+
+    private fun getBookedAppointments() {
+        Log.d("today","this called")
+        var dateToday = SimpleDateFormat("dd-MM-yyyy").format(Date()).toString()
+        var appointmentAccess = context?.let { AppointmentsAccess(it,this,sharedViewModel) }
+        Log.d("today",dateToday)
+        var bookedLive = appointmentAccess?.getBookedAppointments(dateToday)
+        if (bookedLive != null) {
+            bookedLive.observe(viewLifecycleOwner){appointments->
+                if(appointments != null && appointments.size != 0){
+                    var bookedAppointmentsAdapter = context?.let {
+                        BookedAppointmentsAdapter(
+                            it,
+                            this,
+                            sharedViewModel,
+                            appointments
+                        )
+                    }
+                    binding.bookedAppointmentsRecyclerViewStudentDashboard.adapter = bookedAppointmentsAdapter
+                    binding.completedAppointmentsRecyclerViewInStudentDashboard.visibility = View.GONE
+                    binding.bookedAppointmentsRecyclerViewStudentDashboard.visibility = View.VISIBLE
+                }else{
+                    binding.noBookingsTVInStudentDashboardFragment.visibility = View.VISIBLE
+                    binding.bookedAppointmentsRecyclerViewStudentDashboard.visibility = View.GONE
+                    binding.completedAppointmentsRecyclerViewInStudentDashboard.visibility = View.GONE
+                    binding.noCompletedTVInStudentDashboardFragment.visibility = View.GONE
+                }
+            }
+        }
     }
 
 }

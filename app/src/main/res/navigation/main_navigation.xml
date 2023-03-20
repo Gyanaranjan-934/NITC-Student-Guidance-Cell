@@ -45,7 +45,7 @@
         tools:layout="@layout/fragment_mentor_update" />
     <fragment
         android:id="@+id/studentDashBoardFragment"
-        android:name="com.nitc.projectsgc.StudentDashBoardFragment"
+        android:name="com.nitc.projectsgc.student.StudentDashboardFragment"
         android:label="fragment_student_dash_board"
         tools:layout="@layout/fragment_student_dash_board" />
     <fragment
