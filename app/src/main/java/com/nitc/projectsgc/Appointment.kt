@@ -9,4 +9,5 @@ data class Appointment(
     var completed:Boolean = false,
     var id:String? = null,
     var problemDescription:String? = null
-)
+) {
+}

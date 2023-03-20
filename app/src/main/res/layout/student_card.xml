@@ -161,6 +161,42 @@
             android:id="@+id/deleteButtonInStudentCard"
             android:textAllCaps="false"
             android:letterSpacing="0"/>
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/cancelButtonInStudentCard"
+            app:layout_constraintHeight_percent="0.25"
+            app:layout_constraintWidth_percent="0.5"
+            android:text="View Past record"
+            app:cornerRadius="10dp"
+            android:visibility="gone"
+            android:fontFamily="@font/inter_semibold"
+            android:textAllCaps="false"
+            android:id="@+id/viewPastRecordButtonInStudentCard"
+            android:letterSpacing="0"
+            app:layout_constraintVertical_bias="0.9"
+            app:layout_constraintHorizontal_bias="0.1"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="@id/viewPastRecordButtonInStudentCard"
+            app:layout_constraintBottom_toBottomOf="@id/viewPastRecordButtonInStudentCard"
+            app:layout_constraintStart_toEndOf="@id/viewPastRecordButtonInStudentCard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.3"
+            android:text="Cancel"
+            android:fontFamily="@font/inter_semibold"
+            app:cornerRadius="10dp"
+            android:backgroundTint="@color/light_gray"
+            android:textColor="@color/black"
+            android:id="@+id/cancelButtonInStudentCard"
+            android:textAllCaps="false"
+            android:letterSpacing="0"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

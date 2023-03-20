@@ -1,14 +1,14 @@
-package com.nitc.projectsgc
+package com.nitc.projectsgc.mentors
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.nitc.projectsgc.databinding.FragmentStudentDashBoardBinding
+import androidx.fragment.app.Fragment
+import com.nitc.projectsgc.R
 
-class StudentDashBoardFragment : Fragment() {
-    lateinit var studentDashBoardBinding: FragmentStudentDashBoardBinding
+
+class MentorDashboardFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,10 +20,6 @@ class StudentDashBoardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        studentDashBoardBinding =  FragmentStudentDashBoardBinding.inflate(inflater, container, false)
-        return studentDashBoardBinding.root
-
+        return inflater.inflate(R.layout.fragment_mentor_dashboard, container, false)
     }
-
-
 }
