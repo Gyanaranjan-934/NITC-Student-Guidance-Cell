@@ -92,22 +92,24 @@ class StudentDashboardFragment: Fragment() {
         if (completedLive != null) {
             completedLive.observe(viewLifecycleOwner){appointments->
                 if(appointments != null && appointments.size != 0){
-                    var bookedAppointmentsAdapter = context?.let {
+                    var completedAppointmentsAdapter = context?.let {
                         BookedAppointmentsAdapter(
                             it,
                             this,
                             sharedViewModel,
-                            appointments
+                            appointments,
+                            true
                         )
                     }
-                    binding.bookedAppointmentsRecyclerViewStudentDashboard.adapter = bookedAppointmentsAdapter
-                    binding.completedAppointmentsRecyclerViewInStudentDashboard.visibility = View.GONE
-                    binding.bookedAppointmentsRecyclerViewStudentDashboard.visibility = View.VISIBLE
+                    binding.completedAppointmentsRecyclerViewInStudentDashboard.adapter = completedAppointmentsAdapter
+                    binding.completedAppointmentsRecyclerViewInStudentDashboard.visibility = View.VISIBLE
+                    binding.bookedAppointmentsRecyclerViewStudentDashboard.visibility = View.GONE
+                    binding.noBookingsTVInStudentDashboardFragment.visibility = View.GONE
                 }else{
-                    binding.noBookingsTVInStudentDashboardFragment.visibility = View.VISIBLE
+                    binding.noCompletedTVInStudentDashboardFragment.visibility = View.VISIBLE
                     binding.bookedAppointmentsRecyclerViewStudentDashboard.visibility = View.GONE
                     binding.completedAppointmentsRecyclerViewInStudentDashboard.visibility = View.GONE
-                    binding.noCompletedTVInStudentDashboardFragment.visibility = View.GONE
+                    binding.noBookingsTVInStudentDashboardFragment.visibility = View.GONE
                 }
             }
         }
@@ -127,12 +129,14 @@ class StudentDashboardFragment: Fragment() {
                             it,
                             this,
                             sharedViewModel,
-                            appointments
+                            appointments,
+                            false
                         )
                     }
                     binding.bookedAppointmentsRecyclerViewStudentDashboard.adapter = bookedAppointmentsAdapter
                     binding.completedAppointmentsRecyclerViewInStudentDashboard.visibility = View.GONE
                     binding.bookedAppointmentsRecyclerViewStudentDashboard.visibility = View.VISIBLE
+                    binding.noBookingsTVInStudentDashboardFragment.visibility = View.GONE
                 }else{
                     binding.noBookingsTVInStudentDashboardFragment.visibility = View.VISIBLE
                     binding.bookedAppointmentsRecyclerViewStudentDashboard.visibility = View.GONE

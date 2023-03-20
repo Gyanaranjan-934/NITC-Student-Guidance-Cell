@@ -2,6 +2,7 @@ package com.nitc.projectsgc.student.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -14,15 +15,17 @@ import com.nitc.projectsgc.Appointment
 import com.nitc.projectsgc.Mentor
 import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.databinding.UpcomingAppointmentCardBinding
+import com.nitc.projectsgc.student.access.AppointmentsAccess
 
 class BookedAppointmentsAdapter(
     var context: Context,
     var parentFragment: Fragment,
     var sharedViewModel: SharedViewModel,
-    var appointments:ArrayList<Appointment>
-): RecyclerView.Adapter<BookedAppointmentsAdapter.UpcomingAppointmentsViewHolder>() {
+    var appointments:ArrayList<Appointment>,
+    var isCompleted:Boolean
+): RecyclerView.Adapter<BookedAppointmentsAdapter.BookedAppointmentsViewHolder>() {
 
-    class UpcomingAppointmentsViewHolder(val binding: UpcomingAppointmentCardBinding):RecyclerView.ViewHolder(binding.root) {
+    class BookedAppointmentsViewHolder(val binding: UpcomingAppointmentCardBinding):RecyclerView.ViewHolder(binding.root) {
 
         var database = FirebaseDatabase.getInstance()
         var reference = database.reference.child("types")
@@ -31,17 +34,29 @@ class BookedAppointmentsAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): UpcomingAppointmentsViewHolder {
+    ): BookedAppointmentsViewHolder {
         var binding = UpcomingAppointmentCardBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        return UpcomingAppointmentsViewHolder(binding)
+        return BookedAppointmentsViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
         return appointments.size
     }
 
-    override fun onBindViewHolder(holder: UpcomingAppointmentsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BookedAppointmentsViewHolder, position: Int) {
+        if(isCompleted){
+            holder.binding.cancelAppointmentInUpcomingAppointmentCard.visibility = View.GONE
+            holder.binding.rescheduleButtonInUpcomingCard.visibility = View.GONE
+        }else{
+            holder.binding.cancelAppointmentInUpcomingAppointmentCard.visibility = View.VISIBLE
+            holder.binding.rescheduleButtonInUpcomingCard.visibility = View.VISIBLE
+        }
 
+        if(appointments[position].completed || appointments[position].cancelled){
+            holder.binding.cancelAppointmentInUpcomingAppointmentCard.visibility = View.GONE
+            holder.binding.rescheduleButtonInUpcomingCard.visibility = View.GONE
+        }
+        holder.binding.statusTextInBookedAppointmentsCard.text = appointments[position].status
         var typeReference = holder.reference.child(appointments[position].mentorType.toString())
         typeReference.child(appointments[position].mentorID.toString()).addValueEventListener(object:ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -62,7 +77,18 @@ class BookedAppointmentsAdapter(
 
         }
         holder.binding.cancelAppointmentInUpcomingAppointmentCard.setOnClickListener {
-
+            var cancelLive = AppointmentsAccess(context,parentFragment, sharedViewModel).cancelAppointment(appointment = appointments[position])
+            cancelLive.observe(parentFragment.viewLifecycleOwner){cancelled->
+                if(cancelled != null){
+                    if(cancelled){
+                        Toast.makeText(context,"Cancelled",Toast.LENGTH_SHORT).show()
+                        appointments[position].status = "Cancelled by student"
+                        holder.binding.statusTextInBookedAppointmentsCard.text = appointments[position].status
+                        appointments[position].cancelled = true
+                        notifyItemChanged(position)
+                    }
+                }
+            }
         }
     }
 }

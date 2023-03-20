@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="220dp"
     android:layout_margin="5dp"
     app:cardCornerRadius="15dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -19,11 +19,11 @@
             android:src="@drawable/boy_face"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.33"
+            app:layout_constraintHeight_percent="0.28"
             app:layout_constraintHorizontal_bias="0.031"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.2"
+            app:layout_constraintVertical_bias="0.15"
             app:layout_constraintWidth_percent="0.2" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -146,25 +146,49 @@
 
         </LinearLayout>
 
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/timeLayoutInUpcomingAppointmentCard"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/statusCardInBookedAppointmentsCard"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintWidth_percent="0.5"
+            app:layout_constraintVertical_bias="0.2"
+            app:cardCornerRadius="25dp"
+            app:cardBackgroundColor="@color/ivory"
+            app:cardElevation="0dp">
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Booked"
+                android:id="@+id/statusTextInBookedAppointmentsCard"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:fontFamily="@font/inter_semibold"/>
+        </com.google.android.material.card.MaterialCardView>
 
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/statusCardInBookedAppointmentsCard"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/cancelAppointmentInUpcomingAppointmentCard"
-            app:layout_constraintHeight_percent="0.25"
+            app:layout_constraintHeight_percent="0.24"
             app:layout_constraintWidth_percent="0.35"
             android:text="Reschedule"
             android:backgroundTint="@color/light_gray"
-            app:cornerRadius="10dp"
+            app:cornerRadius="15dp"
             android:textColor="@color/black"
             android:textAllCaps="false"
             android:id="@+id/rescheduleButtonInUpcomingCard"
             android:letterSpacing="0"
-            app:layout_constraintVertical_bias="0.9"
+            app:layout_constraintVertical_bias="0.8"
             app:layout_constraintHorizontal_bias="0.1"/>
 
         <com.google.android.material.button.MaterialButton
@@ -176,7 +200,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintWidth_percent="0.35"
             android:text="Delete"
-            app:cornerRadius="10dp"
+            app:cornerRadius="15dp"
             android:backgroundTint="@color/navy_blue"
             android:textColor="@color/white"
             android:id="@+id/cancelAppointmentInUpcomingAppointmentCard"

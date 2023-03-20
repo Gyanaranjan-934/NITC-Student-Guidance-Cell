@@ -72,4 +72,24 @@ class AppointmentsAccess(
     }
 
 
+    fun cancelAppointment(appointment: Appointment):LiveData<Boolean>{
+        var deletedLive = MutableLiveData<Boolean>()
+        var database = FirebaseDatabase.getInstance()
+        var studentReference = database.reference.child("students")
+        var typeReference = database.reference.child("types")
+        studentReference.child(sharedViewModel.currentUserID+"/appointments").child(appointment.id.toString()).removeValue().addOnCompleteListener { studentTask->
+            if(studentTask.isSuccessful){
+                typeReference.child(appointment.mentorType.toString()+"/${appointment.mentorID}/appointments/${appointment.date}/${appointment.timeSlot}").removeValue().addOnCompleteListener {mentorTask->
+                    if(mentorTask.isSuccessful) deletedLive.postValue(true)
+                    else deletedLive.postValue(false)
+                }
+            }else{
+                Toast.makeText(context,"Some error occurred",Toast.LENGTH_SHORT).show()
+                deletedLive.postValue(false)
+            }
+        }
+        return deletedLive
+    }
+
+
 }
