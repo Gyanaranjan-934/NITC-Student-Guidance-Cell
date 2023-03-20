@@ -59,10 +59,11 @@ class IntroductoryFragment : Fragment() {
                     }
                     "Mentor" -> {
                         coroutineScope.cancel()
-                        var ft = parentFragmentManager.beginTransaction()
-                        ft.add(R.id.navHostFragment,BookingFragment())
-                        ft.addToBackStack(null)
-                        ft.commit()
+//                        var ft = parentFragmentManager.beginTransaction()
+//                        ft.add(R.id.navHostFragment,BookingFragment())
+//                        ft.addToBackStack(null)
+//                        ft.commit()
+                        findNavController().navigate(R.id.mentorDashboardFragment)
                     }
                 }
             } else {

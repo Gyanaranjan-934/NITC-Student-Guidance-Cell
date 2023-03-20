@@ -78,6 +78,7 @@ class BookedAppointmentsAdapter(
         holder.binding.timeOfAppointmentInBookedAppointmentCard.text = appointments[position].timeSlot.toString()
         holder.binding.rescheduleButtonInUpcomingCard.setOnClickListener {
             parentFragment.findNavController().navigate(R.id.bookingFragment)
+            sharedViewModel.reschedulingAppointment = appointments[position]
             sharedViewModel.rescheduling = true
             sharedViewModel.reschedulingMentorName = mentorName
         }
@@ -90,7 +91,7 @@ class BookedAppointmentsAdapter(
                     if(cancelled){
                         Toast.makeText(context,"Cancelled",Toast.LENGTH_SHORT).show()
                         holder.binding.statusTextInBookedAppointmentsCard.text = appointments[position].status
-                        notifyItemChanged(position)
+                        notifyDataSetChanged()
                     }
                 }
             }

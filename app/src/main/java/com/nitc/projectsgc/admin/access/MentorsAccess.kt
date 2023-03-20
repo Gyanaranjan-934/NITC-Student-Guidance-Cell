@@ -40,9 +40,9 @@ class MentorsAccess(var context: Context) {
         return mentorLive
     }
 
-    fun getMentorNames(mentorType:String):LiveData<ArrayList<Mentor>>{
-        var mentorNamesLive = MutableLiveData<ArrayList<Mentor>>(null)
-        var mentors = arrayListOf<Mentor>()
+    fun getMentorNames(mentorType:String):LiveData<ArrayList<String>>{
+        var mentorNamesLive = MutableLiveData<ArrayList<String>>(null)
+        var mentors = arrayListOf<String>()
         var database : FirebaseDatabase = FirebaseDatabase.getInstance()
         var reference : DatabaseReference = database.reference.child("types")
 
@@ -54,7 +54,7 @@ class MentorsAccess(var context: Context) {
                 var mentorsSnapshot = snapshot.child(mentorType).children
 
                 for(mentor in mentorsSnapshot){
-                    mentors.add(mentor.getValue(Mentor::class.java)!!)
+                    mentors.add(mentor.getValue(Mentor::class.java)!!.name)
                 }
                 mentorNamesLive.postValue(mentors)
 

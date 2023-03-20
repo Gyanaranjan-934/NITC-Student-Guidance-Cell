@@ -19,7 +19,7 @@ class AppointmentsAccess(
     var sharedViewModel: SharedViewModel
 ) {
 
-    fun getBookedAppointments(today:String):LiveData<ArrayList<Appointment>>{
+    fun getBookedAppointments():LiveData<ArrayList<Appointment>>{
         Log.d("appointment","class called")
         var bookedLive = MutableLiveData<ArrayList<Appointment>>(null)
         var appointments = arrayListOf<Appointment>()

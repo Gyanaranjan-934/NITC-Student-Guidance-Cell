@@ -68,4 +68,9 @@
             android:id="@+id/action_splashScreenFragment_to_studentDashBoardFragment"
             app:destination="@id/studentDashBoardFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/mentorDashboardFragment"
+        android:name="com.nitc.projectsgc.mentors.MentorDashboardFragment"
+        android:label="fragment_mentor_dashboard"
+        tools:layout="@layout/fragment_mentor_dashboard" />
 </navigation>

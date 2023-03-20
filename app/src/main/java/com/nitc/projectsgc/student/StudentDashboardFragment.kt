@@ -120,7 +120,7 @@ class StudentDashboardFragment: Fragment() {
         var dateToday = SimpleDateFormat("dd-MM-yyyy").format(Date()).toString()
         var appointmentAccess = context?.let { AppointmentsAccess(it,this,sharedViewModel) }
         Log.d("today",dateToday)
-        var bookedLive = appointmentAccess?.getBookedAppointments(dateToday)
+        var bookedLive = appointmentAccess?.getBookedAppointments()
         if (bookedLive != null) {
             bookedLive.observe(viewLifecycleOwner){appointments->
                 if(appointments != null && appointments.size != 0){

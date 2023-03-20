@@ -16,11 +16,11 @@ import com.nitc.projectsgc.Appointment
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.Student
 
-class AppointmentAdapter(
+class MentorAppointmentsAdapter(
     var context : Context,
     var appointments : ArrayList<Appointment>,
-) : RecyclerView.Adapter<AppointmentAdapter.AppointmentsViewHolder>() {
-    class AppointmentsViewHolder(itemView : View):RecyclerView.ViewHolder(itemView){
+) : RecyclerView.Adapter<MentorAppointmentsAdapter.MentorAppointmentsViewHolder>() {
+    class MentorAppointmentsViewHolder(itemView : View):RecyclerView.ViewHolder(itemView){
         var nameOfTheStudent = itemView.findViewById<TextView>(R.id.nameInStudentCard)
         var dobText = itemView.findViewById<TextView>(R.id.dobInStudentCard)
         var phoneText = itemView.findViewById<TextView>(R.id.phoneInStudentCard)
@@ -31,16 +31,16 @@ class AppointmentAdapter(
         var deleteStudentButton = itemView.findViewById<Button>(R.id.deleteButtonInStudentCard)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppointmentsViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MentorAppointmentsViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.student_card,parent,false)
-        return AppointmentAdapter.AppointmentsViewHolder(view)
+        return MentorAppointmentsAdapter.MentorAppointmentsViewHolder(view)
     }
 
     override fun getItemCount(): Int {
         return appointments.size
     }
 
-    override fun onBindViewHolder(holder: AppointmentsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MentorAppointmentsViewHolder, position: Int) {
         var stdId = appointments[position].studentID.toString()
         var database =  FirebaseDatabase.getInstance()
         var reference = database.reference.child("students")
