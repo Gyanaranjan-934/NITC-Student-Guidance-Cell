@@ -1,14 +1,22 @@
 package com.nitc.projectsgc.Login.access
 
 import android.content.Context
+import android.provider.ContactsContract.Profile
 import android.util.Log
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
+import com.nitc.projectsgc.Mentor
+import com.nitc.projectsgc.ProfileAccess
 import com.nitc.projectsgc.SharedViewModel
+import com.nitc.projectsgc.Student
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 class LoginAccess(
     var context: Context,
@@ -18,7 +26,7 @@ class LoginAccess(
 
 
     var database : FirebaseDatabase = FirebaseDatabase.getInstance()
-    var reference : DatabaseReference = database.reference.child("students")
+    var reference : DatabaseReference = database.reference
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     fun login(
@@ -42,6 +50,35 @@ class LoginAccess(
                         editor.putString("email",email)
                         editor.putString("username",username)
                         editor.apply()
+                        sharedViewModel.currentUserID = username
+                        sharedViewModel.userType = userType
+                        when(userType){
+                            "Student"->{
+                                reference.child("students/$username").addListenerForSingleValueEvent(object:ValueEventListener{
+                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                        sharedViewModel.currentStudent = snapshot.getValue(Student::class.java)!!
+                                    }
+
+                                    override fun onCancelled(error: DatabaseError) {
+                                        Toast.makeText(context,"Some error : $error",Toast.LENGTH_LONG).show()
+                                    }
+
+                                })
+                            }
+                            "Mentor"->{
+                                reference.child("types/$mentorType/$username").addListenerForSingleValueEvent(object:ValueEventListener{
+                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                        sharedViewModel.currentMentor = snapshot.getValue(Mentor::class.java)!!
+
+                                    }
+
+                                    override fun onCancelled(error: DatabaseError) {
+                                        Toast.makeText(context,"Some error : $error",Toast.LENGTH_LONG).show()
+                                    }
+
+                                })
+                            }
+                        }
                     }
 
                 }else{

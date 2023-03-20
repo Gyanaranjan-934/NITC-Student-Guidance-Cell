@@ -88,15 +88,17 @@ class BookingFragment : Fragment() {
                             val mentorNameBuilder = AlertDialog.Builder(context)
                             mentorNameBuilder.setTitle("Choose Mentor Name")
                             mentorNameBuilder.setSingleChoiceItems(
-                                mentors.map { it }.toTypedArray(),
+                                mentors.map { it.name }.toTypedArray(),
                                 0
                             ) { dialog, selectedIndex ->
-                                mentorNameSelected = mentors[selectedIndex]
+                                mentorNameSelected = mentors[selectedIndex].name.toString()
+                                mentorID = mentors[selectedIndex].userName.toString()
                                 binding.mentorNameButtonInBookingFragment.text = mentorNameSelected
                                 dialog.dismiss()
                             }
                             mentorNameBuilder.setPositiveButton("Go") { dialog, which ->
-                                mentorNameSelected = mentors[0]
+                                mentorNameSelected = mentors[0].name
+                                mentorID = mentors[0].userName.toString()
                                 binding.mentorNameButtonInBookingFragment.text = mentorNameSelected
                                 dialog.dismiss()
                             }
@@ -115,7 +117,9 @@ class BookingFragment : Fragment() {
 
             val datePickerDialog = context?.let { it1 ->
                 DatePickerDialog(it1, { _, year, month, day ->
-                    selectedDate = "$day-${month + 1}-$year"
+                    var monthToSet = month + 1
+                    if(monthToSet < 10) selectedDate = "$day-0${monthToSet}-$year"
+                    else selectedDate = "$day-${monthToSet}-$year"
                     binding.bookingDateButtonInBookingFragment.text = selectedDate
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
             }

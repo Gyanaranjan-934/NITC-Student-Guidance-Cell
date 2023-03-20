@@ -132,7 +132,7 @@
                      <com.google.android.material.textfield.TextInputEditText
                          android:layout_width="match_parent"
                          android:layout_height="match_parent"
-                         android:id="@+id/typeInputInAddMentorFragment"
+                         android:id="@+id/mentorTypeInputInAddMentorFragment"
                          android:textColorHint="@color/black"
                          android:textColor="@color/black"/>
 

@@ -26,7 +26,7 @@ class AppointmentsAccess(
         var database = FirebaseDatabase.getInstance()
         var studentReference = database.reference.child("students")
         Log.d("appointment",sharedViewModel.currentUserID.toString())
-        studentReference.child(sharedViewModel.currentUserID).addValueEventListener(object:ValueEventListener{
+        studentReference.child(sharedViewModel.currentUserID).addListenerForSingleValueEvent(object:ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 for(ds in snapshot.child("appointments").children){
                     Log.d("appointment",ds.toString())
@@ -52,7 +52,7 @@ class AppointmentsAccess(
         var appointments = arrayListOf<Appointment>()
         var database = FirebaseDatabase.getInstance()
         var studentReference = database.reference.child("students")
-        studentReference.child(sharedViewModel.currentUserID).addValueEventListener(object:ValueEventListener{
+        studentReference.child(sharedViewModel.currentUserID).addListenerForSingleValueEvent(object:ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 for(ds in snapshot.child("appointments").children){
                     var appointment = ds.getValue(Appointment::class.java)

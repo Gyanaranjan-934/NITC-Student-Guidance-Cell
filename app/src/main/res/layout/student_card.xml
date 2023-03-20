@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="230dp"
     android:layout_margin="5dp"
     app:cardCornerRadius="15dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -21,8 +21,8 @@
         android:src="@drawable/boy_face"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.2"
-        app:layout_constraintHeight_percent="0.37"
+        app:layout_constraintVertical_bias="0.14"
+        app:layout_constraintHeight_percent="0.3"
         app:layout_constraintWidth_percent="0.2"
         app:layout_constraintHorizontal_bias="0.03"/>
 
@@ -37,7 +37,7 @@
             app:layout_constraintWidth_percent="0.4"
             app:layout_constraintHeight_percent="0.1"
             app:layout_constraintHorizontal_bias="0.05"
-            app:layout_constraintVertical_bias="0.1"
+            app:layout_constraintVertical_bias="0"
             app:layout_constraintBottom_toBottomOf="@+id/imageInStudentCard"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageInStudentCard"
@@ -96,6 +96,7 @@
             app:layout_constraintStart_toStartOf="@id/nameInStudentCard"
             app:layout_constraintEnd_toEndOf="parent"
             android:gravity="start"
+            android:id="@+id/phoneLayoutInStudentCard"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintWidth_percent="0.6"
             app:layout_constraintTop_toBottomOf="@id/rollNoInStudentCard"
@@ -126,15 +127,41 @@
 
         </LinearLayout>
 
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/phoneLayoutInStudentCard"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"
+            android:id="@+id/statusCardInStudentCard"
+            app:layout_constraintHeight_percent="0.19"
+            app:layout_constraintWidth_percent="0.5"
+            app:layout_constraintVertical_bias="0.25"
+            app:cardCornerRadius="25dp"
+            app:cardBackgroundColor="@color/ivory"
+            app:cardElevation="0dp">
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Booked"
+                android:id="@+id/statusTextInStudentCard"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:fontFamily="@font/inter_semibold"/>
+        </com.google.android.material.card.MaterialCardView>
+
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/statusCardInStudentCard"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/deleteButtonInStudentCard"
-            app:layout_constraintHeight_percent="0.25"
+            app:layout_constraintHeight_percent="0.22"
             app:layout_constraintWidth_percent="0.5"
             android:text="View appointments"
             app:cornerRadius="10dp"
@@ -142,7 +169,7 @@
             android:textAllCaps="false"
             android:id="@+id/viewAppointmentsButtonInStudentCard"
             android:letterSpacing="0"
-            app:layout_constraintVertical_bias="0.9"
+            app:layout_constraintVertical_bias="0.95"
             app:layout_constraintHorizontal_bias="0.1"/>
 
         <com.google.android.material.button.MaterialButton
@@ -164,7 +191,7 @@
         <com.google.android.material.button.MaterialButton
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/statusCardInStudentCard"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/cancelButtonInStudentCard"
@@ -177,7 +204,7 @@
             android:textAllCaps="false"
             android:id="@+id/viewPastRecordButtonInStudentCard"
             android:letterSpacing="0"
-            app:layout_constraintVertical_bias="0.9"
+            app:layout_constraintVertical_bias="0.95"
             app:layout_constraintHorizontal_bias="0.1"/>
 
         <com.google.android.material.button.MaterialButton

@@ -11,6 +11,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.nitc.projectsgc.Login.access.LoginAccess
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.admin.adapters.MentorsAdapter
@@ -64,7 +65,16 @@ class AdminDashboardFragment : Fragment() {
             findNavController().navigate(R.id.registerFragment)
         }
 
+        binding.logoutButtonInAdminDashboardFragment.setOnClickListener {
+            var logoutSuccess = context?.let { it1 -> LoginAccess(it1,this,sharedViewModel).logout() }
+            if(logoutSuccess == true){
+                findNavController().navigate(R.id.loginFragment)
+            }else{
+                Toast.makeText(context,"Some error occurred. Try again", Toast.LENGTH_SHORT).show()
+            }
+//            }
 
+        }
 
 
         binding.addMentorButtonInAdminDashboard.setOnClickListener{

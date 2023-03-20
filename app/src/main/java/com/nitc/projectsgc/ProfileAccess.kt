@@ -46,7 +46,7 @@ class ProfileAccess(var context: Context,var sharedViewModel: SharedViewModel,va
                                                 if (username != null) {
                                                     Log.d("sharedP", "username not null")
                                                     reference.child("students").child(username)
-                                                        .addValueEventListener(object :
+                                                        .addListenerForSingleValueEvent(object :
                                                             ValueEventListener {
                                                             override fun onDataChange(snapshot: DataSnapshot) {
                                                                 Log.d(
@@ -85,10 +85,11 @@ class ProfileAccess(var context: Context,var sharedViewModel: SharedViewModel,va
                                                         "mentorType",
                                                         null
                                                     )
+                                                    Log.d("username","mentor username = ${username.toString()}")
                                                     if (mentorType != null) {
                                                         reference.child("types/$mentorType")
                                                             .child(username)
-                                                            .addValueEventListener(object :
+                                                            .addListenerForSingleValueEvent(object :
                                                                 ValueEventListener {
                                                                 override fun onDataChange(snapshot: DataSnapshot) {
                                                                     sharedViewModel.userType =

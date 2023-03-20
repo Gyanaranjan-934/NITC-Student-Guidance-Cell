@@ -30,33 +30,33 @@ class AddMentorFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var mentorTypeSelected = "NA"
-        addMentorBinding.mentorTypeButtonInAddMentorFragment.setOnClickListener {
-            val mentorTypesLive = context?.let { it1 -> MentorsAccess(it1).getMentorTypes() }
-            mentorTypesLive?.observe(viewLifecycleOwner) { mentorTypes ->
-                if (mentorTypes != null) {
-                    val mentorTypeBuilder = AlertDialog.Builder(context)
-                    mentorTypeBuilder.setTitle("Choose Mentor Type")
-                    mentorTypeBuilder.setSingleChoiceItems(
-                        mentorTypes.map { it }.toTypedArray(),
-                        mentorNumber
-                    ) { dialog, selectedIndex ->
-                        mentorTypeSelected = mentorTypes[selectedIndex].toString()
-                        addMentorBinding.mentorTypeButtonInAddMentorFragment.text = mentorTypeSelected
-                        mentorNumber = selectedIndex
-                        mentorTypes.clear()
-                        dialog.dismiss()
-                    }
-                    mentorTypeBuilder.setPositiveButton("Go") { dialog, which ->
-                        mentorTypeSelected = mentorTypes[0].toString()
-                        addMentorBinding.mentorTypeButtonInAddMentorFragment.text = mentorTypeSelected
-                        mentorTypes.clear()
-                        dialog.dismiss()
-                    }
-                    mentorTypeBuilder.create().show()
-                }
-
-            }
-        }
+//        addMentorBinding.mentorTypeButtonInAddMentorFragment.setOnClickListener {
+//            val mentorTypesLive = context?.let { it1 -> MentorsAccess(it1).getMentorTypes() }
+//            mentorTypesLive?.observe(viewLifecycleOwner) { mentorTypes ->
+//                if (mentorTypes != null) {
+//                    val mentorTypeBuilder = AlertDialog.Builder(context)
+//                    mentorTypeBuilder.setTitle("Choose Mentor Type")
+//                    mentorTypeBuilder.setSingleChoiceItems(
+//                        mentorTypes.map { it }.toTypedArray(),
+//                        mentorNumber
+//                    ) { dialog, selectedIndex ->
+//                        mentorTypeSelected = mentorTypes[selectedIndex].toString()
+//                        addMentorBinding.mentorTypeButtonInAddMentorFragment.text = mentorTypeSelected
+//                        mentorNumber = selectedIndex
+//                        mentorTypes.clear()
+//                        dialog.dismiss()
+//                    }
+//                    mentorTypeBuilder.setPositiveButton("Go") { dialog, which ->
+//                        mentorTypeSelected = mentorTypes[0].toString()
+//                        addMentorBinding.mentorTypeButtonInAddMentorFragment.text = mentorTypeSelected
+//                        mentorTypes.clear()
+//                        dialog.dismiss()
+//                    }
+//                    mentorTypeBuilder.create().show()
+//                }
+//
+//            }
+//        }
         addMentorBinding.addButtonInAddMentorFragment.setOnClickListener{
             val nameOfMentor = addMentorBinding.nameFieldInAddMentorFragment.text.toString()
             var phoneNumberOfMentor = addMentorBinding.phoneNumberInAddMentorFragment.text.toString()
@@ -97,7 +97,12 @@ class AddMentorFragment : Fragment() {
                 return@setOnClickListener
             }
 
-
+            mentorTypeSelected = addMentorBinding.mentorTypeInputInAddMentorFragment.text.toString().trim()
+            if(mentorTypeSelected.isEmpty()){
+                addMentorBinding.mentorTypeInputInAddMentorFragment.error = "Add Mentor type"
+                addMentorBinding.mentorTypeInputInAddMentorFragment.requestFocus()
+                return@setOnClickListener
+            }
             val userName = emailOfMentor.substring(0,emailOfMentor.indexOf("@"))
             val mentor = Mentor(nameOfMentor,phoneNumberOfMentor,emailOfMentor,mentorTypeSelected,passwordOfMentor,userName)
             val addMentorSuccess = context?.let { it1 -> AddMentorAccess(it1).addMentor(mentor) }

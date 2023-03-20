@@ -145,17 +145,17 @@ class LoginFragment : Fragment() {
             }
             else if(userType == "Mentor"){
                 val emailDomain = emailInput.substring(emailInput.indexOf("@")+1,emailInput.length)
-                val userName = emailInput.substring(emailInput.indexOf("_")+1,emailInput.indexOf("@"))
+                val userName = emailInput.substring(0,emailInput.indexOf("@"))
                 if(emailDomain != "nitc.ac.in"){
                     Toast.makeText(context,"Mentor should login with NITC email id",Toast.LENGTH_SHORT).show()
                 }else{
-                    val loginLive = context?.let { it1 -> LoginAccess(it1,this,sharedViewModel).login(emailInput,passwordInput,userType,emailInput,mentorTypeSelected) }
+                    val loginLive = context?.let { it1 -> LoginAccess(it1,this,sharedViewModel).login(emailInput,passwordInput,userType,userName,mentorTypeSelected) }
 
                     loginLive!!.observe(viewLifecycleOwner){loginSuccess->
                         if(loginSuccess){
                             sharedViewModel.currentUserID = userName
                             sharedViewModel.userType = "Mentor"
-                            findNavController().navigate(R.id.bookingFragment)
+                            findNavController().navigate(R.id.mentorDashboardFragment)
                         }else{
                             Toast.makeText(context,"Some error occurred",Toast.LENGTH_SHORT).show()
                         }

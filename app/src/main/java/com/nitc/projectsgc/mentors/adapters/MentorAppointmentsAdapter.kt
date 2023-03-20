@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -29,6 +30,8 @@ class MentorAppointmentsAdapter(
         var cancelButton = itemView.findViewById<Button>(R.id.cancelButtonInStudentCard)
         var viewAppointmentButton = itemView.findViewById<Button>(R.id.viewAppointmentsButtonInStudentCard)
         var deleteStudentButton = itemView.findViewById<Button>(R.id.deleteButtonInStudentCard)
+        var statusCard = itemView.findViewById<CardView>(R.id.statusCardInStudentCard)
+        var statusText = itemView.findViewById<TextView>(R.id.statusTextInStudentCard)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MentorAppointmentsViewHolder {
@@ -41,6 +44,17 @@ class MentorAppointmentsAdapter(
     }
 
     override fun onBindViewHolder(holder: MentorAppointmentsViewHolder, position: Int) {
+
+        holder.statusCard.visibility = View.VISIBLE
+        holder.statusText.text = appointments[position].status
+        if(appointments[position].cancelled ||appointments[position].completed) {
+            holder.cancelButton.visibility = View.GONE
+            holder.viewPastRecord.visibility = View.GONE
+        }
+        else {
+            holder.cancelButton.visibility = View.VISIBLE
+            holder.viewPastRecord.visibility = View.VISIBLE
+        }
         var stdId = appointments[position].studentID.toString()
         var database =  FirebaseDatabase.getInstance()
         var reference = database.reference.child("students")
@@ -57,8 +71,6 @@ class MentorAppointmentsAdapter(
             }
 
         })
-        holder.cancelButton.visibility = View.VISIBLE
-        holder.viewPastRecord.visibility = View.VISIBLE
         holder.deleteStudentButton.visibility = View.GONE
         holder.viewAppointmentButton.visibility = View.GONE
 

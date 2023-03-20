@@ -1,6 +1,7 @@
 package com.nitc.projectsgc.mentors.access
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
@@ -22,14 +23,15 @@ class MentorAppointmentsAccess(
     fun getAppointments(today:String):LiveData<ArrayList<Appointment>>{
         var appointmentLive = MutableLiveData<ArrayList<Appointment>>(null)
         var database = FirebaseDatabase.getInstance()
-        var reference = database.reference.child("types/${sharedViewModel.currentMentor.type}/${sharedViewModel.currentUserID}/appointments/$today")
+        var refString = "types/${sharedViewModel.currentMentor.type}/${sharedViewModel.currentUserID}/appointments/23-03-2023"
+        Log.d("refString",refString)
+        var reference = database.reference.child(refString)
         reference.addListenerForSingleValueEvent(object:ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 var appointments = arrayListOf<Appointment>()
                 for(timeSlot in snapshot.children){
-                    for(thisAppointment in snapshot.child(timeSlot.key.toString()).children){
-                        appointments.add(thisAppointment.getValue(Appointment::class.java)!!)
-                    }
+                    Log.d("refString",timeSlot.key.toString())
+                    appointments.add(timeSlot.getValue(Appointment::class.java)!!)
                 }
                 appointmentLive.postValue(appointments)
             }
