@@ -40,8 +40,29 @@ class MentorsAccess(var context: Context) {
         return mentorLive
     }
 
-    fun getMentorNames(mentorType:String):LiveData<ArrayList<Mentor>>{
-        var mentorNamesLive = MutableLiveData<ArrayList<Mentor>>(null)
+    fun getMentor(mentorType:String,mentorID:String):LiveData<Mentor>{
+        var mentorLive = MutableLiveData<Mentor>(null)
+        var database : FirebaseDatabase = FirebaseDatabase.getInstance()
+        var reference : DatabaseReference = database.reference.child("types/${mentorType}/${mentorID}")
+
+        reference.addValueEventListener(object:ValueEventListener{
+
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                mentorLive.postValue(snapshot.getValue(Mentor::class.java))
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context,"Error : $error",Toast.LENGTH_SHORT).show()
+            }
+
+        })
+        return mentorLive
+    }
+    fun getMentorNames(mentorType:String): MutableLiveData<ArrayList<Mentor>?> {
+        var mentorNamesLive = MutableLiveData<ArrayList<Mentor>?>()
         var mentors = arrayListOf<Mentor>()
         var database : FirebaseDatabase = FirebaseDatabase.getInstance()
         var reference : DatabaseReference = database.reference.child("types")
@@ -56,12 +77,13 @@ class MentorsAccess(var context: Context) {
                 for(mentor in mentorsSnapshot){
                     mentors.add(mentor.getValue(Mentor::class.java)!!)
                 }
-                mentorNamesLive.postValue(mentors)
+                mentorNamesLive.value = mentors
 
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(context,"Error : $error",Toast.LENGTH_SHORT).show()
+                mentorNamesLive.value = null
             }
 
         })

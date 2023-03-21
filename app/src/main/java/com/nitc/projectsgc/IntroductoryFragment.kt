@@ -100,5 +100,10 @@ class IntroductoryFragment : Fragment() {
         return view
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        coroutineScope.cancel()
+    }
+
 
 }

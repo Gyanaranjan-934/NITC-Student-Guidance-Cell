@@ -99,6 +99,7 @@ class BookingFragment : Fragment() {
                                 mentorID = mentors[selectedIndex].userName.toString()
                                 binding.mentorNameButtonInBookingFragment.text = mentorNameSelected
                                 mentors.clear()
+                                mentorsLive.removeObservers(viewLifecycleOwner)
                                 dialog.dismiss()
                             }
                             mentorNameBuilder.setPositiveButton("Go") { dialog, which ->
@@ -194,6 +195,10 @@ class BookingFragment : Fragment() {
             }
         }
         binding.confirmBookingInBookingFragment.setOnClickListener {
+            binding.mentorTypeButtonInBookingFragment.isEnabled = false
+            binding.mentorNameButtonInBookingFragment.isEnabled = false
+            binding.bookingDateButtonInBookingFragment.isEnabled = false
+            binding.bookingTimeSlotButtonInBookingFragment.isEnabled = false
             var problemDescription = binding.problemDescriptionInputInBookingFragment.text.toString()
             mentorNameSelected = mentorNameSelected.toString()
 
@@ -235,9 +240,15 @@ class BookingFragment : Fragment() {
                         if(rescheduled != null){
                             if(rescheduled){
                                 findNavController().navigate(R.id.studentDashBoardFragment)
+                            }else{
+                                Toast.makeText(context,"Some error occurred.",Toast.LENGTH_SHORT).show()
                             }
+                        }else{
+                            Toast.makeText(context,"Some error occurred.",Toast.LENGTH_SHORT).show()
                         }
                     }
+                }else{
+                    Toast.makeText(context,"Some error occurred.",Toast.LENGTH_SHORT).show()
                 }
             }else{
                 var bookingLive = context?.let { it1 ->
@@ -256,10 +267,20 @@ class BookingFragment : Fragment() {
                         problemDescription = problemDescription
                     ))
                 }
-                bookingLive!!.observe(viewLifecycleOwner){bookingSuccess->
-                    if(bookingSuccess){
-                        Toast.makeText(context,"Booked",Toast.LENGTH_SHORT).show()
-                        findNavController().navigate(R.id.studentDashBoardFragment)
+                if(bookingLive != null) {
+                    bookingLive.observe(viewLifecycleOwner) { bookingSuccess ->
+                        if (bookingSuccess != null) {
+                            if (bookingSuccess) {
+                                Toast.makeText(context, "Booked", Toast.LENGTH_SHORT).show()
+                                findNavController().navigate(R.id.studentDashBoardFragment)
+                            } else {
+                                Toast.makeText(context, "Some error occurred.", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                        } else {
+                            Toast.makeText(context, "Some error occurred.", Toast.LENGTH_SHORT)
+                                .show()
+                        }
                     }
                 }
             }

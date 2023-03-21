@@ -1,6 +1,5 @@
 package com.nitc.projectsgc.admin
 
-import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import com.nitc.projectsgc.Mentor
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.admin.access.AddMentorAccess
-import com.nitc.projectsgc.admin.access.MentorsAccess
 import com.nitc.projectsgc.databinding.FragmentAddMentorBinding
 
 class AddMentorFragment : Fragment() {
@@ -104,7 +102,14 @@ class AddMentorFragment : Fragment() {
                 return@setOnClickListener
             }
             val userName = emailOfMentor.substring(0,emailOfMentor.indexOf("@"))
-            val mentor = Mentor(nameOfMentor,phoneNumberOfMentor,emailOfMentor,mentorTypeSelected,passwordOfMentor,userName)
+            val mentor = Mentor(
+                nameOfMentor,
+                phoneNumberOfMentor,
+                emailOfMentor,
+                mentorTypeSelected,
+                passwordOfMentor,
+                userName
+            )
             val addMentorSuccess = context?.let { it1 -> AddMentorAccess(it1).addMentor(mentor) }
 
             addMentorSuccess!!.observe(viewLifecycleOwner){success->

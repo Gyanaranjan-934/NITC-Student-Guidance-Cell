@@ -16,6 +16,7 @@ import com.nitc.projectsgc.Appointment
 import com.nitc.projectsgc.Mentor
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.SharedViewModel
+import com.nitc.projectsgc.admin.access.MentorsAccess
 import com.nitc.projectsgc.databinding.BookedAppointmentCardBinding
 import com.nitc.projectsgc.student.access.AppointmentsAccess
 
@@ -54,23 +55,21 @@ class CompletedAppointmentsAdapter(
             holder.binding.cancelAppointmentInBookedAppointmentCard.visibility = View.GONE
             holder.binding.rescheduleButtonInUpcomingCard.visibility = View.GONE
         }
+        holder.binding.imageInBookedAppointmentCard.setOnClickListener {
+            sharedViewModel.profileForMentorID = appointments[position].mentorID.toString()
+            sharedViewModel.profileForMentorType = appointments[position].mentorType.toString()
+            parentFragment.findNavController().navigate(R.id.mentorProfileFragment)
+        }
         holder.binding.typeInBookedAppointmentCard.text = appointments[position].mentorType.toString()
         holder.binding.statusTextInBookedAppointmentsCard.text = appointments[position].status
         var mentorName = "NA"
-        var typeReference = holder.reference.child(appointments[position].mentorType.toString())
-        typeReference.child(appointments[position].mentorID.toString()).addValueEventListener(object:ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                var mentor = snapshot.getValue(Mentor::class.java)
-                if (mentor != null) {
-                    holder.binding.mentorNameInBookedAppointmentCard.text = mentor.name.toString()
-                    mentorName = mentor.name.toString()
-                }
+        var mentorLive = MentorsAccess(context).getMentor(appointments[position].mentorType.toString(),appointments[position].mentorID.toString())
+        mentorLive.observe(parentFragment.viewLifecycleOwner) { mentor ->
+            if (mentor != null) {
+                holder.binding.mentorNameInBookedAppointmentCard.text = mentor.name.toString()
+                mentorName = mentor.name.toString()
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context,"Error : $error",Toast.LENGTH_LONG).show()
-            }
-        })
+        }
         holder.binding.dateOfAppointmentInBookedAppointmentCard.text = appointments[position].date.toString()
         holder.binding.timeOfAppointmentInBookedAppointmentCard.text = appointments[position].timeSlot.toString()
         holder.binding.rescheduleButtonInUpcomingCard.setOnClickListener {

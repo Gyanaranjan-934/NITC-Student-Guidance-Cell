@@ -119,6 +119,10 @@ class LoginAccess(
             editor.remove("email")
             editor.putBoolean("loggedIn",false)
             editor.apply()
+            sharedViewModel.rescheduling = false
+            sharedViewModel.profileForMentorType = "NA"
+            sharedViewModel.viewAppointmentStudentID = "NA"
+            sharedViewModel.pastRecordStudentID = "NA"
             logoutLive = true
             sharedViewModel.userType = "NA"
             sharedViewModel.currentUserID = "NA"
