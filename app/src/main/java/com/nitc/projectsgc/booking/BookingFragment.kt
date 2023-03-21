@@ -68,10 +68,14 @@ class BookingFragment : Fragment() {
                             0
                         ) { dialog, selectedIndex ->
                             mentorTypeSelected = mentorTypes[selectedIndex].toString()
+                            binding.mentorTypeButtonInBookingFragment.text = mentorTypeSelected
+                            mentorTypes.clear()
                             dialog.dismiss()
                         }
                         mentorTypeBuilder.setPositiveButton("Go") { dialog, which ->
                             mentorTypeSelected = mentorTypes[0].toString()
+                            binding.mentorTypeButtonInBookingFragment.text = mentorTypeSelected
+                            mentorTypes.clear()
                             dialog.dismiss()
                         }
                         mentorTypeBuilder.create().show()
@@ -95,12 +99,14 @@ class BookingFragment : Fragment() {
                                 mentorNameSelected = mentors[selectedIndex].name.toString()
                                 mentorID = mentors[selectedIndex].userName.toString()
                                 binding.mentorNameButtonInBookingFragment.text = mentorNameSelected
+                                mentors.clear()
                                 dialog.dismiss()
                             }
                             mentorNameBuilder.setPositiveButton("Go") { dialog, which ->
                                 mentorNameSelected = mentors[0].name
                                 mentorID = mentors[0].userName.toString()
                                 binding.mentorNameButtonInBookingFragment.text = mentorNameSelected
+                                mentors.clear()
                                 dialog.dismiss()
                             }
                             mentorNameBuilder.create().show()
@@ -163,11 +169,13 @@ class BookingFragment : Fragment() {
                         ) { dialog, selectedIndex ->
                             selectedTimeSlot = availableTimeSlots[selectedIndex]
                             binding.bookingTimeSlotButtonInBookingFragment.text = selectedTimeSlot
+                            availableTimeSlots.clear()
                             dialog.dismiss()
                         }
                         timeSlotDialog.setPositiveButton("Ok") { dialog, which ->
                             selectedTimeSlot = availableTimeSlots[0]
                             binding.bookingTimeSlotButtonInBookingFragment.text = selectedTimeSlot
+                            availableTimeSlots.clear()
                             dialog.dismiss()
                         }
                         timeSlotDialog.create().show()
@@ -254,8 +262,6 @@ class BookingFragment : Fragment() {
                 }
             }
         }
-
-
 
         return binding.root
     }
