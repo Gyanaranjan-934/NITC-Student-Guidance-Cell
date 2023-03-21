@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="15dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/lavender">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/imageInMentorAppointmentsCard"
+            android:src="@drawable/boy_face"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.08"
+            app:layout_constraintHeight_percent="0.22"
+            app:layout_constraintWidth_percent="0.2"
+            app:layout_constraintHorizontal_bias="0.03"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/nameInMentorAppointmentsCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_semibold"
+            android:textColor="@color/black"
+            android:ellipsize="end"
+            android:text="Student Name"
+            app:layout_constraintWidth_percent="0.4"
+            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintVertical_bias="0"
+            app:layout_constraintBottom_toBottomOf="@+id/imageInMentorAppointmentsCard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageInMentorAppointmentsCard"
+            app:layout_constraintTop_toTopOf="@+id/imageInMentorAppointmentsCard" />
+
+        <LinearLayout
+            android:id="@+id/dobLayoutInMentorAppointmentsCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/nameInMentorAppointmentsCard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/nameInMentorAppointmentsCard"
+            app:layout_constraintTop_toTopOf="@+id/nameInMentorAppointmentsCard">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DOB: "
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:fontFamily="@font/inter_semibold"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="16/01/2002"
+                android:textColor="@color/black"
+                android:fontFamily="@font/inter"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:id="@+id/dobInMentorAppointmentsCard"/>
+
+
+        </LinearLayout>
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter"
+            android:id="@+id/rollNoInMentorAppointmentsCard"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.02"
+            android:text="M210704CA"
+            app:layout_constraintTop_toBottomOf="@id/nameInMentorAppointmentsCard"
+            app:layout_constraintStart_toStartOf="@id/nameInMentorAppointmentsCard"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@id/nameInMentorAppointmentsCard"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="start"
+            android:id="@+id/phoneLayoutInMentorAppointmentsCard"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintWidth_percent="0.6"
+            app:layout_constraintTop_toBottomOf="@id/rollNoInMentorAppointmentsCard"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.02">
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phone:     "
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="@color/black"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="9306032860"
+                android:fontFamily="@font/inter"
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:id="@+id/phoneInMentorAppointmentsCard"/>
+
+
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/reactLayoutInMentorAppointmentsCard"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/completedButtonInMentorAppointmentsCard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/phoneLayoutInMentorAppointmentsCard"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintWidth_percent="1">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/statusCardInMentorAppointmentsCard"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="visible"
+                app:cardBackgroundColor="@color/ivory"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.35"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.2"
+                app:layout_constraintWidth_percent="0.5">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/statusTextInMentorAppointmentsCard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/inter_semibold"
+                    android:gravity="center"
+                    android:text="Booked"
+                    android:textColor="@color/black" />
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/viewPastRecordButtonInMentorAppointmentsCard"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:fontFamily="@font/inter_semibold"
+                android:letterSpacing="0"
+                android:text="View Past record"
+                android:textAllCaps="false"
+                android:visibility="visible"
+                app:cornerRadius="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/cancelButtonInMentorAppointmentsCard"
+                app:layout_constraintHeight_percent="0.34"
+                app:layout_constraintHorizontal_bias="0.1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/statusCardInMentorAppointmentsCard"
+                app:layout_constraintVertical_bias="0.8"
+                app:layout_constraintWidth_percent="0.45" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/cancelButtonInMentorAppointmentsCard"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:backgroundTint="@color/light_gray"
+                android:fontFamily="@font/inter_semibold"
+                android:letterSpacing="0"
+                android:text="Cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:visibility="visible"
+                app:cornerRadius="10dp"
+                app:layout_constraintBottom_toBottomOf="@id/viewPastRecordButtonInMentorAppointmentsCard"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/viewPastRecordButtonInMentorAppointmentsCard"
+                app:layout_constraintTop_toTopOf="@id/viewPastRecordButtonInMentorAppointmentsCard"
+                app:layout_constraintWidth_percent="0.3" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="Completed ?"
+            android:id="@+id/completedButtonInMentorAppointmentsCard"
+            android:textAllCaps="false"
+            android:visibility="visible"
+            app:cornerRadius="15dp"
+            android:letterSpacing="0"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            app:layout_constraintHeight_percent="0.15"
+            app:layout_constraintWidth_percent="0.4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:backgroundTint="#00000000"
+            android:textColor="@color/purple_700"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="visible"
+            android:id="@+id/remarksLayoutInMentorAppointmentsCard"
+            app:layout_constraintTop_toBottomOf="@id/phoneLayoutInMentorAppointmentsCard"
+            app:layout_constraintBottom_toTopOf="@id/completedButtonInMentorAppointmentsCard"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintHeight_percent="0.5"
+            app:layout_constraintWidth_percent="0.8"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.6"
+                app:layout_constraintVertical_bias="0.02"
+                android:id="@+id/remarksCardInMentorAppointmentsCard"
+                app:cardCornerRadius="25dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:cardBackgroundColor="@color/mint_cream">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:boxStrokeWidth="0dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                    app:boxBackgroundColor="@color/mint_cream"
+                    android:hint="Remarks">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="start"
+                        android:inputType="textMultiLine"
+                        android:id="@+id/remarksInputInMentorAppointmentsCard"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@id/remarksCardInMentorAppointmentsCard"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="Submit"
+                android:textAllCaps="false"
+                app:cornerRadius="15dp"
+                android:id="@+id/submitRemarksButtonInMentorAppointmentsCard"
+                android:letterSpacing="0.05"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                app:layout_constraintHeight_percent="0.35"
+                app:layout_constraintWidth_percent="0.4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintVertical_bias="0.9"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:backgroundTint="@color/navy_blue"
+                android:textColor="@color/white"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</com.google.android.material.card.MaterialCardView>

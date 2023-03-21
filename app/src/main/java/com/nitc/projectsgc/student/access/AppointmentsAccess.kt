@@ -31,7 +31,7 @@ class AppointmentsAccess(
                 for(ds in snapshot.child("appointments").children){
                     Log.d("appointment",ds.toString())
                     var appointment = ds.getValue(Appointment::class.java)
-                    if (appointment != null) {
+                    if (appointment != null && appointment.completed == false) {
                         appointments.add(appointment)
                     }
                 }

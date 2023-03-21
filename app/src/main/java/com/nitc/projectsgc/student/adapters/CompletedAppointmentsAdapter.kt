@@ -19,14 +19,14 @@ import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.databinding.BookedAppointmentCardBinding
 import com.nitc.projectsgc.student.access.AppointmentsAccess
 
-class BookedAppointmentsAdapter(
+class CompletedAppointmentsAdapter(
     var context: Context,
     var parentFragment: Fragment,
     var sharedViewModel: SharedViewModel,
     var appointments:ArrayList<Appointment>
-): RecyclerView.Adapter<BookedAppointmentsAdapter.BookedAppointmentsViewHolder>() {
+): RecyclerView.Adapter<CompletedAppointmentsAdapter.CompletedAppointmentsViewHolder>() {
 
-    class BookedAppointmentsViewHolder(val binding: BookedAppointmentCardBinding):RecyclerView.ViewHolder(binding.root) {
+    class CompletedAppointmentsViewHolder(val binding: BookedAppointmentCardBinding):RecyclerView.ViewHolder(binding.root) {
 
         var database = FirebaseDatabase.getInstance()
         var reference = database.reference.child("types")
@@ -35,19 +35,21 @@ class BookedAppointmentsAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): BookedAppointmentsViewHolder {
+    ): CompletedAppointmentsViewHolder {
         var binding = BookedAppointmentCardBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        return BookedAppointmentsViewHolder(binding)
+        return CompletedAppointmentsViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
         return appointments.size
     }
 
-    override fun onBindViewHolder(holder: BookedAppointmentsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CompletedAppointmentsViewHolder, position: Int) {
+            holder.binding.cancelAppointmentInBookedAppointmentCard.visibility = View.GONE
+            holder.binding.rescheduleButtonInUpcomingCard.visibility = View.GONE
+            holder.binding.remarksCardInBookedAppointmentsCard.visibility = View.VISIBLE
+            holder.binding.remarksTextInBookedAppointmentsCard.text = appointments[position].remarks
 
-            holder.binding.cancelAppointmentInBookedAppointmentCard.visibility = View.VISIBLE
-            holder.binding.rescheduleButtonInUpcomingCard.visibility = View.VISIBLE
         if(appointments[position].completed || appointments[position].cancelled){
             holder.binding.cancelAppointmentInBookedAppointmentCard.visibility = View.GONE
             holder.binding.rescheduleButtonInUpcomingCard.visibility = View.GONE

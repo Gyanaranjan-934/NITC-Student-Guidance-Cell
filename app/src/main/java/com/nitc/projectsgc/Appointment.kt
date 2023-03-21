@@ -11,6 +11,7 @@ data class Appointment(
     var status:String? = null,
     var remarks:String? = null,
     var cancelled:Boolean = false,
+    var expanded:Boolean = false,
     var id:String? = null,
     var problemDescription:String? = null
 ) {

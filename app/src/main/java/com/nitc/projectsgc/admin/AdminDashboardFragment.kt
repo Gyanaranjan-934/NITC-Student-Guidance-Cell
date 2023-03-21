@@ -129,7 +129,6 @@ class AdminDashboardFragment : Fragment() {
                     var studentsAdapter = context?.let {
                         StudentsAdapter(
                             it,
-                            true,
                             students = students,
                             this
                         )

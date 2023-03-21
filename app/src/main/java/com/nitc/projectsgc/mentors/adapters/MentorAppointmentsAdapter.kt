@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -28,21 +30,24 @@ class MentorAppointmentsAdapter(
     var sharedViewModel: SharedViewModel
 ) : RecyclerView.Adapter<MentorAppointmentsAdapter.MentorAppointmentsViewHolder>() {
     class MentorAppointmentsViewHolder(itemView : View):RecyclerView.ViewHolder(itemView){
-        var nameOfTheStudent = itemView.findViewById<TextView>(R.id.nameInStudentCard)
-        var dobText = itemView.findViewById<TextView>(R.id.dobInStudentCard)
-        var phoneText = itemView.findViewById<TextView>(R.id.phoneInStudentCard)
-        var rollText = itemView.findViewById<TextView>(R.id.rollNoInStudentCard)
-        var viewPastRecord = itemView.findViewById<Button>(R.id.viewPastRecordButtonInStudentCard)
-        var cancelButton = itemView.findViewById<Button>(R.id.cancelButtonInStudentCard)
-        var viewAppointmentButton = itemView.findViewById<Button>(R.id.viewAppointmentsButtonInStudentCard)
-        var deleteStudentButton = itemView.findViewById<Button>(R.id.deleteButtonInStudentCard)
-        var statusCard = itemView.findViewById<CardView>(R.id.statusCardInStudentCard)
-        var statusText = itemView.findViewById<TextView>(R.id.statusTextInStudentCard)
+        var nameOfTheStudent = itemView.findViewById<TextView>(R.id.nameInMentorAppointmentsCard)
+        var dobText = itemView.findViewById<TextView>(R.id.dobInMentorAppointmentsCard)
+        var phoneText = itemView.findViewById<TextView>(R.id.phoneInMentorAppointmentsCard)
+        var rollText = itemView.findViewById<TextView>(R.id.rollNoInMentorAppointmentsCard)
+        var viewPastRecord = itemView.findViewById<Button>(R.id.viewPastRecordButtonInMentorAppointmentsCard)
+        var cancelButton = itemView.findViewById<Button>(R.id.cancelButtonInMentorAppointmentsCard)
+        var statusCard = itemView.findViewById<CardView>(R.id.statusCardInMentorAppointmentsCard)
+        var statusText = itemView.findViewById<TextView>(R.id.statusTextInMentorAppointmentsCard)
+        var remarksLayout = itemView.findViewById<ConstraintLayout>(R.id.remarksLayoutInMentorAppointmentsCard)
+        var reactLayout = itemView.findViewById<ConstraintLayout>(R.id.reactLayoutInMentorAppointmentsCard)
+        var completeButton = itemView.findViewById<Button>(R.id.completedButtonInMentorAppointmentsCard)
+        var submitRemarks = itemView.findViewById<Button>(R.id.submitRemarksButtonInMentorAppointmentsCard)
+        var remarksInput = itemView.findViewById<EditText>(R.id.remarksInputInMentorAppointmentsCard)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MentorAppointmentsViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.student_card,parent,false)
-        return MentorAppointmentsAdapter.MentorAppointmentsViewHolder(view)
+        val view = LayoutInflater.from(context).inflate(R.layout.mentor_appointments_card,parent,false)
+        return MentorAppointmentsViewHolder(view)
     }
 
     override fun getItemCount(): Int {
@@ -53,14 +58,20 @@ class MentorAppointmentsAdapter(
 
         holder.statusCard.visibility = View.VISIBLE
         holder.statusText.text = appointments[position].status
-        if(appointments[position].cancelled ||appointments[position].completed) {
+        if(appointments[position].cancelled) {
             holder.cancelButton.visibility = View.GONE
             holder.viewPastRecord.visibility = View.GONE
+            holder.completeButton.visibility = View.GONE
+            holder.remarksLayout.visibility = View.VISIBLE
         }
-        else {
-            holder.cancelButton.visibility = View.VISIBLE
-            holder.viewPastRecord.visibility = View.VISIBLE
+        if(appointments[position].completed){
+            holder.reactLayout.visibility = View.GONE
+            holder.remarksLayout.visibility = View.VISIBLE
+            holder.remarksInput.setText(appointments[position].remarks)
+            holder.remarksInput.isEnabled = false
+            holder.completeButton.visibility = View.GONE
         }
+
         var stdId = appointments[position].studentID.toString()
         var database =  FirebaseDatabase.getInstance()
         var reference = database.reference.child("students")
@@ -102,13 +113,43 @@ class MentorAppointmentsAdapter(
                     }else{
                         sharedViewModel.pastRecordStudentID = appointments[position].studentID.toString()
                         parentFragment.findNavController().navigate(R.id.pastRecordFragment)
-
                     }
                 }
             }
         }
-        holder.deleteStudentButton.visibility = View.GONE
-        holder.viewAppointmentButton.visibility = View.GONE
+        if(appointments[position].expanded){
+            holder.reactLayout.visibility = View.GONE
+            holder.remarksLayout.visibility = View.VISIBLE
+        }else{
+            holder.reactLayout.visibility = View.VISIBLE
+            holder.remarksLayout.visibility = View.GONE
+        }
+        holder.submitRemarks.setOnClickListener {
+            var remarksInput = holder.remarksInput.text.toString()
+            if(remarksInput.isEmpty()){
+                holder.remarksInput.error = "Enter remarks"
+                holder.remarksInput.requestFocus()
+                return@setOnClickListener
+            }
+            var remarkAppointment = appointments[position]
+            remarkAppointment.remarks = remarksInput
+            remarkAppointment.status = "Completed"
+            remarkAppointment.completed = true
+            var remarksLive = MentorAppointmentsAccess(context, sharedViewModel).giveRemarks(remarkAppointment)
+            if(remarksLive != null){
+                remarksLive.observe(parentFragment.viewLifecycleOwner){remarked->
+                    if(remarked){
+                        appointments[position] = remarkAppointment
+                        notifyItemChanged(position)
+                    }
+                }
+            }
+        }
+
+        holder.completeButton.setOnClickListener {
+            appointments[position].expanded = !appointments[position].expanded
+            notifyItemChanged(position)
+        }
 
 
     }

@@ -19,6 +19,7 @@ import com.nitc.projectsgc.databinding.FragmentStudentDashBoardBinding
 import com.nitc.projectsgc.student.access.AppointmentsAccess
 import com.nitc.projectsgc.student.access.BasicStudentAccess
 import com.nitc.projectsgc.student.adapters.BookedAppointmentsAdapter
+import com.nitc.projectsgc.student.adapters.CompletedAppointmentsAdapter
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -34,6 +35,7 @@ class StudentDashboardFragment: Fragment() {
         binding = FragmentStudentDashBoardBinding.inflate(inflater,container,false)
         binding.bookedAppointmentsRecyclerViewStudentDashboard.layoutManager = LinearLayoutManager(context)
         binding.completedAppointmentsRecyclerViewInStudentDashboard.layoutManager = LinearLayoutManager(context)
+        sharedViewModel.rescheduling = false
         getBookedAppointments()
         binding.bookedAppointmentTypeButtonInStudentDashboardFragment.setOnClickListener {
             binding.bookedAppointmentTypeImageInStudentDashboardFragment.setBackgroundResource(R.drawable.login_type_card_blue_bg)
@@ -93,12 +95,11 @@ class StudentDashboardFragment: Fragment() {
             completedLive.observe(viewLifecycleOwner){appointments->
                 if(appointments != null && appointments.size != 0){
                     var completedAppointmentsAdapter = context?.let {
-                        BookedAppointmentsAdapter(
+                        CompletedAppointmentsAdapter(
                             it,
                             this,
                             sharedViewModel,
-                            appointments,
-                            true
+                            appointments
                         )
                     }
                     binding.completedAppointmentsRecyclerViewInStudentDashboard.adapter = completedAppointmentsAdapter
@@ -129,8 +130,7 @@ class StudentDashboardFragment: Fragment() {
                             it,
                             this,
                             sharedViewModel,
-                            appointments,
-                            false
+                            appointments
                         )
                     }
                     binding.bookedAppointmentsRecyclerViewStudentDashboard.adapter = bookedAppointmentsAdapter

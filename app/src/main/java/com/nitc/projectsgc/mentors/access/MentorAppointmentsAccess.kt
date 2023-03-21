@@ -22,7 +22,7 @@ class MentorAppointmentsAccess(
     fun getAppointments(today:String):LiveData<ArrayList<Appointment>>{
         var appointmentLive = MutableLiveData<ArrayList<Appointment>>(null)
         var database = FirebaseDatabase.getInstance()
-        var refString = "types/${sharedViewModel.currentMentor.type}/${sharedViewModel.currentUserID}/appointments/22-03-2023"
+        var refString = "types/${sharedViewModel.currentMentor.type}/${sharedViewModel.currentUserID}/appointments/$today"
         Log.d("refString",refString)
         var reference = database.reference.child(refString)
         reference.addListenerForSingleValueEvent(object:ValueEventListener{
@@ -52,8 +52,12 @@ class MentorAppointmentsAccess(
         var reference = database.reference.child(refString)
         reference.setValue(appointment).addOnCompleteListener {cancelTask->
             if(cancelTask.isSuccessful){
-                cancelLive.postValue(true)
-            }
+                var studentRefString = "students/${appointment.studentID}/appointments/${appointment.id}"
+                reference.child(studentRefString).setValue(appointment).addOnCompleteListener {studentTask->
+                    if(studentTask.isSuccessful) cancelLive.postValue(true)
+                    else Toast.makeText(context,"Some error occurred. Try again",Toast.LENGTH_SHORT).show()
+                }
+            } else Toast.makeText(context,"Some error occurred. Try again",Toast.LENGTH_SHORT).show()
         }
         return cancelLive
     }
@@ -84,6 +88,32 @@ class MentorAppointmentsAccess(
 
         })
         return appointmentsLive
+    }
+
+
+    fun giveRemarks(appointment: Appointment):LiveData<Boolean>{
+        var remarksLive = MutableLiveData<Boolean>(false)
+        var database = FirebaseDatabase.getInstance()
+        var refString = "students/${appointment.studentID}/appointments"
+        var studentReference = database.reference.child(refString)
+        studentReference.child(appointment.id.toString()).setValue(appointment).addOnCompleteListener {task->
+            if(task.isSuccessful){
+                var mentorRefString = "types/${sharedViewModel.currentMentor.type}/${sharedViewModel.currentUserID}/appointments/${appointment.date}/${appointment.timeSlot}"
+                var mentorReference = database.reference.child(mentorRefString)
+                mentorReference.setValue(appointment).addOnCompleteListener { mentorTask->
+                    if(mentorTask.isSuccessful){
+                        Toast.makeText(context,"Submitted",Toast.LENGTH_SHORT).show()
+                        remarksLive.postValue(true)
+                    }else{
+                        Toast.makeText(context,"Some error occurred",Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }else{
+                Toast.makeText(context,"Some error occurred",Toast.LENGTH_SHORT).show()
+            }
+        }
+        return remarksLive
+
     }
 
 

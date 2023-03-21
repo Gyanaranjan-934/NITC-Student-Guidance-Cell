@@ -1,5 +1,6 @@
 package com.nitc.projectsgc.mentors
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -34,10 +35,27 @@ class MentorDashboardFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        var selectedDate = SimpleDateFormat("dd-MM-yyyy").format(Date())
         binding = FragmentMentorDashboardBinding.inflate(inflater,container,false)
-        binding.appointmentRecyclerViewInMentorDashboard.layoutManager = LinearLayoutManager(context)
+        binding.selectDateInMentorDashboardFragment.text = selectedDate
+        getAppointments(selectedDate)
+        binding.selectDateInMentorDashboardFragment.setOnClickListener {
+            val calendar = Calendar.getInstance()
 
-        getAppointments()
+            val datePickerDialog = context?.let { it1 ->
+                DatePickerDialog(it1, { _, year, month, day ->
+                    var monthToSet = month + 1
+                    if(monthToSet < 10) selectedDate = "$day-0${monthToSet}-$year"
+                    else selectedDate = "$day-${monthToSet}-$year"
+                    binding.selectDateInMentorDashboardFragment.setText(selectedDate)
+                    getAppointments(selectedDate)
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
+            }
+            if (datePickerDialog != null) {
+                datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
+            }
+            datePickerDialog?.show()
+        }
 
         binding.logoutButtonInMentorDashboardFragment.setOnClickListener {
             var logoutSuccess = context?.let { it1 -> LoginAccess(it1,this,sharedViewModel).logout() }
@@ -60,13 +78,12 @@ class MentorDashboardFragment : Fragment() {
         return binding.root
     }
 
-    private fun getAppointments() {
-        var appointmentsLive = context?.let { MentorAppointmentsAccess(it,sharedViewModel,this).getAppointments(SimpleDateFormat("dd-MM-yyyy").format(
-            Date()
-        )) }
+    private fun getAppointments(selectedDate:String) {
+        var appointmentsLive = context?.let { MentorAppointmentsAccess(it,sharedViewModel).getAppointments(selectedDate) }
         if (appointmentsLive != null) {
             appointmentsLive.observe(viewLifecycleOwner){appointments->
                 if(appointments != null) {
+                    binding.appointmentRecyclerViewInMentorDashboard.layoutManager = LinearLayoutManager(context)
                     binding.appointmentRecyclerViewInMentorDashboard.adapter =
                         context?.let { MentorAppointmentsAdapter(it, appointments,this,sharedViewModel) }
                 }
