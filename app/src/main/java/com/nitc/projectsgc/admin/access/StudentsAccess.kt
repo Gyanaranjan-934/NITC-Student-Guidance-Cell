@@ -18,7 +18,7 @@ class StudentsAccess(var context: Context) {
         var reference : DatabaseReference = database.reference.child("students")
         reference.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                var student = snapshot.child(rollNo).getValue(Student::class.java)
+                var student = snapshot.child(rollNo).getValue(Student::class.java)!!
                 studentLive.postValue(student)
             }
 
@@ -75,7 +75,7 @@ class StudentsAccess(var context: Context) {
         var appointments = arrayListOf<Appointment>()
         var database = FirebaseDatabase.getInstance()
         var reference = database.reference.child("students")
-        reference.child("appointments").addListenerForSingleValueEvent(object:ValueEventListener{
+        reference.child("$rollNo/appointments").addListenerForSingleValueEvent(object:ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 for(ds in snapshot.children){
                     var appointment = ds.getValue(Appointment::class.java)

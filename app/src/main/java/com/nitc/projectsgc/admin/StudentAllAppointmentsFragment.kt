@@ -45,7 +45,8 @@ class StudentAllAppointmentsFragment: Fragment() {
                             it,
                             this,
                             sharedViewModel,
-                            appointments
+                            appointments,
+                            true
                         )
                     }
                 }

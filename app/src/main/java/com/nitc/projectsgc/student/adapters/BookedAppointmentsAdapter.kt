@@ -23,7 +23,8 @@ class BookedAppointmentsAdapter(
     var context: Context,
     var parentFragment: Fragment,
     var sharedViewModel: SharedViewModel,
-    var appointments:ArrayList<Appointment>
+    var appointments:ArrayList<Appointment>,
+    var isAdmin:Boolean
 ): RecyclerView.Adapter<BookedAppointmentsAdapter.BookedAppointmentsViewHolder>() {
 
     class BookedAppointmentsViewHolder(val binding: BookedAppointmentCardBinding):RecyclerView.ViewHolder(binding.root) {
@@ -45,9 +46,13 @@ class BookedAppointmentsAdapter(
     }
 
     override fun onBindViewHolder(holder: BookedAppointmentsViewHolder, position: Int) {
-
+        if(isAdmin){
+            holder.binding.rescheduleButtonInUpcomingCard.visibility = View.GONE
+            holder.binding.cancelAppointmentInBookedAppointmentCard.visibility = View.GONE
+        }else {
             holder.binding.cancelAppointmentInBookedAppointmentCard.visibility = View.VISIBLE
             holder.binding.rescheduleButtonInUpcomingCard.visibility = View.VISIBLE
+        }
         if(appointments[position].completed || appointments[position].cancelled){
             holder.binding.cancelAppointmentInBookedAppointmentCard.visibility = View.GONE
             holder.binding.rescheduleButtonInUpcomingCard.visibility = View.GONE

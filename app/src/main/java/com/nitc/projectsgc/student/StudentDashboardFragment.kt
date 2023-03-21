@@ -130,7 +130,8 @@ class StudentDashboardFragment: Fragment() {
                             it,
                             this,
                             sharedViewModel,
-                            appointments
+                            appointments,
+                            false
                         )
                     }
                     binding.bookedAppointmentsRecyclerViewStudentDashboard.adapter = bookedAppointmentsAdapter

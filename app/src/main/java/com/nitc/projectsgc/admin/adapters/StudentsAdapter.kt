@@ -51,9 +51,13 @@ class StudentsAdapter(
             var appointmentsLive = StudentsAccess(context).getAppointments(students[position].rollNo)
             if(appointmentsLive != null){
                 appointmentsLive.observe(parentFragment.viewLifecycleOwner){appointments->
-                    if(!appointments.isEmpty() || appointments != null){
-                        sharedViewModel.viewAppointmentStudentID = students[position].rollNo
-                        parentFragment.findNavController().navigate(R.id.studentAllAppointmentsFragment)
+                    if(appointments != null){
+                        if(!appointments.isEmpty()) {
+
+                            sharedViewModel.viewAppointmentStudentID = students[position].rollNo
+                            parentFragment.findNavController()
+                                .navigate(R.id.studentAllAppointmentsFragment)
+                        }
                     }
                 }
             }
