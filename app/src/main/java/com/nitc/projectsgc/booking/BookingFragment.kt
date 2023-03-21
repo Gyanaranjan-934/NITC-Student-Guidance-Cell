@@ -69,12 +69,14 @@ class BookingFragment : Fragment() {
                             mentorTypeSelected = mentorTypes[selectedIndex].toString()
                             binding.mentorTypeButtonInBookingFragment.text = mentorTypeSelected
                             mentorTypes.clear()
+                            mentorTypesLive.removeObservers(viewLifecycleOwner)
                             dialog.dismiss()
                         }
                         mentorTypeBuilder.setPositiveButton("Go") { dialog, which ->
                             mentorTypeSelected = mentorTypes[0].toString()
                             binding.mentorTypeButtonInBookingFragment.text = mentorTypeSelected
                             mentorTypes.clear()
+                            mentorTypesLive.removeObservers(viewLifecycleOwner)
                             dialog.dismiss()
                         }
                         mentorTypeBuilder.create().show()
@@ -107,6 +109,7 @@ class BookingFragment : Fragment() {
                                 mentorID = mentors[0].userName.toString()
                                 binding.mentorNameButtonInBookingFragment.text = mentorNameSelected
                                 mentors.clear()
+                                mentorsLive.removeObservers(viewLifecycleOwner)
                                 dialog.dismiss()
                             }
                             mentorNameBuilder.create().show()
@@ -195,10 +198,6 @@ class BookingFragment : Fragment() {
             }
         }
         binding.confirmBookingInBookingFragment.setOnClickListener {
-            binding.mentorTypeButtonInBookingFragment.isEnabled = false
-            binding.mentorNameButtonInBookingFragment.isEnabled = false
-            binding.bookingDateButtonInBookingFragment.isEnabled = false
-            binding.bookingTimeSlotButtonInBookingFragment.isEnabled = false
             var problemDescription = binding.problemDescriptionInputInBookingFragment.text.toString()
             mentorNameSelected = mentorNameSelected.toString()
             if(mentorTypeSelected == "NA"){
