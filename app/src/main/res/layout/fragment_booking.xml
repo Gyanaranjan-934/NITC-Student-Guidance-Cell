@@ -11,15 +11,16 @@
     <ImageView
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:id="@+id/headingImageInBookingFragment"
         android:src="@drawable/appointment"
-        app:layout_constraintBottom_toTopOf="@+id/bookingCardInBookingFragment"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintHeight_percent="0.15"
         app:layout_constraintWidth_percent="0.3"
         android:scaleType="centerCrop"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.05" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/bookingCardInBookingFragment"
@@ -30,10 +31,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintWidth_percent="0.85"
-        app:layout_constraintHeight_percent="0.7"
+        app:layout_constraintHeight_percent="0.6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.55">
+        app:layout_constraintTop_toBottomOf="@id/headingImageInBookingFragment"
+        app:layout_constraintVertical_bias="0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/bookingLayout"
@@ -52,7 +53,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHeight_percent="0.1"
+                    app:layout_constraintHeight_percent="0.12"
                     app:layout_constraintVertical_bias="0"
                     android:letterSpacing="0"
                     app:layout_constraintWidth_percent="0.6"
@@ -71,7 +72,7 @@
                     android:fontFamily="@font/inter"
                     android:letterSpacing="0"
                     app:layout_constraintVertical_bias="0.05"
-                    app:layout_constraintHeight_percent="0.1"
+                    app:layout_constraintHeight_percent="0.12"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/mentorTypeButtonInBookingFragment"
                     app:layout_constraintStart_toStartOf="@id/mentorTypeButtonInBookingFragment"
@@ -89,8 +90,10 @@
                     android:layout_height="0dp"
                     android:fontFamily="@font/inter"
                     android:letterSpacing="0"
-                    app:layout_constraintHeight_percent="0.1"
-                    app:layout_constraintVertical_bias="0.05"
+                    android:textColor="@color/black"
+                    app:cornerRadius="15dp"
+                    app:layout_constraintHeight_percent="0.12"
+                    app:layout_constraintVertical_bias="0.06"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/mentorTypeButtonInBookingFragment"
                     app:layout_constraintStart_toStartOf="@id/mentorTypeButtonInBookingFragment"
@@ -106,10 +109,14 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:fontFamily="@font/inter"
+                    app:layout_constraintHeight_percent="0.12"
                     android:letterSpacing="0"
+                    app:cornerRadius="15dp"
+                    android:textColor="@color/black"
+                    app:layout_constraintVertical_bias="0.08"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/mentorTypeButtonInBookingFragment"
+                    app:layout_constraintStart_toStartOf="@id/mentorTypeButtonInBookingFragment"
                     app:layout_constraintTop_toBottomOf="@id/bookingDateButtonInBookingFragment"
                     android:textAllCaps="false"
                     android:backgroundTint="@color/baby_blue"
@@ -118,17 +125,21 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/problemDescCardInBookingFragment"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="5"
                 android:paddingBottom="5dp"
-                app:layout_constraintHeight_percent="0.4"
+                app:boxStrokeWidth="0dp"
+                app:boxBackgroundColor="@color/sky_blue"
+                app:boxStrokeWidthFocused="0dp"
+                app:layout_constraintHeight_percent="0.3"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintWidth_percent="0.7"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintVertical_bias="0.9"
+                app:layout_constraintVertical_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/timeSlotCardInBookingFragment">
+                app:layout_constraintTop_toBottomOf="@+id/bookingTimeSlotButtonInBookingFragment">
 
                 <com.google.android.material.textfield.TextInputEditText
 
@@ -160,28 +171,36 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/confirmBookingInBookingFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#00C853"
-        android:text="CONFIRM"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="@color/navy_blue"
+        android:text="Confirm"
+        app:cornerRadius="15dp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintHeight_percent="0.075"
+        app:layout_constraintWidth_percent="0.4"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.85"
+        app:layout_constraintEnd_toEndOf="@id/bookingCardInBookingFragment"
+        app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bookingCardInBookingFragment"
         app:layout_constraintVertical_bias="0.3" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/cancelButtonInBookingFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#FF4500"
-        android:text="cancel"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="@color/dark_white"
+        android:text="Cancel"
+        android:textAllCaps="false"
+        app:cornerRadius="15dp"
+        app:layout_constraintWidth_percent="0.3"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@id/confirmBookingInBookingFragment"
         app:layout_constraintEnd_toStartOf="@+id/confirmBookingInBookingFragment"
-        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bookingCardInBookingFragment"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintTop_toTopOf="@id/confirmBookingInBookingFragment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
