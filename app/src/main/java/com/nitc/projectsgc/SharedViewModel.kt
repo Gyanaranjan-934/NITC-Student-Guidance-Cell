@@ -10,5 +10,6 @@ class SharedViewModel:ViewModel() {
     var userType = "Student"
     var rescheduling:Boolean = false
     var reschedulingMentorName = "NA"
+    lateinit var pastRecordStudentID:String
     lateinit var reschedulingAppointment:Appointment
 }

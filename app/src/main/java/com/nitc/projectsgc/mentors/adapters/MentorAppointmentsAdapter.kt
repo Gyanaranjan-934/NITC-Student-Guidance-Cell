@@ -8,6 +8,8 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -15,11 +17,15 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.nitc.projectsgc.Appointment
 import com.nitc.projectsgc.R
+import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.Student
+import com.nitc.projectsgc.mentors.access.MentorAppointmentsAccess
 
 class MentorAppointmentsAdapter(
     var context : Context,
     var appointments : ArrayList<Appointment>,
+    var parentFragment: Fragment,
+    var sharedViewModel: SharedViewModel
 ) : RecyclerView.Adapter<MentorAppointmentsAdapter.MentorAppointmentsViewHolder>() {
     class MentorAppointmentsViewHolder(itemView : View):RecyclerView.ViewHolder(itemView){
         var nameOfTheStudent = itemView.findViewById<TextView>(R.id.nameInStudentCard)
@@ -71,6 +77,36 @@ class MentorAppointmentsAdapter(
             }
 
         })
+        holder.cancelButton.setOnClickListener {
+            var cancelAppointment = appointments[position]
+            cancelAppointment.cancelled = true
+            cancelAppointment.status = "Cancelled by mentor"
+            var cancelLive = MentorAppointmentsAccess(context, sharedViewModel = sharedViewModel).cancelAppointment(appointment = cancelAppointment)
+            if(cancelLive != null){
+                cancelLive.observe(parentFragment.viewLifecycleOwner){cancelSuccess->
+                    if(cancelSuccess){
+                        Toast.makeText(context,"Cancelled",Toast.LENGTH_SHORT).show()
+                        appointments[position] = cancelAppointment
+                        notifyItemChanged(position)
+                    }
+                }
+            }
+        }
+
+        holder.viewPastRecord.setOnClickListener {
+            var appointmentsLive = MentorAppointmentsAccess(context, sharedViewModel).getStudentRecord(studentID = appointments[position].studentID.toString())
+            if(appointmentsLive != null){
+                appointmentsLive.observe(parentFragment.viewLifecycleOwner){pastAppointments->
+                    if(pastAppointments == null || pastAppointments.isEmpty()){
+                        Toast.makeText(context,"No past record found",Toast.LENGTH_SHORT).show()
+                    }else{
+                        sharedViewModel.pastRecordStudentID = appointments[position].studentID.toString()
+                        parentFragment.findNavController().navigate(R.id.pastRecordFragment)
+
+                    }
+                }
+            }
+        }
         holder.deleteStudentButton.visibility = View.GONE
         holder.viewAppointmentButton.visibility = View.GONE
 

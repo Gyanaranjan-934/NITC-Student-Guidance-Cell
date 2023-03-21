@@ -40,6 +40,7 @@ class LoginAccess(
         auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(){ task->
                 if(task.isSuccessful){
                     var verification = auth.currentUser?.isEmailVerified
+                    if(userType == "Mentor") verification = true
                     if(verification==true){
                         loginLive.postValue(true)
                         var sharedPreferences = parentFragment.activity?.getSharedPreferences("sgcLogin",Context.MODE_PRIVATE)

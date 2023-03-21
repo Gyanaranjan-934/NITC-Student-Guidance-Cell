@@ -49,6 +49,8 @@ class BookedAppointmentsAdapter(
         if(isCompleted){
             holder.binding.cancelAppointmentInBookedAppointmentCard.visibility = View.GONE
             holder.binding.rescheduleButtonInUpcomingCard.visibility = View.GONE
+            holder.binding.remarksCardInBookedAppointmentsCard.visibility = View.VISIBLE
+            holder.binding.remarksTextInBookedAppointmentsCard.text = appointments[position].remarks
         }else{
             holder.binding.cancelAppointmentInBookedAppointmentCard.visibility = View.VISIBLE
             holder.binding.rescheduleButtonInUpcomingCard.visibility = View.VISIBLE

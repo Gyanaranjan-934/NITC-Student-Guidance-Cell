@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
 import androidx.databinding.DataBindingUtil.inflate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -47,6 +49,14 @@ class MentorDashboardFragment : Fragment() {
 //            }
 
         }
+
+        var backCallBack = object:OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                requireActivity().finish()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,backCallBack)
+
         return binding.root
     }
 
@@ -58,7 +68,7 @@ class MentorDashboardFragment : Fragment() {
             appointmentsLive.observe(viewLifecycleOwner){appointments->
                 if(appointments != null) {
                     binding.appointmentRecyclerViewInMentorDashboard.adapter =
-                        context?.let { MentorAppointmentsAdapter(it, appointments) }
+                        context?.let { MentorAppointmentsAdapter(it, appointments,this,sharedViewModel) }
                 }
             }
         }

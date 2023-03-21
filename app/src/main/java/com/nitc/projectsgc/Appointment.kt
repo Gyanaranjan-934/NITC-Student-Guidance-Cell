@@ -9,6 +9,7 @@ data class Appointment(
     var mentorName:String? = null,
     var completed:Boolean = false,
     var status:String? = null,
+    var remarks:String? = null,
     var cancelled:Boolean = false,
     var id:String? = null,
     var problemDescription:String? = null

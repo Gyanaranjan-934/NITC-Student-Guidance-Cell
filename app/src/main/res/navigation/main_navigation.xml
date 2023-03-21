@@ -73,4 +73,8 @@
         android:name="com.nitc.projectsgc.mentors.MentorDashboardFragment"
         android:label="fragment_mentor_dashboard"
         tools:layout="@layout/fragment_mentor_dashboard" />
+    <fragment
+        android:id="@+id/pastRecordFragment"
+        android:name="com.nitc.projectsgc.student.PastRecordFragment"
+        android:label="PastRecordFragment" />
 </navigation>
