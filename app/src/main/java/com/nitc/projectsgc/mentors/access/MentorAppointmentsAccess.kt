@@ -23,7 +23,7 @@ class MentorAppointmentsAccess(
     fun getAppointments(today:String):LiveData<ArrayList<Appointment>>{
         var appointmentLive = MutableLiveData<ArrayList<Appointment>>(null)
         var database = FirebaseDatabase.getInstance()
-        var refString = "types/${sharedViewModel.currentMentor.type}/${sharedViewModel.currentUserID}/appointments/23-03-2023"
+        var refString = "types/${sharedViewModel.currentMentor.type}/${sharedViewModel.currentUserID}/appointments/22-03-2023"
         Log.d("refString",refString)
         var reference = database.reference.child(refString)
         reference.addListenerForSingleValueEvent(object:ValueEventListener{
