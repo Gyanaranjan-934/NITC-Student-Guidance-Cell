@@ -5,8 +5,8 @@
     android:id="@+id/signUpInRegisterFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D8C3A5"
-    android:backgroundTint="#D8C3A5"
+    android:background="@color/light_blue"
+    android:backgroundTint="@color/light_blue"
     android:padding="10dp"
     tools:context="register.RegisterFragment">
 
@@ -18,7 +18,7 @@
         android:fontFamily="@font/inter_semibold"
         android:text="Sign Up"
         android:textColor="@color/black"
-        android:textSize="25sp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/addMentorCard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

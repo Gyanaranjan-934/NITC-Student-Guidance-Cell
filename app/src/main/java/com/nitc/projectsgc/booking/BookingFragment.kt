@@ -196,6 +196,7 @@ class BookingFragment : Fragment() {
         binding.confirmBookingInBookingFragment.setOnClickListener {
             var problemDescription = binding.problemDescriptionInputInBookingFragment.text.toString()
             mentorNameSelected = mentorNameSelected.toString()
+
             if(mentorTypeSelected == "NA"){
                 binding.mentorTypeButtonInBookingFragment.error = "Select type"
                 binding.mentorTypeButtonInBookingFragment.requestFocus()
@@ -206,7 +207,6 @@ class BookingFragment : Fragment() {
                 binding.mentorNameButtonInBookingFragment.requestFocus()
                 return@setOnClickListener
             }
-
             if(problemDescription.isEmpty()){
                 binding.problemDescriptionInputInBookingFragment.error = "Write problem description first"
                 binding.problemDescriptionInputInBookingFragment.requestFocus()
