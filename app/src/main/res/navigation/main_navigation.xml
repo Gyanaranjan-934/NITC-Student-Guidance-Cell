@@ -73,4 +73,9 @@
         android:name="com.nitc.projectsgc.mentors.MentorDashboardFragment"
         android:label="fragment_mentor_dashboard"
         tools:layout="@layout/fragment_mentor_dashboard" />
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.nitc.projectsgc.ForgotPasswordFragment"
+        android:label="fragment_forgot_password"
+        tools:layout="@layout/fragment_forgot_password" />
 </navigation>

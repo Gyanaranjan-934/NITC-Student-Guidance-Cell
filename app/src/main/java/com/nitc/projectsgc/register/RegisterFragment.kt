@@ -115,6 +115,7 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
         registerBinding.signInButtonInRegisterFragment.setOnClickListener{
             findNavController().navigate(R.id.loginFragment)
         }
+//        registerBinding.f
     val backCallback = object : OnBackPressedCallback(true /* enabled by default */) {
         override fun handleOnBackPressed() {
             // Call a method in your Fragment to handle the navigation
