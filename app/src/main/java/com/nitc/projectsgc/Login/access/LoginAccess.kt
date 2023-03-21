@@ -39,47 +39,53 @@ class LoginAccess(
         var loginLive = MutableLiveData<Boolean>()
         auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(){ task->
                 if(task.isSuccessful){
-                    loginLive.postValue(true)
-                    var sharedPreferences = parentFragment.activity?.getSharedPreferences("sgcLogin",Context.MODE_PRIVATE)
-                    val editor = sharedPreferences?.edit()
-                    if (editor != null) {
-                        editor.putBoolean("loggedIn",true)
-                        editor.putString("password",password)
-                        editor.putString("userType",userType)
-                        editor.putString("mentorType",mentorType)
-                        editor.putString("email",email)
-                        editor.putString("username",username)
-                        editor.apply()
-                        sharedViewModel.currentUserID = username
-                        sharedViewModel.userType = userType
-                        when(userType){
-                            "Student"->{
-                                reference.child("students/$username").addListenerForSingleValueEvent(object:ValueEventListener{
-                                    override fun onDataChange(snapshot: DataSnapshot) {
-                                        sharedViewModel.currentStudent = snapshot.getValue(Student::class.java)!!
-                                    }
+                    var verification = auth.currentUser?.isEmailVerified
+                    if(verification==true){
+                        loginLive.postValue(true)
+                        var sharedPreferences = parentFragment.activity?.getSharedPreferences("sgcLogin",Context.MODE_PRIVATE)
+                        val editor = sharedPreferences?.edit()
+                        if (editor != null) {
+                            editor.putBoolean("loggedIn",true)
+                            editor.putString("password",password)
+                            editor.putString("userType",userType)
+                            editor.putString("mentorType",mentorType)
+                            editor.putString("email",email)
+                            editor.putString("username",username)
+                            editor.apply()
+                            sharedViewModel.currentUserID = username
+                            sharedViewModel.userType = userType
+                            when(userType){
+                                "Student"->{
+                                    reference.child("students/$username").addListenerForSingleValueEvent(object:ValueEventListener{
+                                        override fun onDataChange(snapshot: DataSnapshot) {
+                                            sharedViewModel.currentStudent = snapshot.getValue(Student::class.java)!!
+                                        }
 
-                                    override fun onCancelled(error: DatabaseError) {
-                                        Toast.makeText(context,"Some error : $error",Toast.LENGTH_LONG).show()
-                                    }
+                                        override fun onCancelled(error: DatabaseError) {
+                                            Toast.makeText(context,"Some error : $error",Toast.LENGTH_LONG).show()
+                                        }
 
-                                })
-                            }
-                            "Mentor"->{
-                                reference.child("types/$mentorType/$username").addListenerForSingleValueEvent(object:ValueEventListener{
-                                    override fun onDataChange(snapshot: DataSnapshot) {
-                                        sharedViewModel.currentMentor = snapshot.getValue(Mentor::class.java)!!
+                                    })
+                                }
+                                "Mentor"->{
+                                    reference.child("types/$mentorType/$username").addListenerForSingleValueEvent(object:ValueEventListener{
+                                        override fun onDataChange(snapshot: DataSnapshot) {
+                                            sharedViewModel.currentMentor = snapshot.getValue(Mentor::class.java)!!
 
-                                    }
+                                        }
 
-                                    override fun onCancelled(error: DatabaseError) {
-                                        Toast.makeText(context,"Some error : $error",Toast.LENGTH_LONG).show()
-                                    }
+                                        override fun onCancelled(error: DatabaseError) {
+                                            Toast.makeText(context,"Some error : $error",Toast.LENGTH_LONG).show()
+                                        }
 
-                                })
+                                    })
+                                }
                             }
                         }
+                    }else{
+                        Toast.makeText(context, "Please verify your email", Toast.LENGTH_SHORT).show()
                     }
+
 
                 }else{
                     loginLive.postValue(false)

@@ -2,6 +2,7 @@ package com.nitc.projectsgc.register.access
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
@@ -29,7 +30,14 @@ class RegisterAccess(
                     student.password
                 ).addOnCompleteListener{authTask->
                     if(authTask.isSuccessful){
-                        registerSuccess.postValue(true)
+                        auth.currentUser?.sendEmailVerification()
+                            ?.addOnSuccessListener {
+                                Toast.makeText(context, "Please verify your email", Toast.LENGTH_SHORT).show()
+                                registerSuccess.postValue(true)
+                            }
+                            ?.addOnFailureListener {
+                                Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
+                            }
                     }else{
                         reference.child(student.rollNo).removeValue()
                         registerSuccess.postValue(false)
