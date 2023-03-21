@@ -38,11 +38,11 @@ class ForgotPasswordFragment : Fragment() {
             var reference = FirebaseDatabase.getInstance().reference.child("students")
             auth.sendPasswordResetEmail(emailInput)
                 .addOnSuccessListener {
-                    Toast.makeText(context, "Please check your email", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Please check your email and click the link to reset the password", Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.loginFragment)
                 }
                 .addOnFailureListener {
-                    Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,"You are not registered , please sign up to proceed further", Toast.LENGTH_SHORT).show()
                 }
         }
 

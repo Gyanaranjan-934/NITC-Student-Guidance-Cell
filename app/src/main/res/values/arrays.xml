@@ -3,6 +3,5 @@
     <array name="gender_options">
         <item>Male</item>
         <item>Female</item>
-        <item>Other</item>
     </array>
 </resources>

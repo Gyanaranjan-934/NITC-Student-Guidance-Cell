@@ -99,7 +99,7 @@ class LoginFragment : Fragment() {
         binding.signInButton.setOnClickListener {
             var emailInput = requireView().findViewById<EditText>(R.id.editTextTextEmailAddress).text.toString()
             val passwordInput = requireView().findViewById<EditText>(R.id.editTextTextPassword).text.toString()
-
+            emailInput = emailInput.trim()
             if(emailInput.isEmpty()){
                 binding.editTextTextEmailAddress.error = "No email entered"
                 binding.editTextTextEmailAddress.requestFocus()
@@ -133,7 +133,7 @@ class LoginFragment : Fragment() {
 
             }
             else if(userType == "Admin"){
-                Toast.makeText(requireContext(),"Email entered is $emailInput and password entered is $passwordInput",Toast.LENGTH_LONG).show()
+//                Toast.makeText(requireContext(),"Email entered is $emailInput and password entered is $passwordInput",Toast.LENGTH_LONG).show()
                 emailInput = emailInput.trim()
                 if(emailInput=="admin@nitc.ac.in" && passwordInput=="admin@123"){
                     sharedViewModel.userType = "Admin"

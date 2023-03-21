@@ -1,5 +1,6 @@
 package com.nitc.projectsgc.updateprofile
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.nitc.projectsgc.Mentor
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.SharedViewModel
+import com.nitc.projectsgc.admin.access.MentorsAccess
 import com.nitc.projectsgc.databinding.FragmentMentorUpdateBinding
 
 class MentorUpdateFragment : Fragment() {
@@ -40,7 +42,36 @@ class MentorUpdateFragment : Fragment() {
         mentorUpdateBinding.mentorTypeButtonInUpdateMentorFragment.text = sharedViewModel.currentMentor.type
         mentorUpdateBinding.passwordFieldInUpdateMentorFragment.setText(sharedViewModel.currentMentor.password)
         mentorUpdateBinding.phoneNumberInUpdateMentorFragment.setText(sharedViewModel.currentMentor.phone)
-
+        var mentorTypeSelected = "NA"
+        mentorUpdateBinding.mentorTypeButtonInUpdateMentorFragment.setOnClickListener{
+            var mentorTypesLive = context?.let { it1 -> MentorsAccess(it1).getMentorTypes() }
+            if (mentorTypesLive != null) {
+                mentorTypesLive.observe(viewLifecycleOwner) { mentorTypes ->
+                    if(mentorTypes != null) {
+                        val mentorTypeBuilder = AlertDialog.Builder(context)
+                        mentorTypeBuilder.setTitle("Choose Mentor Type")
+                        mentorTypeBuilder.setSingleChoiceItems(
+                            mentorTypes.map { it }.toTypedArray(),
+                            0
+                        ) { dialog, selectedIndex ->
+                            mentorTypeSelected = mentorTypes[selectedIndex].toString()
+                            mentorUpdateBinding.mentorTypeButtonInUpdateMentorFragment.text = mentorTypeSelected
+                            mentorTypes.clear()
+                            mentorTypesLive.removeObservers(viewLifecycleOwner)
+                            dialog.dismiss()
+                        }
+                        mentorTypeBuilder.setPositiveButton("Go") { dialog, which ->
+                            mentorTypeSelected = mentorTypes[0].toString()
+                            mentorUpdateBinding.mentorTypeButtonInUpdateMentorFragment.text = mentorTypeSelected
+                            mentorTypes.clear()
+                            mentorTypesLive.removeObservers(viewLifecycleOwner)
+                            dialog.dismiss()
+                        }
+                        mentorTypeBuilder.create().show()
+                    }
+                }
+            }
+        }
 
         mentorUpdateBinding.updateButtonInUpdateMentorFragment.setOnClickListener {
             var newEmail = mentorUpdateBinding.emailFieldInUpdateMentorFragment.text.toString()

@@ -117,7 +117,7 @@ class AddMentorFragment : Fragment() {
                     findNavController().navigate(R.id.adminDashboardFragment)
                     Toast.makeText(context,"adding success of $nameOfMentor",Toast.LENGTH_SHORT).show()
                 }else{
-                    Toast.makeText(context,"Failed",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,success.toString(),Toast.LENGTH_SHORT).show()
                 }
             }
 
