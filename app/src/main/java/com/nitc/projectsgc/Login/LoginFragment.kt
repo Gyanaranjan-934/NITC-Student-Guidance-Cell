@@ -167,6 +167,9 @@ class LoginFragment : Fragment() {
         binding.signUpButton.setOnClickListener{
             findNavController().navigate(R.id.registerFragment)
         }
+        binding.forgotPasswordButtonInLoginFragment.setOnClickListener {
+            findNavController().navigate(R.id.forgotPasswordFragment)
+        }
         val backCallback = object : OnBackPressedCallback(true /* enabled by default */) {
             override fun handleOnBackPressed() {
                 // Call a method in your Fragment to handle the navigation
