@@ -4,114 +4,117 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5DEB3"
-    android:padding="40dp"
+    android:background="@color/light_blue"
     android:id="@+id/mainLayoutOfBookingFragment"
     tools:context=".MainActivity">
 
     <ImageView
-        android:layout_width="102dp"
-        android:layout_height="96dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:src="@drawable/appointment"
         app:layout_constraintBottom_toTopOf="@+id/bookingCardInBookingFragment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHeight_percent="0.15"
+        app:layout_constraintWidth_percent="0.3"
+        android:scaleType="centerCrop"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/bookingCardInBookingFragment"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        app:cardCornerRadius="10dp"
+        app:cardCornerRadius="25dp"
+        app:cardBackgroundColor="@color/mint_cream"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.85"
         app:layout_constraintHeight_percent="0.7"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.55"
-        app:layout_constraintVertical_weight="0.7">
+        app:layout_constraintVertical_bias="0.55">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/bookingLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/mint_cream"
             android:padding="10dp">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/mentorTypeCardInBookingFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@+id/mentorNameCardInBookingFragment"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/mentorTypeButtonInBookingFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:backgroundTint="#FAEBD7"
-                    android:hint="SELECT MENTOR TYPE" />
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:fontFamily="@font/inter"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHeight_percent="0.1"
+                    app:layout_constraintVertical_bias="0"
+                    android:letterSpacing="0"
+                    app:layout_constraintWidth_percent="0.6"
+                    android:textAllCaps="false"
+                    app:cornerRadius="15dp"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/baby_blue"
+                    android:text="Select Mentor Type" />
 
-            </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/mentorNameCardInBookingFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
-                app:layout_constraintBottom_toTopOf="@+id/dateSlotCardInBookingFragment"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mentorTypeCardInBookingFragment">
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/mentorNameButtonInBookingFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:backgroundTint="#FAEBD7"
-                    android:hint="SELECT MENTOR NAME" />
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:fontFamily="@font/inter"
+                    android:letterSpacing="0"
+                    app:layout_constraintVertical_bias="0.05"
+                    app:layout_constraintHeight_percent="0.1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/mentorTypeButtonInBookingFragment"
+                    app:layout_constraintStart_toStartOf="@id/mentorTypeButtonInBookingFragment"
+                    app:layout_constraintTop_toBottomOf="@+id/mentorTypeButtonInBookingFragment"
+                    android:textAllCaps="false"
+                    app:cornerRadius="15dp"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/baby_blue"
+                    android:text="Select Mentor Name" />
 
-            </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/dateSlotCardInBookingFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
-                app:layout_constraintBottom_toTopOf="@+id/timeSlotCardInBookingFragment"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mentorNameCardInBookingFragment">
-
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/bookingDateButtonInBookingFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:backgroundTint="#FAEBD7"
-                    android:hint="SELECT DATE SLOT" />
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:fontFamily="@font/inter"
+                    android:letterSpacing="0"
+                    app:layout_constraintHeight_percent="0.1"
+                    app:layout_constraintVertical_bias="0.05"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/mentorTypeButtonInBookingFragment"
+                    app:layout_constraintStart_toStartOf="@id/mentorTypeButtonInBookingFragment"
+                    app:layout_constraintTop_toBottomOf="@+id/mentorNameButtonInBookingFragment"
+                    android:textAllCaps="false"
+                    android:backgroundTint="@color/baby_blue"
+                    android:text="Select Date slot" />
 
-            </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/timeSlotCardInBookingFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
-                app:layout_constraintBottom_toTopOf="@+id/problemDescCardInBookingFragment"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/dateSlotCardInBookingFragment">
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/bookingTimeSlotButtonInBookingFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:backgroundTint="#FAEBD7"
-                    android:hint="SELECT TIME SLOT" />
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:fontFamily="@font/inter"
+                    android:letterSpacing="0"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/bookingDateButtonInBookingFragment"
+                    android:textAllCaps="false"
+                    android:backgroundTint="@color/baby_blue"
+                    android:text="Select Time Slot" />
 
-            </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/problemDescCardInBookingFragment"
@@ -132,7 +135,7 @@
                     android:id="@+id/problemDescriptionInputInBookingFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:backgroundTint="#FAEBD7"
+                    android:backgroundTint="@color/baby_blue"
                     android:gravity="center"
                     android:hint="PROBLEM DESCRIPTION" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -146,7 +149,7 @@
             <!--                    android:id="@+id/appointmentReviewNoteInBookingFragment"-->
             <!--                    android:layout_width="match_parent"-->
             <!--                    android:layout_height="110dp"-->
-            <!--                    android:backgroundTint="#FAEBD7"-->
+            <!--                    android:backgroundTint="@color/baby_blue"-->
             <!--                    android:gravity="center"-->
             <!--                    android:hint="REVIEW OF APPOINTMENT" />-->
             <!--            </com.google.android.material.textfield.TextInputLayout>-->

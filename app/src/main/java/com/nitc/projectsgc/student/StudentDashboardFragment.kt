@@ -105,6 +105,7 @@ class StudentDashboardFragment: Fragment() {
                     binding.completedAppointmentsRecyclerViewInStudentDashboard.adapter = completedAppointmentsAdapter
                     binding.completedAppointmentsRecyclerViewInStudentDashboard.visibility = View.VISIBLE
                     binding.bookedAppointmentsRecyclerViewStudentDashboard.visibility = View.GONE
+                    binding.noCompletedTVInStudentDashboardFragment.visibility = View.GONE
                     binding.noBookingsTVInStudentDashboardFragment.visibility = View.GONE
                 }else{
                     binding.noCompletedTVInStudentDashboardFragment.visibility = View.VISIBLE
