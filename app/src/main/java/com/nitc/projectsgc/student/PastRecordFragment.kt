@@ -32,7 +32,7 @@ class PastRecordFragment:Fragment() {
             pastRecordLive.observe(viewLifecycleOwner){pastRecord->
                 if(pastRecord != null){
                     binding.pastRecordRecyclerViewInPastRecordFragment.adapter =
-                        context?.let { PastRecordAdapter(it,this,pastRecord) }
+                        context?.let { PastRecordAdapter(it,this,pastRecord, sharedViewModel = sharedViewModel) }
                 }
             }
         }

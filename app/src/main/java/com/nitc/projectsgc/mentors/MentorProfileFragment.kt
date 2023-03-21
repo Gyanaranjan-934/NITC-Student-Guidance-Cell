@@ -24,6 +24,8 @@ class MentorProfileFragment: Fragment() {
         if (mentorLive != null) {
             mentorLive.observe(viewLifecycleOwner) { mentor ->
                 if (mentor != null) {
+                    if(sharedViewModel.userType == "Admin") binding.passwordInputLayoutInAddMentorFragment.visibility = View.VISIBLE
+                    else binding.passwordInputLayoutInAddMentorFragment.visibility = View.GONE
                     binding.addButtonInAddMentorFragment.visibility = View.GONE
                     binding.headingTVInAddMentorFragment.text = mentor.name
                     binding.nameFieldInAddMentorFragment.setText(mentor.name)
