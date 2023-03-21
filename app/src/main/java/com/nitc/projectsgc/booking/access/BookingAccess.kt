@@ -11,7 +11,7 @@ import com.nitc.projectsgc.SharedViewModel
 class BookingAccess(var context: Context,var sharedViewModel: SharedViewModel) {
 
     fun bookAppointment(appointment: Appointment):LiveData<Boolean>{
-        var bookingLive = MutableLiveData<Boolean>(false)
+        var bookingLive = MutableLiveData<Boolean>()
         val database : FirebaseDatabase = FirebaseDatabase.getInstance()
         var reference : DatabaseReference = database.reference
         var mentorReference = reference.child("types/${appointment.mentorType}/${appointment.mentorID}/appointments/${appointment.date}/${appointment.timeSlot}")
@@ -24,16 +24,17 @@ class BookingAccess(var context: Context,var sharedViewModel: SharedViewModel) {
                         bookingLive.postValue(true)
                     }else{
                         mentorReference.child(appointment.timeSlot.toString()).removeValue()
+                        bookingLive.postValue(false)
                     }
                 }
-            }
+            }else bookingLive.postValue(false)
         }
         return bookingLive
     }
     fun rescheduleAppointment(appointment: Appointment):LiveData<Boolean>{
         var oldAppointment = sharedViewModel.reschedulingAppointment
         oldAppointment.status = "Rescheduled"
-        var bookingLive = MutableLiveData<Boolean>(false)
+        var bookingLive = MutableLiveData<Boolean>()
         val database : FirebaseDatabase = FirebaseDatabase.getInstance()
         var reference : DatabaseReference = database.reference
         var mentorNewReference = reference.child("types/${appointment.mentorType}/${appointment.mentorID}/appointments/${appointment.date}/${appointment.timeSlot}")
@@ -55,13 +56,14 @@ class BookingAccess(var context: Context,var sharedViewModel: SharedViewModel) {
                                             } else {
                                                 mentorNewReference.child(appointment.timeSlot.toString())
                                                     .removeValue()
+                                                bookingLive.postValue(false)
                                             }
                                         }
-                                }
+                                }else bookingLive.postValue(false)
                             }
-                    }
+                    }else bookingLive.postValue(false)
                 }
-            }
+            }else bookingLive.postValue(false)
         }
         return bookingLive
     }
