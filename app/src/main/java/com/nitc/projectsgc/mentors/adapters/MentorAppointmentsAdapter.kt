@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -21,7 +23,9 @@ import com.nitc.projectsgc.Appointment
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.Student
+import com.nitc.projectsgc.admin.access.StudentsAccess
 import com.nitc.projectsgc.mentors.access.MentorAppointmentsAccess
+import de.hdodenhof.circleimageview.CircleImageView
 
 class MentorAppointmentsAdapter(
     var context : Context,
@@ -31,6 +35,7 @@ class MentorAppointmentsAdapter(
 ) : RecyclerView.Adapter<MentorAppointmentsAdapter.MentorAppointmentsViewHolder>() {
     class MentorAppointmentsViewHolder(itemView : View):RecyclerView.ViewHolder(itemView){
         var nameOfTheStudent = itemView.findViewById<TextView>(R.id.nameInMentorAppointmentsCard)
+        var genderPic = itemView.findViewById<CircleImageView>(R.id.imageInMentorAppointmentsCard)
         var dobText = itemView.findViewById<TextView>(R.id.dobInMentorAppointmentsCard)
         var phoneText = itemView.findViewById<TextView>(R.id.phoneInMentorAppointmentsCard)
         var rollText = itemView.findViewById<TextView>(R.id.rollNoInMentorAppointmentsCard)
@@ -56,6 +61,7 @@ class MentorAppointmentsAdapter(
 
     override fun onBindViewHolder(holder: MentorAppointmentsViewHolder, position: Int) {
 
+
         holder.statusCard.visibility = View.VISIBLE
         holder.statusText.text = appointments[position].status
         if(appointments[position].cancelled) {
@@ -77,17 +83,39 @@ class MentorAppointmentsAdapter(
         var reference = database.reference.child("students")
         reference.child(stdId).addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                var student = snapshot.getValue(Student::class.java)
-                holder.nameOfTheStudent.text = student?.name.toString()
-                holder.dobText.text = student?.dateOfBirth.toString()
-                holder.phoneText.text = student?.phoneNumber.toString()
-                holder.rollText.text = student?.rollNo.toString()
+
             }
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(context,"Error",Toast.LENGTH_SHORT).show()
             }
 
         })
+        var studentLive = StudentsAccess(context).getStudent(stdId)
+        studentLive.observe(parentFragment.viewLifecycleOwner){student->
+            if(student != null) {
+                holder.nameOfTheStudent.text = student.name.toString()
+                holder.dobText.text = student.dateOfBirth.toString()
+                holder.phoneText.text = student.phoneNumber.toString()
+                holder.rollText.text = student.rollNo.toString()
+                if (student.gender == "Male") {
+                    holder.genderPic.setImageDrawable(
+                        ResourcesCompat.getDrawable(
+                            parentFragment.resources,
+                            R.drawable.boy_face,
+                            null
+                        )
+                    )
+                } else {
+                    holder.genderPic.setImageDrawable(
+                        ResourcesCompat.getDrawable(
+                            parentFragment.resources,
+                            R.drawable.girl_face,
+                            null
+                        )
+                    )
+                }
+            }
+        }
         holder.cancelButton.setOnClickListener {
             var cancelAppointment = appointments[position]
             cancelAppointment.cancelled = true

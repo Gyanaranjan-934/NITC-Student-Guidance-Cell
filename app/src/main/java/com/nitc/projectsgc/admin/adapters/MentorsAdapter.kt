@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,7 @@ import com.nitc.projectsgc.Mentor
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.admin.access.MentorsAccess
+import de.hdodenhof.circleimageview.CircleImageView
 
 class MentorsAdapter(
     var context: Context,
@@ -25,6 +27,7 @@ class MentorsAdapter(
 ): RecyclerView.Adapter<MentorsAdapter.MentorsViewHolder>() {
     class MentorsViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
         var nameText = itemView.findViewById<TextView>(R.id.nameInMentorCard)
+        var personImage = itemView.findViewById<CircleImageView>(R.id.imageInMentorCard)
         var typeText = itemView.findViewById<TextView>(R.id.typeInMentorCard)
         var phoneText = itemView.findViewById<TextView>(R.id.phoneInMentorCard)
         var emailText = itemView.findViewById<TextView>(R.id.emailIdInMentorCard)
@@ -47,6 +50,7 @@ class MentorsAdapter(
         holder.phoneText.text = mentors[position].phone.toString()
         holder.typeText.text = mentors[position].type
         holder.emailText.text = mentors[position].email
+
         holder.deleteButton.setOnClickListener {
             var confirmDeleteBuilder = AlertDialog.Builder(context)
             confirmDeleteBuilder.setTitle("Are you sure ?")
@@ -69,6 +73,12 @@ class MentorsAdapter(
                 .create().show()
         }
 
+        holder.personImage.setOnClickListener {
+                sharedViewModel.profileForMentorID = mentors[position].userName.toString()
+                sharedViewModel.profileForMentorType = mentors[position].type.toString()
+                parentFragment.findNavController().navigate(R.id.mentorProfileFragment)
+
+        }
         holder.updateMentorButton.setOnClickListener {
             sharedViewModel.currentMentor = mentors[position]
             parentFragment.findNavController().navigate(R.id.mentorUpdateFragment)

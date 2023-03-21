@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,7 @@ import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.Student
 import com.nitc.projectsgc.admin.access.StudentsAccess
 import com.nitc.projectsgc.booking.access.BookingAccess
+import de.hdodenhof.circleimageview.CircleImageView
 
 class StudentsAdapter(
     var context: Context,
@@ -25,6 +27,7 @@ class StudentsAdapter(
 ): RecyclerView.Adapter<StudentsAdapter.StudentsViewHolder>() {
     class StudentsViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
         var nameText = itemView.findViewById<TextView>(R.id.nameInStudentCard)
+        var personImage = itemView.findViewById<CircleImageView>(R.id.imageInStudentCard)
         var dobText = itemView.findViewById<TextView>(R.id.dobInStudentCard)
         var phoneText = itemView.findViewById<TextView>(R.id.phoneInStudentCard)
         var rollText = itemView.findViewById<TextView>(R.id.rollNoInStudentCard)
@@ -46,7 +49,12 @@ class StudentsAdapter(
         holder.dobText.text = students[position].dateOfBirth.toString()
         holder.phoneText.text = students[position].phoneNumber.toString()
         holder.rollText.text = students[position].rollNo.toString()
-
+        if(students[position].gender == "Male"){
+            holder.personImage.setImageDrawable(ResourcesCompat.getDrawable(parentFragment.resources,R.drawable.boy_face,null))
+        }
+        else{
+            holder.personImage.setImageDrawable(ResourcesCompat.getDrawable(parentFragment.resources,R.drawable.girl_face,null))
+        }
         holder.viewAppointmentsButton.setOnClickListener {
             var appointmentsLive = StudentsAccess(context).getAppointments(students[position].rollNo)
             if(appointmentsLive != null){

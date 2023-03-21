@@ -5,15 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.FirebaseDatabase
 import com.nitc.projectsgc.Appointment
+import com.nitc.projectsgc.R
+import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.databinding.BookedAppointmentCardBinding
 
 class PastRecordAdapter(
     var context: Context,
     var parentFragment: Fragment,
-    var pastRecord:ArrayList<Appointment>
+    var pastRecord:ArrayList<Appointment>,
+    var sharedViewModel: SharedViewModel
     ): RecyclerView.Adapter<PastRecordAdapter.PastRecordViewHolder>() {
     class PastRecordViewHolder(val binding:BookedAppointmentCardBinding):RecyclerView.ViewHolder(binding.root) {
 
@@ -40,5 +44,11 @@ class PastRecordAdapter(
         holder.binding.remarksCardInBookedAppointmentsCard.visibility = View.VISIBLE
         holder.binding.remarksTextInBookedAppointmentsCard.text = pastRecord[position].remarks
 
+        holder.binding.imageInBookedAppointmentCard.setOnClickListener {
+                sharedViewModel.profileForMentorID = pastRecord[position].mentorID.toString()
+                sharedViewModel.profileForMentorType = pastRecord[position].mentorType.toString()
+                parentFragment.findNavController().navigate(R.id.mentorProfileFragment)
+
+        }
     }
 }

@@ -55,7 +55,7 @@ class MentorUpdateFragment : Fragment() {
 //              new email verification will be applied
                 var newUserName = newEmail.substring(0,newEmail.indexOf("@"))
                 reference.child(newType).child(oldUserName).removeValue()
-                val mentor = Mentor(newName,newPhone,newEmail,newType,newPassword,newUserName)
+                val mentor = Mentor(newName, newPhone, newEmail, newType, newPassword, newUserName)
                 reference.child(newType).child(newUserName).setValue(mentor).addOnCompleteListener{task->
                     auth.createUserWithEmailAndPassword(
                         mentor.email,
@@ -70,7 +70,7 @@ class MentorUpdateFragment : Fragment() {
                     }
                 }
             }else{
-                val mentor = Mentor(newName,newPhone,newEmail,newType,newPassword,oldUserName)
+                val mentor = Mentor(newName, newPhone, newEmail, newType, newPassword, oldUserName)
                 reference.child(newType).child(oldUserName).setValue(mentor)
                 findNavController().navigate(R.id.adminDashboardFragment)
             }

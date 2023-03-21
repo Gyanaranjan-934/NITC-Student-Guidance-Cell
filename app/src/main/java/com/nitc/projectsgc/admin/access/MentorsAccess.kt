@@ -40,6 +40,27 @@ class MentorsAccess(var context: Context) {
         return mentorLive
     }
 
+    fun getMentor(mentorType:String,mentorID:String):LiveData<Mentor>{
+        var mentorLive = MutableLiveData<Mentor>(null)
+        var database : FirebaseDatabase = FirebaseDatabase.getInstance()
+        var reference : DatabaseReference = database.reference.child("types/${mentorType}/${mentorID}")
+
+        reference.addValueEventListener(object:ValueEventListener{
+
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                mentorLive.postValue(snapshot.getValue(Mentor::class.java))
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context,"Error : $error",Toast.LENGTH_SHORT).show()
+            }
+
+        })
+        return mentorLive
+    }
     fun getMentorNames(mentorType:String):LiveData<ArrayList<Mentor>>{
         var mentorNamesLive = MutableLiveData<ArrayList<Mentor>>(null)
         var mentors = arrayListOf<Mentor>()
