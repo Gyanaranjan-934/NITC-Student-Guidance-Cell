@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.SharedViewModel
@@ -20,6 +21,7 @@ class StudentsAdapter(
     var context: Context,
     var students:ArrayList<Student>,
     var parentFragment: Fragment,
+    var sharedViewModel: SharedViewModel
 ): RecyclerView.Adapter<StudentsAdapter.StudentsViewHolder>() {
     class StudentsViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
         var nameText = itemView.findViewById<TextView>(R.id.nameInStudentCard)
@@ -45,6 +47,17 @@ class StudentsAdapter(
         holder.phoneText.text = students[position].phoneNumber.toString()
         holder.rollText.text = students[position].rollNo.toString()
 
+        holder.viewAppointmentsButton.setOnClickListener {
+            var appointmentsLive = StudentsAccess(context).getAppointments(students[position].rollNo)
+            if(appointmentsLive != null){
+                appointmentsLive.observe(parentFragment.viewLifecycleOwner){appointments->
+                    if(!appointments.isEmpty() || appointments != null){
+                        sharedViewModel.viewAppointmentStudentID = students[position].rollNo
+                        parentFragment.findNavController().navigate(R.id.studentAllAppointmentsFragment)
+                    }
+                }
+            }
+        }
 
         holder.deleteButton.setOnClickListener {
             var confirmDeleteBuilder = AlertDialog.Builder(context)

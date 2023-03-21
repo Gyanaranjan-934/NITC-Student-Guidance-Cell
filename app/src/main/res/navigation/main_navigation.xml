@@ -78,6 +78,11 @@
         android:name="com.nitc.projectsgc.student.PastRecordFragment"
         android:label="PastRecordFragment" />
     <fragment
+        android:id="@+id/studentAllAppointmentsFragment"
+        tools:layout="@layout/fragment_past_record"
+        android:name="com.nitc.projectsgc.admin.StudentAllAppointmentsFragment"
+        android:label="PastRecordFragment" />
+    <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.nitc.projectsgc.ForgotPasswordFragment"
         android:label="fragment_forgot_password"

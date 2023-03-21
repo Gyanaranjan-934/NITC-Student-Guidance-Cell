@@ -28,7 +28,6 @@ class BookingFragment : Fragment() {
     lateinit var mentorType : String
     var mentorNameSelected = "NA"
     var mentorID = "NA"
-    var totalTimeSlots = arrayListOf<String>("9-10","10-11","11-12","1-2","2-3","3-4","4-5")
     private val sharedViewModel:SharedViewModel by activityViewModels()
     var selectedDate = ""
     override fun onCreateView(
@@ -129,11 +128,12 @@ class BookingFragment : Fragment() {
             }
             datePickerDialog?.show()
         }
-        var mentorTimeSlots = arrayListOf<String>()
-        var availableTimeSlots = arrayListOf<String>()
-        var selectedTimeSlot = "NA"
         var foundDate = MutableLiveData<Boolean>(false)
+        var selectedTimeSlot = "NA"
         binding.bookingTimeSlotButtonInBookingFragment.setOnClickListener {
+            var totalTimeSlots = arrayListOf<String>("9-10","10-11","11-12","1-2","2-3","3-4","4-5")
+            var mentorTimeSlots = arrayListOf<String>()
+            var availableTimeSlots = arrayListOf<String>()
             if (selectedDate != "NA") {
                 reference.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
@@ -142,11 +142,13 @@ class BookingFragment : Fragment() {
                         if (snapshot.hasChild(dateRef)) {
                                 for (timeSlots in snapshot.children) {
                                     mentorTimeSlots.add(timeSlots.key.toString())
+                                    Log.d("totalAdded",timeSlots.key.toString())
                                 }
 //                            if(sharedViewModel.rescheduling) if(sharedViewModel.reschedulingAppointment.date == selectedDate) if(mentorTimeSlots.contains(sharedViewModel.reschedulingAppointment.timeSlot)) mentorTimeSlots.remove(sharedViewModel.reschedulingAppointment.timeSlot)
                                 for (timeslot in totalTimeSlots) {
                                     if (!mentorTimeSlots.contains(timeslot)) {
                                         availableTimeSlots.add(timeslot)
+                                        Log.d("availableAdded",timeslot)
                                     }
                                 }
                             foundDate.postValue(true)

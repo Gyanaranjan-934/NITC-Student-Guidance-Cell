@@ -130,7 +130,8 @@ class AdminDashboardFragment : Fragment() {
                         StudentsAdapter(
                             it,
                             students = students,
-                            this
+                            this,
+                            sharedViewModel
                         )
                     }
                     binding.studentRecyclerViewInAdminDashboardFragment.adapter = studentsAdapter
