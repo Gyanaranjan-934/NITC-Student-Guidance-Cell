@@ -223,6 +223,7 @@
                 app:hintTextColor="@color/black"
                 app:boxBackgroundColor="@color/white"
                 android:hint="Password"
+                app:endIconMode="password_toggle"
                 app:boxStrokeColor="@color/black"
                 app:layout_constraintStart_toStartOf="@id/emailInputLayoutInLoginFragment"
                 app:layout_constraintEnd_toEndOf="@id/emailInputLayoutInLoginFragment"
