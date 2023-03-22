@@ -75,21 +75,12 @@ class MentorAppointmentsAdapter(
             holder.remarksLayout.visibility = View.VISIBLE
             holder.remarksInput.setText(appointments[position].remarks)
             holder.remarksInput.isEnabled = false
+            holder.submitRemarks.visibility = View.GONE
             holder.completeButton.visibility = View.GONE
         }
 
         var stdId = appointments[position].studentID.toString()
-        var database =  FirebaseDatabase.getInstance()
-        var reference = database.reference.child("students")
-        reference.child(stdId).addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
 
-            }
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context,"Error",Toast.LENGTH_SHORT).show()
-            }
-
-        })
         var studentLive = StudentsAccess(context,parentFragment).getStudent(stdId)
         studentLive.observe(parentFragment.viewLifecycleOwner){student->
             if(student != null) {
@@ -114,12 +105,6 @@ class MentorAppointmentsAdapter(
                         )
                     )
                 }
-            }else{
-                holder.nameOfTheStudent.text = "NULL"
-                holder.dobText.text = "NULL"
-                holder.phoneText.text ="NULL"
-                holder.rollText.text = "NULL"
-                holder.statusText.text = "Student deleted"
             }
         }
         holder.cancelButton.setOnClickListener {
