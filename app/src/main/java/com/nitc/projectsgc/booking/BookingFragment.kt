@@ -123,6 +123,14 @@ class BookingFragment : Fragment() {
 
         }
         binding.bookingDateButtonInBookingFragment.setOnClickListener{
+            if(mentorTypeSelected == "NA") {
+                Toast.makeText(context,"Select mentor type first",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if(mentorNameSelected == "NA"){
+                Toast.makeText(context,"Select mentor name first",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             val calendar = Calendar.getInstance()
 
             val datePickerDialog = context?.let { it1 ->
@@ -144,13 +152,13 @@ class BookingFragment : Fragment() {
             var totalTimeSlots = arrayListOf<String>("9-10","10-11","11-12","1-2","2-3","3-4","4-5")
             var mentorTimeSlots = arrayListOf<String>()
             var availableTimeSlots = arrayListOf<String>()
-            if (selectedDate != "NA") {
+            if (selectedDate != "") {
                 reference.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         var dateRef = mentorTypeSelected+"/"+mentorID+"/appointments/"+selectedDate
                         Log.d("reschedule",dateRef)
                         if (snapshot.hasChild(dateRef)) {
-                                for (timeSlots in snapshot.children) {
+                                for (timeSlots in snapshot.child(dateRef).children) {
                                     mentorTimeSlots.add(timeSlots.key.toString())
                                     Log.d("totalAdded",timeSlots.key.toString())
                                 }
@@ -166,25 +174,29 @@ class BookingFragment : Fragment() {
                         }else{
                             availableTimeSlots = totalTimeSlots
                         }
-                        var timeSlotDialog = AlertDialog.Builder(context)
-                        timeSlotDialog.setTitle("Select the Time")
+                        if(!availableTimeSlots.isEmpty()) {
+                            var timeSlotDialog = AlertDialog.Builder(context)
+                            timeSlotDialog.setTitle("Select the Time")
 
-                        timeSlotDialog.setSingleChoiceItems(
-                            availableTimeSlots.toTypedArray(),
-                            0
-                        ) { dialog, selectedIndex ->
-                            selectedTimeSlot = availableTimeSlots[selectedIndex]
-                            binding.bookingTimeSlotButtonInBookingFragment.text = selectedTimeSlot
-                            availableTimeSlots.clear()
-                            dialog.dismiss()
+                            timeSlotDialog.setSingleChoiceItems(
+                                availableTimeSlots.toTypedArray(),
+                                -1
+                            ) { dialog, selectedIndex ->
+                                selectedTimeSlot = availableTimeSlots[selectedIndex]
+                                binding.bookingTimeSlotButtonInBookingFragment.text =
+                                    selectedTimeSlot
+                                availableTimeSlots.clear()
+                                dialog.dismiss()
+                            }
+                            timeSlotDialog.setPositiveButton("Ok") { dialog, which ->
+                                selectedTimeSlot = availableTimeSlots[0]
+                                binding.bookingTimeSlotButtonInBookingFragment.text =
+                                    selectedTimeSlot
+                                availableTimeSlots.clear()
+                                dialog.dismiss()
+                            }
+                            timeSlotDialog.create().show()
                         }
-                        timeSlotDialog.setPositiveButton("Ok") { dialog, which ->
-                            selectedTimeSlot = availableTimeSlots[0]
-                            binding.bookingTimeSlotButtonInBookingFragment.text = selectedTimeSlot
-                            availableTimeSlots.clear()
-                            dialog.dismiss()
-                        }
-                        timeSlotDialog.create().show()
                     }
 
                     override fun onCancelled(error: DatabaseError) {

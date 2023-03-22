@@ -227,8 +227,7 @@
                 app:boxStrokeColor="@color/black"
                 app:layout_constraintStart_toStartOf="@id/emailInputLayoutInLoginFragment"
                 app:layout_constraintEnd_toEndOf="@id/emailInputLayoutInLoginFragment"
-                app:layout_constraintWidth_percent="0.85"
-                app:endIconCheckable="true">
+                app:layout_constraintWidth_percent="0.85">
 
 
                 <com.google.android.material.textfield.TextInputEditText

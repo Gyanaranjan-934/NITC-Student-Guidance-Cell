@@ -134,6 +134,7 @@
                 app:boxBackgroundColor="@color/sky_blue"
                 app:boxStrokeWidthFocused="0dp"
                 app:layout_constraintHeight_percent="0.3"
+                android:hint="Problem Description"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintWidth_percent="0.7"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -146,9 +147,9 @@
                     android:id="@+id/problemDescriptionInputInBookingFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:backgroundTint="@color/baby_blue"
-                    android:gravity="center"
-                    android:hint="PROBLEM DESCRIPTION" />
+                    android:inputType="textMultiLine"
+                    android:fontFamily="@font/inter"
+                    android:backgroundTint="@color/baby_blue" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!--            <com.google.android.material.textfield.TextInputLayout-->

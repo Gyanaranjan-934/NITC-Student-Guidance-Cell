@@ -122,8 +122,13 @@ class ProfileAccess(var context: Context,var sharedViewModel: SharedViewModel,va
                                         }
                                     }
                                 }
-                        }
-                    }
+                                .addOnFailureListener{exc->
+                                    Toast.makeText(context,"Exception : $exc",Toast.LENGTH_LONG).show()
+                                    profileLive.postValue(false)
+                                    continuation.resume(false)
+                                }
+                        } else continuation.resume(false)
+                    }else continuation.resume(false)
                 }else{
                     continuation.resume(false)
                 }

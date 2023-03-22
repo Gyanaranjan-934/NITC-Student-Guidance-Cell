@@ -12,10 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.nitc.projectsgc.Login.LoginFragment
 import com.nitc.projectsgc.booking.BookingFragment
 import com.nitc.projectsgc.student.StudentDashboardFragment
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.util.concurrent.Executors
 
 
@@ -46,32 +43,44 @@ class IntroductoryFragment : Fragment() {
 
             // Move the code that needs to execute after getProfile() inside the coroutine block
             Log.d("profile","backIn Profile")
-            if (pSuccessLive.value == true) {
-                val studentDashboard = StudentDashboardFragment()
-                when (sharedViewModel.userType) {
-                    "Student" -> {
-                        coroutineScope.cancel()
+            if(pSuccessLive != null) {
+                if (pSuccessLive.value == true) {
+                    val studentDashboard = StudentDashboardFragment()
+                    when (sharedViewModel.userType) {
+                        "Student" -> {
+                            coroutineScope.cancel()
 //                        var ft = parentFragmentManager.beginTransaction()
 //                        ft.replace(R.id.navHostFragment,studentDashboard)
 ////                        ft.addToBackStack(null)
 //                        ft.commitNow()
-                        findNavController().navigate(R.id.studentDashBoardFragment)
-                    }
-                    "Mentor" -> {
-                        coroutineScope.cancel()
+                            findNavController().navigate(R.id.studentDashBoardFragment)
+                        }
+                        "Mentor" -> {
+                            coroutineScope.cancel()
 //                        var ft = parentFragmentManager.beginTransaction()
 //                        ft.add(R.id.navHostFragment,BookingFragment())
 //                        ft.addToBackStack(null)
 //                        ft.commit()
-                        findNavController().navigate(R.id.mentorDashboardFragment)
+                            findNavController().navigate(R.id.mentorDashboardFragment)
+                        }
                     }
+                } else {
+                    coroutineScope.cancel()
+                    Log.d("profile", "false")
+//                var ft = parentFragmentManager.beginTransaction()
+//                ft.add(R.id.navHostFragment, LoginFragment())
+//                ft.addToBackStack(null)
+//                ft.commit()
+                    findNavController().navigate(R.id.loginFragment)
                 }
-            } else {
-                Log.d("profile","false")
-                var ft = parentFragmentManager.beginTransaction()
-                ft.add(R.id.navHostFragment, LoginFragment())
-                ft.addToBackStack(null)
-                ft.commit()
+            }else {
+                coroutineScope.cancel()
+                Log.d("profile", "false")
+//                var ft = parentFragmentManager.beginTransaction()
+//                ft.add(R.id.navHostFragment, LoginFragment())
+//                ft.addToBackStack(null)
+//                ft.commit()
+                findNavController().navigate(R.id.loginFragment)
             }
         }
 

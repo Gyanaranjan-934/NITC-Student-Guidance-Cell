@@ -20,6 +20,9 @@ import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.admin.access.MentorsAccess
 import com.nitc.projectsgc.databinding.BookedAppointmentCardBinding
 import com.nitc.projectsgc.student.access.AppointmentsAccess
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class BookedAppointmentsAdapter(
     var context: Context,
@@ -67,8 +70,12 @@ class BookedAppointmentsAdapter(
             if (mentor != null) {
                 holder.binding.mentorNameInBookedAppointmentCard.text = mentor.name.toString()
                 mentorName = mentor.name.toString()
+                mentorLive.removeObservers(parentFragment.viewLifecycleOwner)
             }
         }
+        if(Date().compareTo(SimpleDateFormat("dd-MM-yyyy").parse(appointments[position].date.toString())) > 0){
+            holder.binding.cancelAppointmentInBookedAppointmentCard.visibility = View.GONE
+        }else holder.binding.cancelAppointmentInBookedAppointmentCard.visibility = View.VISIBLE
         holder.binding.imageInBookedAppointmentCard.setOnClickListener {
             sharedViewModel.profileForMentorID = appointments[position].mentorID.toString()
             sharedViewModel.profileForMentorType = appointments[position].mentorType.toString()

@@ -12,6 +12,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.nitc.projectsgc.Appointment
 import com.nitc.projectsgc.SharedViewModel
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class AppointmentsAccess(
     var context: Context,
@@ -35,7 +37,9 @@ class AppointmentsAccess(
                         appointments.add(appointment)
                     }
                 }
-                bookedLive.postValue(appointments)
+                val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+                val sortedAppointments = appointments.sortedBy { LocalDate.parse(it.date, formatter) }.toCollection(ArrayList<Appointment>())
+                bookedLive.postValue(sortedAppointments)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -60,7 +64,9 @@ class AppointmentsAccess(
                         if(appointment.completed) appointments.add(appointment)
                     }
                 }
-                completedLive.postValue(appointments)
+                val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+                val sortedAppointments = appointments.sortedBy { LocalDate.parse(it.date, formatter) }.toCollection(ArrayList<Appointment>())
+                completedLive.postValue(sortedAppointments)
             }
 
             override fun onCancelled(error: DatabaseError) {
