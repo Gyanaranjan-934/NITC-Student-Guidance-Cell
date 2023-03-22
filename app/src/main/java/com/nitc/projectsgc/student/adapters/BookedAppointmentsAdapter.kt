@@ -21,6 +21,8 @@ import com.nitc.projectsgc.admin.access.MentorsAccess
 import com.nitc.projectsgc.databinding.BookedAppointmentCardBinding
 import com.nitc.projectsgc.student.access.AppointmentsAccess
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -73,9 +75,13 @@ class BookedAppointmentsAdapter(
                 mentorLive.removeObservers(parentFragment.viewLifecycleOwner)
             }
         }
-        if(Date().compareTo(SimpleDateFormat("dd-MM-yyyy").parse(appointments[position].date.toString())) > 0){
+        var today = LocalDate.now()
+        if(LocalDate.parse(appointments[position].date.toString(),(DateTimeFormatter.ofPattern("dd-MM-yyyy"))).isBefore(LocalDate.now())){
             holder.binding.cancelAppointmentInBookedAppointmentCard.visibility = View.GONE
         }else holder.binding.cancelAppointmentInBookedAppointmentCard.visibility = View.VISIBLE
+//        if(Date().compareTo(SimpleDateFormat("dd-MM-yyyy").parse(appointments[position].date.toString())) > 0){
+//            holder.binding.cancelAppointmentInBookedAppointmentCard.visibility = View.GONE
+//        }else holder.binding.cancelAppointmentInBookedAppointmentCard.visibility = View.VISIBLE
         holder.binding.imageInBookedAppointmentCard.setOnClickListener {
             sharedViewModel.profileForMentorID = appointments[position].mentorID.toString()
             sharedViewModel.profileForMentorType = appointments[position].mentorType.toString()

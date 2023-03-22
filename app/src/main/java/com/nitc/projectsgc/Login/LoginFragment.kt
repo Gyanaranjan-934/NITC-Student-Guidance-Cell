@@ -47,6 +47,7 @@ class LoginFragment : Fragment() {
             binding.mentorTypeButtonInLoginFragment.visibility = View.GONE
             binding.mentorLoginTypeImageInLoginFragment.setBackgroundResource(R.drawable.login_type_card_transparent_bg)
             binding.mentorLoginTypeButtonInLoginFragment.setTextColor(Color.BLACK)
+            binding.signUpButton.visibility = View.GONE
             userType = "Admin"
         }
         binding.studentLoginTypeButtonInLoginFragment.setOnClickListener {
@@ -57,6 +58,7 @@ class LoginFragment : Fragment() {
             binding.mentorTypeButtonInLoginFragment.visibility = View.GONE
             binding.mentorLoginTypeImageInLoginFragment.setBackgroundResource(R.drawable.login_type_card_transparent_bg)
             binding.mentorLoginTypeButtonInLoginFragment.setTextColor(Color.BLACK)
+            binding.signUpButton.visibility = View.VISIBLE
             userType = "Student"
         }
         binding.mentorLoginTypeButtonInLoginFragment.setOnClickListener {
@@ -67,6 +69,7 @@ class LoginFragment : Fragment() {
             binding.mentorTypeButtonInLoginFragment.visibility = View.VISIBLE
             binding.mentorLoginTypeImageInLoginFragment.setBackgroundResource(R.drawable.login_type_card_blue_bg)
             binding.mentorLoginTypeButtonInLoginFragment.setTextColor(Color.WHITE)
+            binding.signUpButton.visibility = View.GONE
             userType = "Mentor"
         }
 
