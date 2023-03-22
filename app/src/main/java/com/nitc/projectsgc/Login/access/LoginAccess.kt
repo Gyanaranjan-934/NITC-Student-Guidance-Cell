@@ -50,10 +50,23 @@ class LoginAccess(
                             sharedViewModel.userType = userType
                             when(userType){
                                 "Student"->{
-                                    reference.child("students/$username").addListenerForSingleValueEvent(object:ValueEventListener{
+                                    reference.child("students").addListenerForSingleValueEvent(object:ValueEventListener{
                                         override fun onDataChange(snapshot: DataSnapshot) {
-                                            sharedViewModel.currentStudent = snapshot.getValue(Student::class.java)!!
-                                            loginLive.postValue(true)
+                                            if(snapshot.hasChild(username)) {
+                                                sharedViewModel.currentStudent =
+                                                    snapshot.child(username)
+                                                        .getValue(Student::class.java)!!
+                                                loginLive.postValue(true)
+                                            }else{
+                                                auth.currentUser!!.delete().addOnCompleteListener {deleteTask->
+                                                    if(deleteTask.isSuccessful){
+                                                        Toast.makeText(context,"Your account has been removed by admin",Toast.LENGTH_SHORT).show()
+                                                        loginLive.postValue(false)
+                                                    }else{
+                                                        loginLive.postValue(false)
+                                                    }
+                                                }
+                                            }
                                         }
 
                                         override fun onCancelled(error: DatabaseError) {
@@ -64,17 +77,40 @@ class LoginAccess(
                                     })
                                 }
                                 "Mentor"->{
-                                    reference.child("types/$mentorType").addListenerForSingleValueEvent(object:ValueEventListener{
+                                    reference.child("types").addListenerForSingleValueEvent(object:ValueEventListener{
                                         override fun onDataChange(snapshot: DataSnapshot) {
-                                            if(snapshot.hasChild(username)) {
-                                                sharedViewModel.currentMentor = snapshot.child(username).getValue(Mentor::class.java)!!
+                                            if(snapshot.hasChild(mentorType)) {
+                                                var mentorPath = "$mentorType/$username"
+                                                if(snapshot.hasChild(mentorPath)) {
+                                                sharedViewModel.currentMentor = snapshot.child(mentorPath).getValue(Mentor::class.java)!!
                                                 loginLive.postValue(true)
-                                            }
+                                            }else {
+                                                    auth.currentUser!!.delete().addOnCompleteListener {deleteTask->
+                                                        if(deleteTask.isSuccessful){
+                                                            Toast.makeText(context,"Your account has been removed by admin",Toast.LENGTH_SHORT).show()
+                                                            loginLive.postValue(false)
+                                                        }else{
+                                                            loginLive.postValue(false)
+                                                        }
+                                                    }
+                                                    loginLive.postValue(false)
+                                                }
+                                                }
                                             else {
-                                                auth.signOut()
+                                                auth.currentUser!!.delete().addOnCompleteListener {deleteTask->
+                                                    if(deleteTask.isSuccessful){
+                                                        Toast.makeText(context,"Your account has been removed by admin",Toast.LENGTH_SHORT).show()
+                                                        loginLive.postValue(false)
+                                                    }else{
+                                                        loginLive.postValue(false)
+                                                    }
+                                                }
                                                 loginLive.postValue(false)
                                             }
+
                                         }
+
+
 
                                         override fun onCancelled(error: DatabaseError) {
                                             Toast.makeText(context,"Some error : $error",Toast.LENGTH_LONG).show()

@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.*
+import com.nitc.projectsgc.Appointment
 import com.nitc.projectsgc.Mentor
 
 class MentorsAccess(var context: Context) {
@@ -113,9 +114,31 @@ class MentorsAccess(var context: Context) {
 
         var deleteLive = MutableLiveData<Boolean>(false)
         var database : FirebaseDatabase = FirebaseDatabase.getInstance()
-        var reference : DatabaseReference = database.reference.child("types")
-        Log.d("child",reference.child(userName).toString())
-        reference.child("$mentorType/$userName").removeValue().addOnSuccessListener {
+        var typeReference : DatabaseReference = database.reference.child("types")
+        var mentorPath = "$mentorType/$userName"
+        typeReference.child(mentorPath).addListenerForSingleValueEvent(object:ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for(ds in snapshot.child("appointments").children){
+                    var appointment = ds.getValue(Appointment::class.java)!!
+                    var studentReference = "students/${appointment.studentID}/appointments/${appointment.id}"
+                    database.reference.child(studentReference).removeValue().addOnCompleteListener {appointmentDeleted->
+                        if(!appointmentDeleted.isSuccessful){
+                            deleteLive.postValue(true)
+                        }else {
+                            deleteLive.postValue(false)
+                            return@addOnCompleteListener
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context,"Error : $error",Toast.LENGTH_LONG).show()
+                deleteLive.postValue(false)
+            }
+
+        })
+        typeReference.child(mentorPath).removeValue().addOnSuccessListener {deletedMentor->
             deleteLive.postValue(true)
         }
             .addOnFailureListener {error->

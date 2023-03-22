@@ -56,12 +56,11 @@ class StudentsAdapter(
             holder.personImage.setImageDrawable(ResourcesCompat.getDrawable(parentFragment.resources,R.drawable.girl_face,null))
         }
         holder.viewAppointmentsButton.setOnClickListener {
-            var appointmentsLive = StudentsAccess(context).getAppointments(students[position].rollNo)
+            var appointmentsLive = StudentsAccess(context,parentFragment).getAppointments(students[position].rollNo)
             if(appointmentsLive != null){
                 appointmentsLive.observe(parentFragment.viewLifecycleOwner){appointments->
                     if(appointments != null){
                         if(!appointments.isEmpty()) {
-
                             sharedViewModel.viewAppointmentStudentID = students[position].rollNo
                             parentFragment.findNavController()
                                 .navigate(R.id.studentAllAppointmentsFragment)
@@ -76,12 +75,11 @@ class StudentsAdapter(
             confirmDeleteBuilder.setTitle("Are you sure ?")
                 .setMessage("You want to delete this student?")
                 .setPositiveButton("Yes"){dialog,which->
-                    var deletedLive = StudentsAccess(context).deleteStudent(students[position].rollNo.toString(),students[position].emailId.toString())
+                    var deletedLive = StudentsAccess(context,parentFragment).deleteStudent(students[position].rollNo.toString(),students[position].emailId.toString())
                     deletedLive.observe(parentFragment.viewLifecycleOwner){deleted->
                         if(deleted){
                             Toast.makeText(context,"Student deleted",Toast.LENGTH_SHORT).show()
-                            students.removeAt(position)
-                            notifyItemChanged(position)
+                            notifyDataSetChanged()
                         }
                     }
                     dialog.dismiss()

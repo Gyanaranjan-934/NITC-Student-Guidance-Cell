@@ -119,7 +119,7 @@ class AdminDashboardFragment : Fragment() {
     private fun getStudents() {
         binding.mentorLayoutInAdminDashboardFragment.visibility = View.GONE
         binding.studentLayoutInAdminDashboardFragment.visibility = View.VISIBLE
-        var studentsLive = context?.let { StudentsAccess(it).getStudents() }
+        var studentsLive = context?.let { StudentsAccess(it,this).getStudents() }
         if(studentsLive != null){
             studentsLive.observe(viewLifecycleOwner){students->
                 if(students == null){

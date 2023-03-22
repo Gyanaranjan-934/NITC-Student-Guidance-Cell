@@ -23,7 +23,7 @@ class StudentAllAppointmentsFragment: Fragment() {
     ): View? {
         binding = FragmentPastRecordBinding.inflate(inflater,container,false)
 
-        var studentLive = context?.let { StudentsAccess(it).getStudent(sharedViewModel.viewAppointmentStudentID) }
+        var studentLive = context?.let { StudentsAccess(it,this).getStudent(sharedViewModel.viewAppointmentStudentID) }
         if(studentLive != null){
             studentLive.observe(viewLifecycleOwner){student->
                 if(student != null) {
@@ -32,10 +32,15 @@ class StudentAllAppointmentsFragment: Fragment() {
                     binding.nameInStudentCard.text = student.name
                     binding.phoneInStudentCard.text = student.phoneNumber
                     binding.rollNoInStudentCard.text = student.rollNo
+                }else{
+                    binding.dobInStudentCard.text = "NULL"
+                    binding.nameInStudentCard.text = "NULL"
+                    binding.phoneInStudentCard.text = "NULL"
+                    binding.rollNoInStudentCard.text = "NULL"
                 }
             }
         }
-        var appointmentsLive = context?.let { StudentsAccess(it).getAppointments(sharedViewModel.viewAppointmentStudentID) }
+        var appointmentsLive = context?.let { StudentsAccess(it,this).getAppointments(sharedViewModel.viewAppointmentStudentID) }
         if(appointmentsLive != null) {
             appointmentsLive.observe(viewLifecycleOwner){appointments->
                 if(appointments != null){

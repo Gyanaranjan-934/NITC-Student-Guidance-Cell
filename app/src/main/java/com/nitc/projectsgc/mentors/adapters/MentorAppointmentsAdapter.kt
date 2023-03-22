@@ -90,7 +90,7 @@ class MentorAppointmentsAdapter(
             }
 
         })
-        var studentLive = StudentsAccess(context).getStudent(stdId)
+        var studentLive = StudentsAccess(context,parentFragment).getStudent(stdId)
         studentLive.observe(parentFragment.viewLifecycleOwner){student->
             if(student != null) {
                 holder.nameOfTheStudent.text = student.name.toString()
@@ -114,6 +114,12 @@ class MentorAppointmentsAdapter(
                         )
                     )
                 }
+            }else{
+                holder.nameOfTheStudent.text = "NULL"
+                holder.dobText.text = "NULL"
+                holder.phoneText.text ="NULL"
+                holder.rollText.text = "NULL"
+                holder.statusText.text = "Student deleted"
             }
         }
         holder.cancelButton.setOnClickListener {

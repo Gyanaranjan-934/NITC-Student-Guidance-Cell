@@ -75,7 +75,6 @@ class BookedAppointmentsAdapter(
                 mentorLive.removeObservers(parentFragment.viewLifecycleOwner)
             }
         }
-        var today = LocalDate.now()
         if(LocalDate.parse(appointments[position].date.toString(),(DateTimeFormatter.ofPattern("dd-MM-yyyy"))).isBefore(LocalDate.now())){
             holder.binding.cancelAppointmentInBookedAppointmentCard.visibility = View.GONE
         }else holder.binding.cancelAppointmentInBookedAppointmentCard.visibility = View.VISIBLE

@@ -45,7 +45,7 @@ class ProfileAccess(var context: Context,var sharedViewModel: SharedViewModel,va
                                             "Student" -> {
                                                 if (username != null) {
                                                     Log.d("sharedP", "username not null")
-                                                    reference.child("students").child(username)
+                                                    reference.child("students")
                                                         .addListenerForSingleValueEvent(object :
                                                             ValueEventListener {
                                                             override fun onDataChange(snapshot: DataSnapshot) {
@@ -53,15 +53,26 @@ class ProfileAccess(var context: Context,var sharedViewModel: SharedViewModel,va
                                                                     "sharedP",
                                                                     "current student got"
                                                                 )
-                                                                sharedViewModel.userType = userType
-                                                                sharedViewModel.currentStudent =
-                                                                    snapshot.getValue(Student::class.java)!!
-                                                                sharedViewModel.currentUserID = username
-                                                                profileLive.postValue(true)
-                                                                Log.d("sharedP", "return statement")
+                                                                if(snapshot.hasChild(username)) {
+                                                                    sharedViewModel.userType = userType
+                                                                    sharedViewModel.currentStudent =
+                                                                        snapshot.child(username).getValue(Student::class.java)!!
+                                                                    sharedViewModel.currentUserID = username
+                                                                    profileLive.postValue(true)
+                                                                    Log.d("sharedP", "return statement")
 //                                                                callback(true)
-                                                                continuation.resume(true)
-                                                                return
+                                                                    continuation.resume(true)
+                                                                    return
+                                                                }else{
+                                                                    auth.currentUser!!.delete().addOnCompleteListener {deleteTask->
+                                                                        if(deleteTask.isSuccessful){
+                                                                            Toast.makeText(context,"Your account has been removed by admin",Toast.LENGTH_SHORT).show()
+                                                                            continuation.resume(false)
+                                                                        }else{
+                                                                            continuation.resume(false)
+                                                                        }
+                                                                    }
+                                                                }
                                                             }
 
                                                             override fun onCancelled(error: DatabaseError) {
@@ -87,20 +98,47 @@ class ProfileAccess(var context: Context,var sharedViewModel: SharedViewModel,va
                                                     )
                                                     Log.d("username","mentor username = ${username.toString()}")
                                                     if (mentorType != null) {
-                                                        reference.child("types/$mentorType")
-                                                            .child(username)
+                                                        reference.child("types")
                                                             .addListenerForSingleValueEvent(object :
                                                                 ValueEventListener {
                                                                 override fun onDataChange(snapshot: DataSnapshot) {
-                                                                    sharedViewModel.userType =
-                                                                        userType
-                                                                    sharedViewModel.currentMentor =
-                                                                        snapshot.getValue(Mentor::class.java)!!
-                                                                    profileLive.postValue(true)
-                                                                    sharedViewModel.currentUserID = username
-//                                                                    callback(true)
-                                                                    continuation.resume(true)
-                                                                    return
+                                                                    if(snapshot.hasChild(mentorType)) {
+                                                                        var mentorPath = "$mentorType/$username"
+                                                                        if(snapshot.hasChild(mentorPath)) {
+                                                                            sharedViewModel.currentMentor = snapshot.child(mentorPath).getValue(Mentor::class.java)!!
+                                                                            sharedViewModel.userType =
+                                                                                userType
+                                                                            profileLive.postValue(true)
+                                                                            sharedViewModel.currentUserID = username
+                                                                            continuation.resume(true)
+                                                                            return
+                                                                        }else {
+                                                                            auth.currentUser!!.delete().addOnCompleteListener {deleteTask->
+                                                                                if(deleteTask.isSuccessful){
+                                                                                    Toast.makeText(context,"Your account has been removed by admin",Toast.LENGTH_SHORT).show()
+                                                                                    continuation.resume(false)
+                                                                                }else{
+                                                                                    continuation.resume(false)
+                                                                                }
+                                                                            }
+                                                                            continuation.resume(false)
+                                                                            return
+                                                                        }
+                                                                    }
+                                                                    else {
+                                                                        auth.currentUser!!.delete().addOnCompleteListener {deleteTask->
+                                                                            if(deleteTask.isSuccessful){
+                                                                                Toast.makeText(context,"Your account has been removed by admin",Toast.LENGTH_SHORT).show()
+                                                                                continuation.resume(false)
+                                                                            }else{
+                                                                                continuation.resume(false)
+
+                                                                            }
+                                                                        }
+                                                                        continuation.resume(false)
+                                                                        return
+                                                                    }
+
                                                                 }
 
                                                                 override fun onCancelled(error: DatabaseError) {

@@ -3,23 +3,25 @@ package com.nitc.projectsgc.admin.access
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.*
 import com.nitc.projectsgc.Appointment
 import com.nitc.projectsgc.Student
 
-class StudentsAccess(var context: Context) {
+class StudentsAccess(var context: Context,var parentFragment: Fragment) {
 
 
-    fun getStudent(rollNo: String):LiveData<Student>{
-        var studentLive = MutableLiveData<Student>(null)
+    fun getStudent(rollNo: String): MutableLiveData<Student?> {
+        var studentLive = MutableLiveData<Student?>(null)
         var database : FirebaseDatabase = FirebaseDatabase.getInstance()
         var reference : DatabaseReference = database.reference.child("students")
         reference.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                var student = snapshot.child(rollNo).getValue(Student::class.java)!!
-                studentLive.postValue(student)
+                var student = snapshot.child(rollNo).getValue(Student::class.java)
+                if(student == null) studentLive.postValue(null)
+                else studentLive.postValue(student)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -58,15 +60,43 @@ class StudentsAccess(var context: Context) {
 
         var deleteLive = MutableLiveData<Boolean>(false)
         var database : FirebaseDatabase = FirebaseDatabase.getInstance()
-        var reference : DatabaseReference = database.reference.child("students")
-        Log.d("child",reference.child(rollNo).toString())
-        reference.child(rollNo).removeValue().addOnSuccessListener {
-            deleteLive.postValue(true)
+        var typeReference = database.reference.child("types")
+        var studentReference : DatabaseReference = database.reference.child("students")
+//        Log.d("child",reference.child(rollNo).toString())
+        studentReference.child("${ rollNo }/appointments").addListenerForSingleValueEvent(object:ValueEventListener{
+            override fun onDataChange(studentSnapshot: DataSnapshot) {
+                for(appointment in studentSnapshot.children){
+                    var studentAppointment = appointment.getValue(Appointment::class.java)!!
+                    var mentorAppointmentPath = "${studentAppointment.mentorType}/${studentAppointment.mentorID}/${studentAppointment.date}/${studentAppointment.timeSlot}"
+
+                    typeReference.child(mentorAppointmentPath).removeValue().addOnCompleteListener { mentorDeleted->
+                        if(mentorDeleted.isSuccessful) deleteLive.postValue(true)
+                        else{
+                            deleteLive.postValue(false)
+                            return@addOnCompleteListener
+                        }
+                    }
         }
-            .addOnFailureListener {error->
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(context,"Error : $error",Toast.LENGTH_LONG).show()
                 deleteLive.postValue(false)
             }
+
+        })
+
+
+                studentReference.child(rollNo).removeValue().addOnSuccessListener {
+                    deleteLive.postValue(true)
+                }
+                    .addOnFailureListener {error->
+                        Toast.makeText(context,"Error : $error",Toast.LENGTH_LONG).show()
+                        deleteLive.postValue(false)
+                    }
+
+
 
         return deleteLive
     }
