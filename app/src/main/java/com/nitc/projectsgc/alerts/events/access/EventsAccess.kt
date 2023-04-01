@@ -1,4 +1,4 @@
-package com.nitc.projectsgc.alerts.events
+package com.nitc.projectsgc.alerts.events.access
 
 import android.content.Context
 import androidx.fragment.app.Fragment
@@ -8,7 +8,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.nitc.projectsgc.Appointment
 import com.nitc.projectsgc.Event
 import com.nitc.projectsgc.SharedViewModel
 import java.text.SimpleDateFormat

@@ -78,6 +78,9 @@ class StudentDashboardFragment: Fragment() {
 
         }
 
+        binding.notificationsButtonInStudentDashboardFragment.setOnClickListener {
+            findNavController().navigate(R.id.allEventsFragment)
+        }
         binding.bookAppointmentButtonInStudentDashboard.setOnClickListener {
             findNavController().navigate(R.id.bookingFragment)
         }

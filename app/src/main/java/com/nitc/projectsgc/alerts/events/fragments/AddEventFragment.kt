@@ -1,4 +1,4 @@
-package com.nitc.projectsgc.alerts.events
+package com.nitc.projectsgc.alerts.events.fragments
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.nitc.projectsgc.Event
 import com.nitc.projectsgc.SharedViewModel
+import com.nitc.projectsgc.alerts.events.access.EventsAccess
 import com.nitc.projectsgc.databinding.FragmentAddEventBinding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -70,7 +71,9 @@ class AddEventFragment: Fragment() {
                 Toast.makeText(context,"Enter venue for the event",Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            val linkInput = binding.linkInputInAddEventFragment.text.toString().trim()
+            var linkInput = binding.linkInputInAddEventFragment.text.toString().trim()
+
+            if(linkInput.isEmpty()) linkInput = " "
             val addedLive = EventsAccess(requireContext(),sharedViewModel,this).addEvent(
                 Event(
                     heading = headingInput,

@@ -92,4 +92,12 @@
         tools:layout="@layout/fragment_add_mentor"
         android:name="com.nitc.projectsgc.mentors.MentorProfileFragment"
         android:label="MentorProfileFragment" />
+    <fragment
+        android:id="@+id/addEventFragment"
+        android:name="com.nitc.projectsgc.alerts.events.fragments.AddEventFragment"
+        android:label="AddEventFragment" />
+    <fragment
+        android:id="@+id/allEventsFragment"
+        android:name="com.nitc.projectsgc.alerts.events.fragments.AllEventsFragment"
+        android:label="AllEventsFragment" />
 </navigation>
