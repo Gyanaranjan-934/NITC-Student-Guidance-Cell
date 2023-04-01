@@ -16,7 +16,6 @@ import com.nitc.projectsgc.R
 import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.Student
 import com.nitc.projectsgc.admin.access.StudentsAccess
-import com.nitc.projectsgc.booking.access.BookingAccess
 import de.hdodenhof.circleimageview.CircleImageView
 
 class StudentsAdapter(

@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/bookingFragment"
-        android:name="com.nitc.projectsgc.booking.BookingFragment"
+        android:name="com.nitc.projectsgc.student.fragments.BookingFragment"
         android:label="BookingFragment" />
     <fragment
         android:id="@+id/adminDashboardFragment"

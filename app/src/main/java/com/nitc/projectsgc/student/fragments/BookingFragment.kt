@@ -1,4 +1,4 @@
-package com.nitc.projectsgc.booking
+package com.nitc.projectsgc.student.fragments
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
@@ -9,16 +9,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.database.*
 import com.nitc.projectsgc.Appointment
-import com.nitc.projectsgc.Mentor
 import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.admin.access.MentorsAccess
-import com.nitc.projectsgc.booking.access.BookingAccess
+import com.nitc.projectsgc.student.access.BookingAccess
 import com.nitc.projectsgc.databinding.FragmentBookingBinding
 import java.util.*
 import com.nitc.projectsgc.R
@@ -131,20 +129,7 @@ class BookingFragment : Fragment() {
                 Toast.makeText(context,"Select mentor name first",Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            val calendar = Calendar.getInstance()
 
-            val datePickerDialog = context?.let { it1 ->
-                DatePickerDialog(it1, { _, year, month, day ->
-                    var monthToSet = month + 1
-                    if(monthToSet < 10) selectedDate = "$day-0${monthToSet}-$year"
-                    else selectedDate = "$day-${monthToSet}-$year"
-                    binding.bookingDateButtonInBookingFragment.text = selectedDate
-                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
-            }
-            if (datePickerDialog != null) {
-                datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
-            }
-            datePickerDialog?.show()
         }
         var foundDate = MutableLiveData<Boolean>(false)
         var selectedTimeSlot = "NA"

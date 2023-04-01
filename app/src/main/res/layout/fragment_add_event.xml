@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_gray"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Add Event"
+        app:layout_constraintVertical_bias="0.05"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:textSize="26sp"
+        android:textColor="@color/black"
+        android:id="@+id/headingTVInAddEventFragment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/headingTVInAddEventFragment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:cardCornerRadius="15dp"
+        android:id="@+id/headingInputCardInAddEventFragment"
+        app:layout_constraintVertical_bias="0.08"
+        app:layout_constraintWidth_percent="0.75"
+        app:layout_constraintHeight_percent="0.07">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:hint="Enter Heading"
+            app:boxStrokeWidthFocused="0dp"
+            app:boxStrokeWidth="0dp"
+            app:boxBackgroundColor="#00000000"
+            android:textColorHint="@color/black">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/headingInputInAddEventFragment"
+                android:inputType="text"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/headingInputCardInAddEventFragment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/headingInputCardInAddEventFragment"
+        android:id="@+id/venueInputCardInAddEventFragment"
+        app:layout_constraintEnd_toEndOf="@id/headingInputCardInAddEventFragment"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintVertical_bias="0.08"
+        app:layout_constraintHeight_percent="0.07">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:hint="Enter Venue"
+            app:boxStrokeWidthFocused="0dp"
+            app:boxStrokeWidth="0dp"
+            app:boxBackgroundColor="#00000000"
+            android:textColorHint="@color/black">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/venueInputInAddEventFragment"
+                android:inputType="text"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/dateTimeInputLayoutInAddEventFragment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.07"
+        app:layout_constraintVertical_bias="0.08"
+        app:layout_constraintStart_toStartOf="@id/headingInputCardInAddEventFragment"
+        app:layout_constraintEnd_toEndOf="@id/headingInputCardInAddEventFragment"
+        app:layout_constraintTop_toBottomOf="@+id/venueInputCardInAddEventFragment">
+
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Select Date"
+            app:layout_constraintWidth_percent="0.45"
+            android:letterSpacing="0.01"
+            android:backgroundTint="@color/navy_blue"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toStartOf="@id/timeButtonInAddEventFragment"
+            app:cornerRadius="15dp"
+            android:id="@+id/dateButtonInAddEventFragment"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintWidth_percent="0.45"
+            android:letterSpacing="0.01"
+            app:layout_constraintStart_toEndOf="@id/dateButtonInAddEventFragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Select Time"
+            android:visibility="gone"
+            android:backgroundTint="@color/ivory_beige"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+            app:cornerRadius="15dp"
+            android:id="@+id/timeButtonInAddEventFragment"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/dateTimeInputLayoutInAddEventFragment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/headingInputCardInAddEventFragment"
+        app:layout_constraintEnd_toEndOf="@id/headingInputCardInAddEventFragment"
+        app:cardCornerRadius="15dp"
+        android:id="@+id/linkInputCardInAddEventFragment"
+        app:layout_constraintVertical_bias="0.08"
+        app:layout_constraintHeight_percent="0.17">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:hint="Enter Link"
+            app:boxStrokeWidthFocused="0dp"
+            app:boxStrokeWidth="0dp"
+            app:boxBackgroundColor="#00000000"
+            android:textColorHint="@color/black">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/linkInputInAddEventFragment"
+                android:inputType="textMultiLine"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/linkInputCardInAddEventFragment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:backgroundTint="@color/dark_grey"
+        android:textColor="@color/white"
+        android:text="Add Event"
+        android:id="@+id/addEventButtonInAddEventFragment"
+        android:textAllCaps="false"
+        android:letterSpacing="0.02"
+        app:layout_constraintHeight_percent="0.08"
+        app:layout_constraintWidth_percent="0.45"
+        app:cornerRadius="15dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

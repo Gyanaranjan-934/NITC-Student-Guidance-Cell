@@ -1,4 +1,4 @@
-package com.nitc.projectsgc.booking.access
+package com.nitc.projectsgc.student.access
 
 import android.content.Context
 import androidx.lifecycle.LiveData
