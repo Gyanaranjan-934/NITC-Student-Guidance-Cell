@@ -9,9 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
-import com.nitc.projectsgc.Login.LoginFragment
-import com.nitc.projectsgc.booking.BookingFragment
-import com.nitc.projectsgc.student.StudentDashboardFragment
+import com.nitc.projectsgc.student.fragments.StudentDashboardFragment
 import kotlinx.coroutines.*
 import java.util.concurrent.Executors
 

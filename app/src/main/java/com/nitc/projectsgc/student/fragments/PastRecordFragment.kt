@@ -1,4 +1,4 @@
-package com.nitc.projectsgc.student
+package com.nitc.projectsgc.student.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,9 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.databinding.FragmentPastRecordBinding
 import com.nitc.projectsgc.mentors.access.MentorAppointmentsAccess
-import com.nitc.projectsgc.mentors.adapters.MentorAppointmentsAdapter
 import com.nitc.projectsgc.mentors.adapters.PastRecordAdapter
-import com.nitc.projectsgc.student.adapters.BookedAppointmentsAdapter
 
 class PastRecordFragment:Fragment() {
 

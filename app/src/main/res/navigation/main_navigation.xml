@@ -45,7 +45,7 @@
         tools:layout="@layout/fragment_mentor_update" />
     <fragment
         android:id="@+id/studentDashBoardFragment"
-        android:name="com.nitc.projectsgc.student.StudentDashboardFragment"
+        android:name="com.nitc.projectsgc.student.fragments.StudentDashboardFragment"
         android:label="fragment_student_dash_board"
         tools:layout="@layout/fragment_student_dash_board" />
     <fragment
@@ -75,7 +75,7 @@
         tools:layout="@layout/fragment_mentor_dashboard" />
     <fragment
         android:id="@+id/pastRecordFragment"
-        android:name="com.nitc.projectsgc.student.PastRecordFragment"
+        android:name="com.nitc.projectsgc.student.fragments.PastRecordFragment"
         android:label="PastRecordFragment" />
     <fragment
         android:id="@+id/studentAllAppointmentsFragment"
