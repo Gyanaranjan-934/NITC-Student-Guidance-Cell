@@ -2,6 +2,7 @@ package com.nitc.projectsgc.admin.adapters
 
 import android.app.AlertDialog
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,6 +57,7 @@ class MentorsAdapter(
             confirmDeleteBuilder.setTitle("Are you sure ?")
                 .setMessage("You want to delete this mentor?")
                 .setPositiveButton("Yes"){dialog,which->
+                    Log.d("deleteMentor","username = ${mentors[position].userName.toString()}")
                     var deletedLive = MentorsAccess(context).deleteMentor(mentors[position].userName.toString(),mentors[position].type.toString())
                     deletedLive.observe(parentFragment.viewLifecycleOwner){deleted->
                         if(deleted){

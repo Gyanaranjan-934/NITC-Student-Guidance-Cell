@@ -3,11 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="250dp"
+    android:layout_height="230dp"
     android:layout_margin="5dp"
     app:cardCornerRadius="15dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardBackgroundColor="@color/lavender">
+    app:cardBackgroundColor="@color/light_blue">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -26,28 +26,39 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.027" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/byText"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="By : "
-            android:textColor="@color/black"
-            android:fontFamily="@font/inter_semibold"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="@id/dateOfPublishInEventCard"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.7"
-            app:layout_constraintStart_toEndOf="@id/dateOfPublishInEventCard"
-            app:layout_constraintTop_toTopOf="@id/dateOfPublishInEventCard" />
+            app:layout_constraintTop_toTopOf="@id/dateOfPublishInEventCard">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/mentorNameInEventCard"
-            android:text="Dr. Sumit"
-            app:layout_constraintBottom_toBottomOf="@id/byText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/byText"
-            app:layout_constraintTop_toTopOf="@id/byText" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/byText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="By : "
+                android:textColor="@color/black"
+                android:fontFamily="@font/inter_semibold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/mentorNameInEventCard"
+                app:layout_constraintHorizontal_bias="0.7"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/mentorNameInEventCard"
+                android:text="Dr. Sumit"
+                app:layout_constraintBottom_toBottomOf="@id/byText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/byText"
+                app:layout_constraintTop_toTopOf="@id/byText" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/headingInEventCard"
@@ -57,141 +68,203 @@
             android:text="Heading"
             android:textAlignment="center"
             android:textColor="@color/black"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.2" />
+            app:layout_constraintVertical_bias="0.12" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/materialTextView1"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/dateLayoutInEventCard"
+            app:layout_constraintVertical_bias="0.1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintWidth_percent="0.32"
+            app:layout_constraintEnd_toStartOf="@id/timeLayoutInEventCard"
+            app:layout_constraintTop_toBottomOf="@id/headingInEventCard"
+            app:layout_constraintStart_toStartOf="parent">
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/dateTVInEventCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:text="Date: "
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.16"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/dateOfEventInEventCard"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/dateOfEventInEventCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter"
+                android:text="31/08/2000"
+                app:layout_constraintBottom_toBottomOf="@+id/dateTVInEventCard"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/dateTVInEventCard"
+                app:layout_constraintTop_toTopOf="@+id/dateTVInEventCard"
+                app:layout_constraintVertical_bias="1.0" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/timeLayoutInEventCard"
+            app:layout_constraintWidth_percent="0.32"
+            app:layout_constraintTop_toTopOf="@+id/dateLayoutInEventCard"
+            app:layout_constraintBottom_toBottomOf="@id/dateLayoutInEventCard"
+            app:layout_constraintStart_toEndOf="@id/dateLayoutInEventCard"
+            app:layout_constraintEnd_toEndOf="parent">
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/timeTVInEventCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:text="Time: "
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/timeOfEventInEventCard"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.3"
+                app:layout_constraintVertical_bias="0.104" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/timeOfEventInEventCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter"
+                android:text="12:30"
+                app:layout_constraintBottom_toBottomOf="@+id/timeTVInEventCard"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.033"
+                app:layout_constraintStart_toEndOf="@+id/timeTVInEventCard"
+                app:layout_constraintTop_toTopOf="@+id/timeTVInEventCard"
+                app:layout_constraintVertical_bias="0.0" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/inter_semibold"
-            android:text="Date: "
-            android:textColor="@color/black"
+            android:id="@+id/venueLayoutInEventCard"
+            app:layout_constraintTop_toBottomOf="@id/dateLayoutInEventCard"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.16"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/headingInEventCard"
-            app:layout_constraintVertical_bias="0.098" />
+            app:layout_constraintVertical_bias="0.1"
+            app:layout_constraintEnd_toEndOf="parent">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/dateOfEventInEventCard"
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/venueTVInEventCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:text="Venue: "
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/venueOfEventInEventCard"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/venueOfEventInEventCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="Google Meet"
+                android:fontFamily="@font/inter"
+                app:layout_constraintBottom_toBottomOf="@+id/venueTVInEventCard"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/venueTVInEventCard"
+                app:layout_constraintTop_toTopOf="@+id/venueTVInEventCard" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="7dp"
-            android:text="31/08/2000"
-            app:layout_constraintBottom_toBottomOf="@+id/materialTextView1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.033"
-            app:layout_constraintStart_toEndOf="@+id/materialTextView1"
-            app:layout_constraintTop_toTopOf="@+id/materialTextView1"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/materialTextView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/inter_semibold"
-            android:text="Time: "
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.3"
-            app:layout_constraintStart_toEndOf="@+id/dateOfEventInEventCard"
-            app:layout_constraintTop_toBottomOf="@+id/headingInEventCard"
-            app:layout_constraintVertical_bias="0.104" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/timeOfEventInEventCard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:text="12:30"
-            app:layout_constraintBottom_toBottomOf="@+id/materialTextView2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.033"
-            app:layout_constraintStart_toEndOf="@+id/materialTextView2"
-            app:layout_constraintTop_toTopOf="@+id/materialTextView2"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/materialTextView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/inter_semibold"
-            android:text="Venue: "
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.433"
+            app:layout_constraintTop_toBottomOf="@id/venueLayoutInEventCard"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/headingInEventCard"
-            app:layout_constraintVertical_bias="0.345" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/venueOfEventInEventCard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:text="Google Meet"
-            app:layout_constraintBottom_toBottomOf="@+id/materialTextView3"
+            android:id="@+id/linkLayoutInEventCard"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/materialTextView3"
-            app:layout_constraintTop_toTopOf="@+id/materialTextView3" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@id/linkTextViewInEventCard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/inter_semibold"
-            android:text="Link: "
-            android:textColor="@color/black"
-            app:flow_horizontalBias="0.2"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.177"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialTextView3"
-            app:layout_constraintVertical_bias="0.159" />
+            app:layout_constraintVertical_bias="0.15">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/linkOfMeetingInEventCard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="nejtb fjebkjerfb/ejrbkje/erfberfbe/ejrfbe"
-            android:textAlignment="center"
-            app:layout_constraintBottom_toBottomOf="@+id/linkTextViewInEventCard"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/linkTextViewInEventCard"
-            app:layout_constraintTop_toTopOf="@+id/linkTextViewInEventCard" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@id/linkTVInEventCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:text="Link: "
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/linkOfMeetingInEventCard"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintVertical_bias="0.159" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/linkOfMeetingInEventCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="310dp"
+                android:layout_marginStart="5dp"
+                android:text="nejtb fjebkjerfb/ejrbkje/erfberfbe/ejrfbe"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="@+id/linkTVInEventCard"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/linkTVInEventCard"
+                app:layout_constraintTop_toTopOf="@+id/linkTVInEventCard" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/materialButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/updateButtonInEventCard"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:text="Update"
+            android:textAllCaps="false"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/deleteButtonInEventCard"
             app:layout_constraintHorizontal_bias="0.278"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linkTextViewInEventCard"
-            app:layout_constraintVertical_bias="0.384" />
+            app:layout_constraintHeight_percent="0.24"
+            app:cornerRadius="10dp"
+            android:letterSpacing="0.02"
+            android:fontFamily="@font/inter_semibold"
+            android:backgroundTint="@color/navy_blue"
+            app:layout_constraintWidth_percent="0.3"
+            app:layout_constraintTop_toBottomOf="@+id/linkLayoutInEventCard"
+            app:layout_constraintVertical_bias="0.9" />
 
         <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:text="Delete"
-            android:backgroundTint="@color/baby_blue"
+            android:id="@+id/deleteButtonInEventCard"
+            android:backgroundTint="@color/light_gray"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/materialButton"
+            android:textAllCaps="false"
+            app:cornerRadius="10dp"
+            android:letterSpacing="0.02"
+            app:layout_constraintWidth_percent="0.25"
+            app:layout_constraintBottom_toBottomOf="@+id/updateButtonInEventCard"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/materialButton"
-            app:layout_constraintTop_toTopOf="@+id/materialButton" />
+            app:layout_constraintStart_toEndOf="@+id/updateButtonInEventCard"
+            app:layout_constraintTop_toTopOf="@+id/updateButtonInEventCard" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

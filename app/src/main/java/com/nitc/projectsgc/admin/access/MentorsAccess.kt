@@ -116,18 +116,17 @@ class MentorsAccess(var context: Context) {
         var database : FirebaseDatabase = FirebaseDatabase.getInstance()
         var typeReference : DatabaseReference = database.reference.child("types")
         var mentorPath = "$mentorType/$userName"
+        Log.d("deleteMentor",mentorPath)
         typeReference.child(mentorPath).addListenerForSingleValueEvent(object:ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 for(ds in snapshot.child("appointments").children){
                     var appointment = ds.getValue(Appointment::class.java)!!
                     var studentReference = "students/${appointment.studentID}/appointments/${appointment.id}"
-                    database.reference.child(studentReference).removeValue().addOnCompleteListener {appointmentDeleted->
-                        if(!appointmentDeleted.isSuccessful){
+                    Log.d("deleteMentor",studentReference)
+                    database.reference.child(studentReference).removeValue().addOnSuccessListener {appointmentDeleted->
                             deleteLive.postValue(true)
-                        }else {
-                            deleteLive.postValue(false)
-                            return@addOnCompleteListener
-                        }
+                    }.addOnFailureListener {
+                        deleteLive.postValue(false)
                     }
                 }
             }
