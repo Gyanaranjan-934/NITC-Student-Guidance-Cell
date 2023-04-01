@@ -55,12 +55,17 @@ class StudentDashboardFragment: Fragment() {
 //        }
 
         binding.viewPagerInStudentDashboard.adapter = StudentAppointmentsPagerAdapter(parentFragmentManager,lifecycle)
+        binding.tabLayoutInStudentDashboard.addTab(binding.tabLayoutInStudentDashboard.newTab().setText("Booked"))
+        binding.tabLayoutInStudentDashboard.addTab(binding.tabLayoutInStudentDashboard.newTab().setText("Completed"))
+
+//        binding.tabLayoutInStudentDashboard.addTab(binding.tabLayoutInStudentDashboard.newTab().setText("Profile"))
         TabLayoutMediator(binding.tabLayoutInStudentDashboard,binding.viewPagerInStudentDashboard){tab,position->
-            if(position == 0) tab.text = "Booked"
-            else tab.text = "Completed"
+            when(position){
+                0-> tab.text = "Booked"
+                1-> tab.text = "Completed"
+                2-> tab.text = "Profile"
+            }
         }.attach()
-
-
         binding.logoutButtonInStudentDashboardFragment.setOnClickListener {
             var logoutSuccess = context?.let { it1 -> LoginAccess(it1,this,sharedViewModel).logout() }
 //            logoutLive!!.observe(viewLifecycleOwner){logoutSuccess->

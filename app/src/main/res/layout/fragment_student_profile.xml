@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_gray"
+    tools:context=".admin.AddMentorFragment">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.02"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/headingTVStudentProfileFragment"
+        android:textColor="@color/black"
+        android:fontFamily="@font/inter_semibold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Student name"
+        android:textSize="30dp">
+
+    </com.google.android.material.textview.MaterialTextView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:cardCornerRadius="@dimen/input_card_radius"
+        app:layout_constraintHeight_percent="0.13"
+        app:cardBackgroundColor="@color/lavender"
+        app:layout_constraintWidth_percent="0.85"
+        android:id="@+id/nameInputCardStudentProfileFragment"
+        app:layout_constraintVertical_bias="0.15"
+        app:layout_constraintTop_toBottomOf="@id/headingTVStudentProfileFragment"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:layout_width="match_parent"
+            app:boxBackgroundColor="@color/lavender"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            android:textColorHint="@color/black"
+            android:id="@+id/nameInputLayoutInStudentProfileFragment"
+            app:hintTextColor="@color/black"
+            android:hint="Name"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nameFieldStudentProfileFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:cardCornerRadius="@dimen/input_card_radius"
+        app:layout_constraintStart_toStartOf="@id/nameInputCardStudentProfileFragment"
+        app:layout_constraintEnd_toEndOf="@id/nameInputCardStudentProfileFragment"
+        app:layout_constraintHeight_percent="0.13"
+        app:layout_constraintTop_toBottomOf="@id/nameInputCardStudentProfileFragment"
+        app:layout_constraintVertical_bias="0.05"
+        android:gravity="center"
+        app:cardBackgroundColor="@color/lavender"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/phoneCardStudentProfileFragment">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColorHint="@color/black"
+            app:hintTextColor="@color/black"
+            android:id="@+id/phoneInputLayoutInStudentProfileFragment"
+            android:layout_gravity="center"
+            app:boxStrokeWidth="0dp"
+            android:hint="Phone"
+            app:boxStrokeWidthFocused="0dp"
+            app:boxBackgroundColor="@color/lavender">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phoneNumberStudentProfileFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="phone"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/nameInputCardStudentProfileFragment"
+        app:layout_constraintEnd_toEndOf="@id/nameInputCardStudentProfileFragment"
+        app:layout_constraintHeight_percent="0.13"
+        android:id="@+id/emailInputCardStudentProfileFragment"
+        app:layout_constraintTop_toBottomOf="@id/phoneCardStudentProfileFragment"
+        app:layout_constraintVertical_bias="0.06"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:cardCornerRadius="@dimen/input_card_radius">
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:boxBackgroundColor="@color/lavender"
+            android:hint="Email"
+            app:boxStrokeWidthFocused="0dp"
+            android:id="@+id/emailInputLayoutInStudentProfileFragment"
+            app:boxStrokeWidth="0dp"
+            android:textColorHint="@color/black"
+            app:hintTextColor="@color/black"
+            android:layout_weight="9">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailFieldStudentProfileFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/passwordInputCardStudentProfileFragment"
+        app:layout_constraintStart_toStartOf="@id/nameInputCardStudentProfileFragment"
+        app:layout_constraintEnd_toEndOf="@id/nameInputCardStudentProfileFragment"
+        app:layout_constraintHeight_percent="0.13"
+        app:cardBackgroundColor="@color/lavender"
+        app:cardCornerRadius="@dimen/input_card_radius"
+        app:layout_constraintTop_toBottomOf="@id/emailInputCardStudentProfileFragment"
+        app:layout_constraintVertical_bias="0.08"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColorHint="@color/black"
+            app:hintTextColor="@color/black"
+            android:hint="Password"
+            android:id="@+id/passwordInputLayoutInStudentProfileFragment"
+            app:endIconMode="password_toggle"
+            app:boxStrokeWidthFocused="0dp"
+            app:boxStrokeWidth="0dp"
+            app:boxBackgroundColor="@color/lavender">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordFieldStudentProfileFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textPassword"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/updateButtonStudentProfileFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/nameInputCardStudentProfileFragment"
+        app:layout_constraintEnd_toEndOf="@id/nameInputCardStudentProfileFragment"
+        app:layout_constraintTop_toBottomOf="@id/passwordInputCardStudentProfileFragment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.13"
+        android:backgroundTint="@color/navy_blue"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Update"
+        android:textSize="18sp"
+        android:letterSpacing="0"
+        android:textColor="@color/white"
+        app:layout_constraintWidth_percent="0.6"
+        android:textAllCaps="false"
+        app:cornerRadius="15dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
