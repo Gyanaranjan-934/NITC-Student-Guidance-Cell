@@ -57,7 +57,9 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintHeight_percent="0.1"
+                    app:strokeColor="@color/black"
+                    app:strokeWidth="1dp"
+                    app:layout_constraintHeight_percent="0.11"
                     app:cardElevation="0dp"
                     app:layout_constraintVertical_bias="0.03"
                     app:layout_constraintWidth_percent="0.97"
@@ -181,63 +183,89 @@
                 android:textColor="@color/black"/>
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:id="@+id/emailInputLayoutInLoginFragment"
+                android:id="@+id/emailInputCardInLoginFragment"
                 app:layout_constraintTop_toBottomOf="@id/mentorTypeButtonInLoginFragment"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHeight_percent="0.13"
+                app:layout_constraintHeight_percent="0.12"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
                 app:layout_constraintVertical_bias="0.15"
-                app:boxStrokeWidth="1dp"
-                app:boxStrokeColor="@color/black"
-                app:hintTextColor="@color/black"
-                android:hint="Email"
-                app:boxBackgroundColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintWidth_percent="0.85"
-                android:textColorHint="@color/black">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextTextEmailAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="textEmailAddress" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_weight="3"
-                android:textColorHint="@color/black"
-                app:layout_constraintTop_toBottomOf="@+id/emailInputLayoutInLoginFragment"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintVertical_bias="0.05"
-                app:layout_constraintHeight_percent="0.13"
-                android:id="@+id/passwordInputLayoutInLoginFragment"
-                app:boxStrokeWidth="0.5dp"
-                app:hintTextColor="@color/black"
-                app:boxBackgroundColor="@color/white"
-                android:hint="Password"
-                app:endIconMode="password_toggle"
-                app:boxStrokeColor="@color/black"
-                app:layout_constraintStart_toStartOf="@id/emailInputLayoutInLoginFragment"
-                app:layout_constraintEnd_toEndOf="@id/emailInputLayoutInLoginFragment"
                 app:layout_constraintWidth_percent="0.85">
 
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextTextPassword"
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="4"
-                    android:inputType="textPassword" />
+                    android:id="@+id/emailInputLayoutInLoginFragment"
+                    app:boxStrokeColor="@color/black"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:startIconDrawable="@drawable/email_icon"
+                    app:boxStrokeWidth="0dp"
+                    android:hint="Email"
+                    android:textColorHint="@color/black"
+                    app:startIconTint="@color/black"
+                    app:boxBackgroundColor="@color/white">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextTextEmailAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="textEmailAddress" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:id="@+id/passwordInputCardInLoginFragment"
+                app:layout_constraintTop_toBottomOf="@id/emailInputCardInLoginFragment"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.05"
+                app:layout_constraintHeight_percent="0.12"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:layout_constraintStart_toStartOf="@id/emailInputCardInLoginFragment"
+                app:layout_constraintEnd_toEndOf="@id/emailInputCardInLoginFragment">
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                    android:layout_weight="3"
+                    app:layout_constraintTop_toBottomOf="@+id/emailInputCardInLoginFragment"
+                    android:id="@+id/passwordInputLayoutInLoginFragment"
+                    app:boxStrokeWidth="0dp"
+                    app:boxBackgroundColor="@color/white"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:startIconDrawable="@drawable/lock_icon"
+                    android:hint="Password"
+                    app:endIconMode="password_toggle"
+                    app:boxStrokeColor="@color/black">
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextTextPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:inputType="textPassword" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
 
 
 
@@ -245,7 +273,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/passwordInputLayoutInLoginFragment"
+                    app:layout_constraintTop_toBottomOf="@id/passwordInputCardInLoginFragment"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -272,6 +300,7 @@
                 app:layout_constraintHeight_percent="0.12"
                 app:layout_constraintVertical_bias="0.65"
                 app:layout_constraintStart_toStartOf="parent"
+                android:backgroundTint="@color/navy_blue"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintWidth_percent="0.9"
                 android:text="Login"

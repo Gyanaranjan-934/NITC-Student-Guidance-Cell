@@ -246,7 +246,7 @@
             android:letterSpacing="0.02"
             android:fontFamily="@font/inter_semibold"
             android:backgroundTint="@color/navy_blue"
-            app:layout_constraintWidth_percent="0.3"
+            app:layout_constraintWidth_percent="0.35"
             app:layout_constraintTop_toBottomOf="@+id/linkLayoutInEventCard"
             app:layout_constraintVertical_bias="0.9" />
 
