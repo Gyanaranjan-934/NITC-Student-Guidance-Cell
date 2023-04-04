@@ -30,7 +30,7 @@ class EventsAccess(
         val reference = database.reference.child("events")
         val eventID = reference.push().key.toString()
         event.id = eventID
-        reference.setValue(event).addOnCompleteListener { task->
+        reference.child(eventID).setValue(event).addOnCompleteListener { task->
             if(task.isSuccessful){
                 addedLive.postValue(true)
             }else addedLive.postValue(false)

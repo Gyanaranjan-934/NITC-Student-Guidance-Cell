@@ -6,19 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/light_gray">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/headingTVInAllEventsFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/inter_semibold"
-        android:text="All Events"
-        android:textColor="@color/black"
-        android:textSize="26sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.03" />
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
@@ -26,10 +14,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/addEventButtonInAllEventsFragment"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.8"
+        app:layout_constraintHeight_percent="0.9"
         android:background="@color/light_gray"
         app:layout_constraintVertical_bias="0.9"
-        app:layout_constraintTop_toBottomOf="@+id/headingTVInAllEventsFragment">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.SharedViewModel
@@ -36,7 +37,7 @@ class AllEventsFragment:Fragment() {
 
         if(sharedViewModel.userType == "Mentor"){
             binding.addEventButtonInAllEventsFragment.visibility = View.VISIBLE
-        }
+        }else binding.addEventButtonInAllEventsFragment.visibility = View.GONE
         var coroutineScope = CoroutineScope(Dispatchers.Main)
         val loadingDialog = Dialog(requireContext())
         loadingDialog.setContentView(requireActivity().layoutInflater.inflate(R.layout.loading_dialog,null))
@@ -60,6 +61,9 @@ class AllEventsFragment:Fragment() {
             }
             loadingDialog.cancel()
             coroutineScope.cancel()
+        }
+        binding.addEventButtonInAllEventsFragment.setOnClickListener {
+            findNavController().navigate(R.id.addEventFragment)
         }
 
 

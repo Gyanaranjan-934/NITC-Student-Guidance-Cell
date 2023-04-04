@@ -67,6 +67,9 @@ class MentorDashboardFragment : Fragment() {
 //            }
 
         }
+        binding.notificationsButtonInMentorDashboardFragment.setOnClickListener {
+            findNavController().navigate(R.id.allEventsFragment)
+        }
 
         var backCallBack = object:OnBackPressedCallback(true){
             override fun handleOnBackPressed() {

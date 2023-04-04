@@ -32,11 +32,11 @@ class AllEventsAdapter(
 
     override fun onBindViewHolder(holder: AllEventsViewHolder, position: Int) {
         holder.binding.mentorNameInEventCard.text = events[position].mentorName.toString()
-        holder.binding.dateOfPublishInEventCard.text = events[position].mentorName.toString()
-        holder.binding.headingInEventCard.text = events[position].mentorName.toString()
-        holder.binding.venueOfEventInEventCard.text = events[position].mentorName.toString()
-        holder.binding.timeOfEventInEventCard.text = events[position].mentorName.toString()
-        holder.binding.dateOfEventInEventCard.text = events[position].mentorName.toString()
+        holder.binding.dateOfPublishInEventCard.text = events[position].publishDate.toString()
+        holder.binding.headingInEventCard.text = events[position].heading.toString()
+        holder.binding.venueOfEventInEventCard.text = events[position].venue.toString()
+        holder.binding.timeOfEventInEventCard.text = events[position].eventTime.toString()
+        holder.binding.dateOfEventInEventCard.text = events[position].eventDate.toString()
         if(events[position].link == " "){
             holder.binding.linkLayoutInEventCard.visibility = View.GONE
         }

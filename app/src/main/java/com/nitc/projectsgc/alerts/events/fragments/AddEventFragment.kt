@@ -10,7 +10,9 @@ import android.widget.TimePicker
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.nitc.projectsgc.Event
+import com.nitc.projectsgc.R
 import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.alerts.events.access.EventsAccess
 import com.nitc.projectsgc.databinding.FragmentAddEventBinding
@@ -88,6 +90,7 @@ class AddEventFragment: Fragment() {
             addedLive.observe(viewLifecycleOwner){addedSuccess->
                 if(addedSuccess){
                     Toast.makeText(context,"Added event",Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.allEventsFragment)
                 }else{
                     Toast.makeText(context,"Some error occurred. Try again later",Toast.LENGTH_SHORT).show()
                 }
