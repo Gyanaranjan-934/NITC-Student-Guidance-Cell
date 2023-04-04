@@ -40,22 +40,36 @@ class AllNewsFragment:Fragment() {
         loadingDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         coroutineScope.launch {
             loadingDialog.show()
-            val news = NewsAccess(requireContext(),sharedViewModel,this@AllNewsFragment).getNews()
-            if(news != null){
-                if(news.isEmpty()){
-                    Toast.makeText(context,"No news found. Try again",Toast.LENGTH_SHORT).show()
-                    coroutineScope.cancel()
-                    loadingDialog.cancel()
-                }
-            }else{
-                Toast.makeText(context,"Some error occurred. Try again",Toast.LENGTH_SHORT).show()
-                coroutineScope.cancel()
+            getNews()
+            coroutineScope.cancel()
+            loadingDialog.cancel()
+
+        }
+        binding.allNewsSwipeLayout.setOnRefreshListener {
+            var swipeCoroutineScope = CoroutineScope(Dispatchers.Main)
+            swipeCoroutineScope.launch {
+                loadingDialog.show()
+                getNews()
+                swipeCoroutineScope.cancel()
                 loadingDialog.cancel()
+                binding.allNewsSwipeLayout.isRefreshing = false
             }
-
-
         }
 
         return binding.root
+    }
+
+    private suspend fun getNews() {
+        val news = NewsAccess(requireContext(),sharedViewModel,this@AllNewsFragment).getNews()
+        if(news != null){
+            if(news.isEmpty()){
+                binding.noNewsTVInAllNewsFragment.visibility = View.VISIBLE
+                binding.allNewsRecyclerViewInAllNewsFragment.visibility = View.GONE
+                return
+            }
+        }else{
+            Toast.makeText(context,"Some error occurred. Try again",Toast.LENGTH_SHORT).show()
+            return
+        }
     }
 }

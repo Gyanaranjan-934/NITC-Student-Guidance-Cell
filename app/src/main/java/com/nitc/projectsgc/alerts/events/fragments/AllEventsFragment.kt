@@ -35,39 +35,57 @@ class AllEventsFragment:Fragment() {
 
         binding.recyclerViewInAllEventsFragment.layoutManager = LinearLayoutManager(context)
 
-        if(sharedViewModel.userType == "Mentor"){
-            binding.addEventButtonInAllEventsFragment.visibility = View.VISIBLE
-        }else binding.addEventButtonInAllEventsFragment.visibility = View.GONE
         var coroutineScope = CoroutineScope(Dispatchers.Main)
         val loadingDialog = Dialog(requireContext())
         loadingDialog.setContentView(requireActivity().layoutInflater.inflate(R.layout.loading_dialog,null))
         loadingDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         coroutineScope.launch {
             loadingDialog.show()
-            val events = EventsAccess(requireContext(),sharedViewModel,this@AllEventsFragment).getEvents(sharedViewModel.userType == "Student")
-            if(events == null || events.isEmpty()){
-                binding.noEventsTVInAllEventsFragment.visibility = View.VISIBLE
-                binding.recyclerViewInAllEventsFragment.visibility = View.GONE
-            }else{
-                binding.noEventsTVInAllEventsFragment.visibility = View.GONE
-                binding.recyclerViewInAllEventsFragment.visibility = View.VISIBLE
-                binding.recyclerViewInAllEventsFragment.adapter = AllEventsAdapter(
-                    requireContext(),
-                    this@AllEventsFragment,
-                    sharedViewModel,
-                    sharedViewModel.userType == "Student",
-                    events
-                )
-            }
-            loadingDialog.cancel()
+            getEvents()
             coroutineScope.cancel()
+            loadingDialog.cancel()
         }
+        binding.allEventsSwipeLayout.setOnRefreshListener {
+            var swipeCoroutineScope = CoroutineScope(Dispatchers.Main)
+            swipeCoroutineScope.launch {
+                loadingDialog.show()
+                getEvents()
+                swipeCoroutineScope.cancel()
+                loadingDialog.cancel()
+                binding.allEventsSwipeLayout.isRefreshing = false
+            }
+        }
+
+        if(sharedViewModel.userType == "Mentor"){
+            binding.addEventButtonInAllEventsFragment.visibility = View.VISIBLE
+        }else binding.addEventButtonInAllEventsFragment.visibility = View.GONE
+
+
         binding.addEventButtonInAllEventsFragment.setOnClickListener {
             findNavController().navigate(R.id.addEventFragment)
         }
 
 
         return binding.root
+    }
+
+    private suspend fun getEvents() {
+        val events = EventsAccess(requireContext(),sharedViewModel,this@AllEventsFragment).getEvents(sharedViewModel.userType == "Student")
+        if(events == null || events.isEmpty()){
+            binding.noEventsTVInAllEventsFragment.visibility = View.VISIBLE
+            binding.recyclerViewInAllEventsFragment.visibility = View.GONE
+            return
+        }else{
+            binding.noEventsTVInAllEventsFragment.visibility = View.GONE
+            binding.recyclerViewInAllEventsFragment.visibility = View.VISIBLE
+            binding.recyclerViewInAllEventsFragment.adapter = AllEventsAdapter(
+                requireContext(),
+                this@AllEventsFragment,
+                sharedViewModel,
+                sharedViewModel.userType == "Student",
+                events
+            )
+        }
     }
 
 }

@@ -52,7 +52,8 @@ class AddNewsFragment: Fragment() {
                     News(
                         news = newsText,
                         mentorID = sharedViewModel.currentMentor.userName,
-                        publishDate = SimpleDateFormat("dd-MM-yyyy").format(Date())
+                        publishDate = SimpleDateFormat("dd-MM-yyyy").format(Date()),
+                        mentorName = sharedViewModel.currentMentor.name.toString()
                     )
                 )
                 if (addedNews) {

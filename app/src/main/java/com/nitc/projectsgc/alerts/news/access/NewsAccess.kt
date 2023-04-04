@@ -34,6 +34,20 @@ class NewsAccess(
             }
         }
     }
+    suspend fun deleteNews(newsID:String):Boolean{
+        return suspendCoroutine {continuation ->
+
+            var database = FirebaseDatabase.getInstance()
+            var reference = database.reference.child("news")
+            reference.child(newsID).removeValue().addOnCompleteListener { task->
+                if(task.isSuccessful){
+                    continuation.resume(true)
+                }else{
+                    continuation.resume(false)
+                }
+            }
+        }
+    }
 
 
     suspend fun getNews():ArrayList<News>?{
