@@ -14,6 +14,8 @@ import com.nitc.projectsgc.Appointment
 import com.nitc.projectsgc.SharedViewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class MentorAppointmentsAccess(
     var context: Context,
@@ -21,30 +23,35 @@ class MentorAppointmentsAccess(
 ) {
 
 
-    fun getAppointments(today:String):LiveData<ArrayList<Appointment>>{
-        var appointmentLive = MutableLiveData<ArrayList<Appointment>>(null)
-        var database = FirebaseDatabase.getInstance()
-        var refString = "types/${sharedViewModel.currentMentor.type}/${sharedViewModel.currentUserID}/appointments/$today"
-        Log.d("refString",refString)
-        var reference = database.reference.child(refString)
-        reference.addListenerForSingleValueEvent(object:ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                var appointments = arrayListOf<Appointment>()
-                for(timeSlot in snapshot.children){
-                    Log.d("refString",timeSlot.key.toString())
-                    appointments.add(timeSlot.getValue(Appointment::class.java)!!)
+    suspend fun getAppointments(today:String):ArrayList<Appointment>?{
+        return suspendCoroutine { continuation ->
+            var appointmentLive = MutableLiveData<ArrayList<Appointment>>(null)
+            var database = FirebaseDatabase.getInstance()
+            var refString =
+                "types/${sharedViewModel.currentMentor.type}/${sharedViewModel.currentUserID}/appointments/$today"
+            Log.d("refString", refString)
+            var reference = database.reference.child(refString)
+            reference.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var appointments = arrayListOf<Appointment>()
+                    for (timeSlot in snapshot.children) {
+                        Log.d("refString", timeSlot.key.toString())
+                        appointments.add(timeSlot.getValue(Appointment::class.java)!!)
+                    }
+                    val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+                    val sortedAppointments =
+                        appointments.sortedBy { LocalDate.parse(it.date, formatter) }
+                            .toCollection(ArrayList<Appointment>())
+                    continuation.resume(sortedAppointments)
                 }
-                val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
-                val sortedAppointments = appointments.sortedBy { LocalDate.parse(it.date, formatter) }.toCollection(ArrayList<Appointment>())
-                appointmentLive.postValue(sortedAppointments)
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context,"Error : $error",Toast.LENGTH_LONG).show()
-            }
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(context, "Error : $error", Toast.LENGTH_LONG).show()
+                    continuation.resume(null)
+                }
 
-        })
-        return appointmentLive
+            })
+        }
     }
 
 

@@ -65,9 +65,9 @@ class EventsAccess(
                         val event = ds.getValue(Event::class.java)
                         if (event != null) {
                             var publishDate =
-                                SimpleDateFormat("dd-MM-yyyy").parse(event.publishDate)
+                                SimpleDateFormat("dd-MM-yyyy").parse(event.eventDate)
                             if (isStudent) {
-                                if (publishDate.compareTo(today) == 1 || publishDate.compareTo(today) == 0) {
+                                if (publishDate.after(today) || publishDate == today) {
                                     events.add(event)
                                 }
                             } else events.add(event)

@@ -90,7 +90,7 @@ class AddEventFragment: Fragment() {
             addedLive.observe(viewLifecycleOwner){addedSuccess->
                 if(addedSuccess){
                     Toast.makeText(context,"Added event",Toast.LENGTH_SHORT).show()
-                    findNavController().navigate(R.id.allEventsFragment)
+                    findNavController().navigate(R.id.allAlertsFragment)
                 }else{
                     Toast.makeText(context,"Some error occurred. Try again later",Toast.LENGTH_SHORT).show()
                 }

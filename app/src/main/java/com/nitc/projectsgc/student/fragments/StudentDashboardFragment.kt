@@ -54,7 +54,7 @@ class StudentDashboardFragment: Fragment() {
 //            }
 //        }
 
-        binding.viewPagerInStudentDashboard.adapter = StudentAppointmentsPagerAdapter(parentFragmentManager,lifecycle)
+        binding.viewPagerInStudentDashboard.adapter = StudentAppointmentsPagerAdapter(childFragmentManager,lifecycle)
         binding.tabLayoutInStudentDashboard.addTab(binding.tabLayoutInStudentDashboard.newTab().setText("Booked"))
         binding.tabLayoutInStudentDashboard.addTab(binding.tabLayoutInStudentDashboard.newTab().setText("Completed"))
 
@@ -79,7 +79,7 @@ class StudentDashboardFragment: Fragment() {
         }
 
         binding.notificationsButtonInStudentDashboardFragment.setOnClickListener {
-            findNavController().navigate(R.id.allEventsFragment)
+            findNavController().navigate(R.id.allAlertsFragment)
         }
         binding.bookAppointmentButtonInStudentDashboard.setOnClickListener {
             findNavController().navigate(R.id.bookingFragment)

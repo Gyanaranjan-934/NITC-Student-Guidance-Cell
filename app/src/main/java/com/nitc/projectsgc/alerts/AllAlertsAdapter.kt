@@ -1,9 +1,11 @@
 package com.nitc.projectsgc.alerts
 
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.alerts.events.fragments.AllEventsFragment
 import com.nitc.projectsgc.alerts.news.fragments.AllNewsFragment
 

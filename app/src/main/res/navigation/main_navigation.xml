@@ -97,11 +97,11 @@
         android:name="com.nitc.projectsgc.alerts.events.fragments.AddEventFragment"
         android:label="AddEventFragment" />
     <fragment
-        android:id="@+id/allEventsFragment"
-        android:name="com.nitc.projectsgc.alerts.events.fragments.AllEventsFragment"
-        android:label="AllEventsFragment" />
-    <fragment
         android:id="@+id/allAlertsFragment"
         android:name="com.nitc.projectsgc.alerts.AllAlertsFragment"
         android:label="AllAlertsFragment" />
+    <fragment
+        android:id="@+id/addNewsFragment"
+        android:name="com.nitc.projectsgc.alerts.news.fragments.AddNewsFragment"
+        android:label="AddNewsFragment" />
 </navigation>

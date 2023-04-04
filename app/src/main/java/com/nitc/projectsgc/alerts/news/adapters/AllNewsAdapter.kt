@@ -2,6 +2,7 @@ package com.nitc.projectsgc.alerts.news.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -38,6 +39,8 @@ class AllNewsAdapter(
         holder.binding.mentorNameInNewsCard.text = news[position].mentorName.toString()
         holder.binding.newsTextInNewsCard.text = news[position].news.toString()
         holder.binding.dateTextInNewsCard.text = news[position].publishDate.toString()
+        if(sharedViewModel.userType == "Mentor") holder.binding.deleteButtonInNewsCard.visibility = View.VISIBLE
+        else holder.binding.deleteButtonInNewsCard.visibility = View.GONE
         holder.binding.deleteButtonInNewsCard.setOnClickListener {
             var coroutineScope = CoroutineScope(Dispatchers.Main)
             coroutineScope.launch {
@@ -49,8 +52,9 @@ class AllNewsAdapter(
 
     private suspend fun deleteNews(position: Int) {
         var deleted = NewsAccess(context, sharedViewModel, parentFragment).deleteNews(news[position].newsID.toString())
-        if(deleted == true){
+        if(deleted){
             Toast.makeText(context,"Deleted",Toast.LENGTH_SHORT).show()
+            notifyDataSetChanged()
         }else Toast.makeText(context,"Some error occurred. Try again",Toast.LENGTH_SHORT).show()
     }
 }

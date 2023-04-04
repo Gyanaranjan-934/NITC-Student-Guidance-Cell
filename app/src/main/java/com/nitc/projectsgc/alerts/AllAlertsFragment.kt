@@ -1,6 +1,7 @@
 package com.nitc.projectsgc.alerts
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,10 +23,11 @@ class AllAlertsFragment:Fragment() {
     ): View? {
         binding = FragmentAllAlertsBinding.inflate(inflater,container,false)
 
-        binding.viewPagerInAllAlertsFragment.adapter = AllAlertsAdapter(parentFragmentManager,lifecycle)
+        binding.viewPagerInAllAlertsFragment.adapter = AllAlertsAdapter(childFragmentManager,lifecycle)
         binding.tabLayoutInAllAlertsFragment.addTab(binding.tabLayoutInAllAlertsFragment.newTab().setText("Events"))
         binding.tabLayoutInAllAlertsFragment.addTab(binding.tabLayoutInAllAlertsFragment.newTab().setText("News"))
 
+        Log.d("userType","in alerts user type = "+sharedViewModel.userType)
 //        binding.tabLayoutInStudentDashboard.addTab(binding.tabLayoutInStudentDashboard.newTab().setText("Profile"))
         TabLayoutMediator(binding.tabLayoutInAllAlertsFragment,binding.viewPagerInAllAlertsFragment){tab,position->
             when(position){

@@ -25,7 +25,7 @@ class NewsAccess(
             var reference = database.reference.child("news")
             var newsID = reference.push().key.toString()
             news.newsID = newsID
-            reference.setValue(news).addOnCompleteListener { task->
+            reference.child(newsID).setValue(news).addOnCompleteListener { task->
                 if(task.isSuccessful){
                     continuation.resume(true)
                 }else{

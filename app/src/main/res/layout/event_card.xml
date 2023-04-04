@@ -28,7 +28,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@id/dateOfPublishInEventCard"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/dateOfPublishInEventCard">
@@ -51,6 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/mentorNameInEventCard"
+                android:textColor="@color/black"
                 android:text="Dr. Sumit"
                 app:layout_constraintBottom_toBottomOf="@id/byText"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -82,7 +83,7 @@
             android:id="@+id/dateLayoutInEventCard"
             app:layout_constraintVertical_bias="0.1"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintWidth_percent="0.32"
+            app:layout_constraintWidth_percent="0.37"
             app:layout_constraintEnd_toStartOf="@id/timeLayoutInEventCard"
             app:layout_constraintTop_toBottomOf="@id/headingInEventCard"
             app:layout_constraintStart_toStartOf="parent">
@@ -119,7 +120,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/timeLayoutInEventCard"
-            app:layout_constraintWidth_percent="0.32"
+            app:layout_constraintWidth_percent="0.37"
             app:layout_constraintTop_toTopOf="@+id/dateLayoutInEventCard"
             app:layout_constraintBottom_toBottomOf="@id/dateLayoutInEventCard"
             app:layout_constraintStart_toEndOf="@id/dateLayoutInEventCard"
@@ -132,6 +133,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_semibold"
                 android:text="Time: "
+                android:gravity="center"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/timeOfEventInEventCard"

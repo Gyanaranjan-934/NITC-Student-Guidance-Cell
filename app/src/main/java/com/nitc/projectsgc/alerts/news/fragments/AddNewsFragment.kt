@@ -56,11 +56,12 @@ class AddNewsFragment: Fragment() {
                         mentorName = sharedViewModel.currentMentor.name.toString()
                     )
                 )
+                loadingDialog.cancel()
                 if (addedNews) {
                     Toast.makeText(context,"Added",Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.allAlertsFragment)
                 } else {
-
+                    Toast.makeText(context,"Some error occurred. Try again later",Toast.LENGTH_SHORT).show()
                 }
             }
         }

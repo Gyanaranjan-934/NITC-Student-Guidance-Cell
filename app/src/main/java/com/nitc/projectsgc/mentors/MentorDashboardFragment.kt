@@ -1,6 +1,9 @@
 package com.nitc.projectsgc.mentors
 
 import android.app.DatePickerDialog
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +22,10 @@ import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.databinding.FragmentMentorDashboardBinding
 import com.nitc.projectsgc.mentors.access.MentorAppointmentsAccess
 import com.nitc.projectsgc.mentors.adapters.MentorAppointmentsAdapter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -38,7 +45,28 @@ class MentorDashboardFragment : Fragment() {
         var selectedDate = SimpleDateFormat("dd-MM-yyyy").format(Date())
         binding = FragmentMentorDashboardBinding.inflate(inflater,container,false)
         binding.selectDateInMentorDashboardFragment.text = selectedDate
-        getAppointments(selectedDate)
+        var coroutineScope = CoroutineScope(Dispatchers.Main)
+        val loadingDialog = Dialog(requireContext())
+        loadingDialog.setContentView(requireActivity().layoutInflater.inflate(R.layout.loading_dialog,null))
+        loadingDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        loadingDialog.create()
+        coroutineScope.launch {
+            loadingDialog.show()
+            getAppointments(selectedDate)
+            loadingDialog.cancel()
+            coroutineScope.cancel()
+        }
+        binding.mentorDashboardSwipeLayout.setOnRefreshListener {
+            var swipeCoroutineScope = CoroutineScope(Dispatchers.Main)
+            swipeCoroutineScope.launch {
+                loadingDialog.show()
+                getAppointments(selectedDate)
+                loadingDialog.cancel()
+                swipeCoroutineScope.cancel()
+                binding.mentorDashboardSwipeLayout.isRefreshing = false
+            }
+        }
+
         binding.selectDateInMentorDashboardFragment.setOnClickListener {
             val calendar = Calendar.getInstance()
 
@@ -48,7 +76,13 @@ class MentorDashboardFragment : Fragment() {
                     if(monthToSet < 10) selectedDate = "$day-0${monthToSet}-$year"
                     else selectedDate = "$day-${monthToSet}-$year"
                     binding.selectDateInMentorDashboardFragment.setText(selectedDate)
-                    getAppointments(selectedDate)
+                    var selectDateCoroutineScope = CoroutineScope(Dispatchers.Main)
+                    selectDateCoroutineScope.launch {
+                        loadingDialog.show()
+                        getAppointments(selectedDate)
+                        loadingDialog.cancel()
+                        selectDateCoroutineScope.cancel()
+                    }
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
             }
             if (datePickerDialog != null) {
@@ -81,16 +115,16 @@ class MentorDashboardFragment : Fragment() {
         return binding.root
     }
 
-    private fun getAppointments(selectedDate:String) {
-        var appointmentsLive = context?.let { MentorAppointmentsAccess(it,sharedViewModel).getAppointments(selectedDate) }
-        if (appointmentsLive != null) {
-            appointmentsLive.observe(viewLifecycleOwner){appointments->
+    private suspend fun getAppointments(selectedDate:String) {
+        var appointments = context?.let { MentorAppointmentsAccess(it,sharedViewModel).getAppointments(selectedDate) }
                 if(appointments != null) {
                     binding.appointmentRecyclerViewInMentorDashboard.layoutManager = LinearLayoutManager(context)
                     binding.appointmentRecyclerViewInMentorDashboard.adapter =
                         context?.let { MentorAppointmentsAdapter(it, appointments,this,sharedViewModel) }
-                }
+                    return
+                }else{
+                    Toast.makeText(context,"Some error occurred. Try again",Toast.LENGTH_SHORT).show()
+                    return
             }
-        }
     }
 }
