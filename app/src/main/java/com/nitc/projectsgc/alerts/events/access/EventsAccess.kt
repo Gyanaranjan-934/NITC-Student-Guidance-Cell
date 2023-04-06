@@ -24,30 +24,30 @@ class EventsAccess(
     var parentFragment: Fragment
 ) {
 
-    fun addEvent(event: Event):LiveData<Boolean>{
-        val addedLive = MutableLiveData<Boolean>()
-        val database = FirebaseDatabase.getInstance()
-        val reference = database.reference.child("events")
-        val eventID = reference.push().key.toString()
-        event.id = eventID
-        reference.child(eventID).setValue(event).addOnCompleteListener { task->
-            if(task.isSuccessful){
-                addedLive.postValue(true)
-            }else addedLive.postValue(false)
+    suspend fun addEvent(event: Event):Boolean{
+        return suspendCoroutine { continuation ->
+            val database = FirebaseDatabase.getInstance()
+            val reference = database.reference.child("events")
+            val eventID = reference.push().key.toString()
+            event.id = eventID
+            reference.child(eventID).setValue(event).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    continuation.resume(true)
+                } else continuation.resume(false)
+            }
         }
-        return addedLive
     }
 
-    fun updateEvent(eventID:String,event: Event):LiveData<Boolean>{
-        val updateLive = MutableLiveData<Boolean>()
-        val database = FirebaseDatabase.getInstance()
-        val reference = database.reference.child("events")
-        reference.child(eventID).setValue(event).addOnCompleteListener { task->
-            if(task.isSuccessful){
-                updateLive.postValue(true)
-            }else updateLive.postValue(false)
+    suspend fun updateEvent(eventID:String,event: Event):Boolean{
+        return suspendCoroutine { continuation ->
+            val database = FirebaseDatabase.getInstance()
+            val reference = database.reference.child("events")
+            reference.child(eventID).setValue(event).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    continuation.resume(true)
+                } else continuation.resume(false)
+            }
         }
-        return updateLive
     }
 
     suspend fun getEvents(isStudent:Boolean):ArrayList<Event>?{

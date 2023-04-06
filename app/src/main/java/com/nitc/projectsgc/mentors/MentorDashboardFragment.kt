@@ -85,9 +85,9 @@ class MentorDashboardFragment : Fragment() {
                     }
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
             }
-            if (datePickerDialog != null) {
-                datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
-            }
+//            if (datePickerDialog != null) {
+//                datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
+//            }
             datePickerDialog?.show()
         }
 
@@ -118,9 +118,22 @@ class MentorDashboardFragment : Fragment() {
     private suspend fun getAppointments(selectedDate:String) {
         var appointments = context?.let { MentorAppointmentsAccess(it,sharedViewModel).getAppointments(selectedDate) }
                 if(appointments != null) {
-                    binding.appointmentRecyclerViewInMentorDashboard.layoutManager = LinearLayoutManager(context)
-                    binding.appointmentRecyclerViewInMentorDashboard.adapter =
-                        context?.let { MentorAppointmentsAdapter(it, appointments,this,sharedViewModel) }
+                    if(appointments.isEmpty()){
+                        binding.appointmentRecyclerViewInMentorDashboard.visibility = View.GONE
+                        binding.noAppointmentsTVInMentorDashboardFragment.visibility = View.VISIBLE
+                    }else {
+                        binding.appointmentRecyclerViewInMentorDashboard.layoutManager =
+                            LinearLayoutManager(context)
+                        binding.appointmentRecyclerViewInMentorDashboard.adapter =
+                            context?.let {
+                                MentorAppointmentsAdapter(
+                                    it,
+                                    appointments,
+                                    this,
+                                    sharedViewModel
+                                )
+                            }
+                    }
                     return
                 }else{
                     Toast.makeText(context,"Some error occurred. Try again",Toast.LENGTH_SHORT).show()

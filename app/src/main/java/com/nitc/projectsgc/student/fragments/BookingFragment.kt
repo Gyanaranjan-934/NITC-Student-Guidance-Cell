@@ -20,6 +20,10 @@ import com.nitc.projectsgc.student.access.BookingAccess
 import com.nitc.projectsgc.databinding.FragmentBookingBinding
 import java.util.*
 import com.nitc.projectsgc.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 class BookingFragment : Fragment() {
     lateinit var binding : FragmentBookingBinding
@@ -129,7 +133,20 @@ class BookingFragment : Fragment() {
                 Toast.makeText(context,"Select mentor name first",Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+            val calendar = Calendar.getInstance()
 
+            val datePickerDialog = context?.let { it1 ->
+                DatePickerDialog(it1, { _, year, month, day ->
+                    var monthToSet = month + 1
+                    if(monthToSet < 10) selectedDate = "$day-0${monthToSet}-$year"
+                    else selectedDate = "$day-${monthToSet}-$year"
+                    binding.bookingDateButtonInBookingFragment.setText(selectedDate)
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
+            }
+            if (datePickerDialog != null) {
+                datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
+            }
+            datePickerDialog?.show()
         }
         var foundDate = MutableLiveData<Boolean>(false)
         var selectedTimeSlot = "NA"

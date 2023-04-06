@@ -42,6 +42,19 @@
         android:textAllCaps="false"
         android:letterSpacing="0"/>
 
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No appointments"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textColor="@color/black"
+            android:fontFamily="@font/inter_semibold"
+            android:textSize="20sp"
+            android:id="@+id/noAppointmentsTVInMentorDashboardFragment"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/appointmentRecyclerViewInMentorDashboard"
         android:layout_width="match_parent"
