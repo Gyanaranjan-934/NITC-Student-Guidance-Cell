@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -118,6 +119,7 @@ class MentorDashboardFragment : Fragment() {
     private suspend fun getAppointments(selectedDate:String) {
         var appointments = context?.let { MentorAppointmentsAccess(it,sharedViewModel).getAppointments(selectedDate) }
                 if(appointments != null) {
+                    Log.d("appointments",appointments.toString())
                     if(appointments.isEmpty()){
                         binding.appointmentRecyclerViewInMentorDashboard.visibility = View.GONE
                         binding.noAppointmentsTVInMentorDashboardFragment.visibility = View.VISIBLE
@@ -133,6 +135,8 @@ class MentorDashboardFragment : Fragment() {
                                     sharedViewModel
                                 )
                             }
+                        binding.noAppointmentsTVInMentorDashboardFragment.visibility = View.GONE
+                        binding.appointmentRecyclerViewInMentorDashboard.visibility = View.VISIBLE
                     }
                     return
                 }else{

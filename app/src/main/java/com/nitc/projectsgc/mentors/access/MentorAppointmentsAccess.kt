@@ -39,9 +39,11 @@ class MentorAppointmentsAccess(
                         appointments.add(timeSlot.getValue(Appointment::class.java)!!)
                     }
                     val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+                    Log.d("appointmentsSize",appointments.size.toString())
                     val sortedAppointments =
                         appointments.sortedBy { LocalDate.parse(it.date, formatter) }
                             .toCollection(ArrayList<Appointment>())
+                    Log.d("appointmentsSize",appointments.size.toString())
                     continuation.resume(sortedAppointments)
                 }
 

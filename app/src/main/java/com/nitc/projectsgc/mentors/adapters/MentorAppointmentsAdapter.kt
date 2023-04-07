@@ -1,5 +1,6 @@
 package com.nitc.projectsgc.mentors.adapters
 
+import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -46,8 +47,12 @@ class MentorAppointmentsAdapter(
         var remarksLayout = itemView.findViewById<ConstraintLayout>(R.id.remarksLayoutInMentorAppointmentsCard)
         var reactLayout = itemView.findViewById<ConstraintLayout>(R.id.reactLayoutInMentorAppointmentsCard)
         var completeButton = itemView.findViewById<Button>(R.id.completedButtonInMentorAppointmentsCard)
+        var dontCancel = itemView.findViewById<Button>(R.id.dontCancelButtonInMentorAppointmentsCard)
         var submitRemarks = itemView.findViewById<Button>(R.id.submitRemarksButtonInMentorAppointmentsCard)
+        var submitCancelNote = itemView.findViewById<Button>(R.id.submitCancelNoteButtonInMentorAppointmentsCard)
         var remarksInput = itemView.findViewById<EditText>(R.id.remarksInputInMentorAppointmentsCard)
+        var cancelNoteInput = itemView.findViewById<EditText>(R.id.cancelNoteInputInMentorAppointmentsCard)
+        var cancelLayout = itemView.findViewById<ConstraintLayout>(R.id.cancelLayoutInMentorAppointmentsCard)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MentorAppointmentsViewHolder {
@@ -108,19 +113,40 @@ class MentorAppointmentsAdapter(
             }
         }
         holder.cancelButton.setOnClickListener {
-            var cancelAppointment = appointments[position]
-            cancelAppointment.cancelled = true
-            cancelAppointment.status = "Cancelled by mentor"
-            var cancelLive = MentorAppointmentsAccess(context, sharedViewModel = sharedViewModel).cancelAppointment(appointment = cancelAppointment)
-            if(cancelLive != null){
-                cancelLive.observe(parentFragment.viewLifecycleOwner){cancelSuccess->
-                    if(cancelSuccess){
-                        Toast.makeText(context,"Cancelled",Toast.LENGTH_SHORT).show()
-                        appointments[position] = cancelAppointment
-                        notifyItemChanged(position)
+            holder.cancelLayout.visibility = View.VISIBLE
+            holder.reactLayout.visibility = View.GONE
+            holder.dontCancel.visibility = View.VISIBLE
+            holder.completeButton.visibility = View.GONE
+            holder.submitCancelNote.setOnClickListener {
+                var cancelNoteInput = holder.cancelNoteInput.text.toString()
+                if(cancelNoteInput.isEmpty()){
+                    Toast.makeText(context,"Add some cancel note first",Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }else {
+                    var cancelAppointment = appointments[position]
+                    cancelAppointment.cancelled = true
+                    cancelAppointment.status = "Cancelled by mentor"+"\n"+cancelNoteInput
+                    var cancelLive = MentorAppointmentsAccess(
+                        context,
+                        sharedViewModel = sharedViewModel
+                    ).cancelAppointment(appointment = cancelAppointment)
+                    if (cancelLive != null) {
+                        cancelLive.observe(parentFragment.viewLifecycleOwner) { cancelSuccess ->
+                            if (cancelSuccess) {
+                                Toast.makeText(context, "Cancelled", Toast.LENGTH_SHORT).show()
+                                appointments[position] = cancelAppointment
+                                notifyItemChanged(position)
+                            }
+                        }
                     }
                 }
             }
+        }
+        holder.dontCancel.setOnClickListener {
+            holder.dontCancel.visibility = View.GONE
+            holder.cancelLayout.visibility = View.GONE
+            holder.reactLayout.visibility = View.VISIBLE
+            holder.completeButton.visibility = View.VISIBLE
         }
 
         holder.viewPastRecord.setOnClickListener {
