@@ -134,6 +134,33 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/selectTypeOfEventInAddEventFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/headingInputCardInAddEventFragment"
+        app:layout_constraintHeight_percent="0.07"
+        app:layout_constraintStart_toStartOf="@id/headingInputCardInAddEventFragment"
+        app:layout_constraintTop_toBottomOf="@+id/dateTimeInputLayoutInAddEventFragment"
+        app:layout_constraintVertical_bias="0.08">
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/typeOfEventButtonInAddEventFragment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/navy_blue"
+            android:letterSpacing="0.01"
+            android:text="Select Type"
+            android:textAllCaps="false"
+            app:cornerRadius="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.45" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
     
     <com.google.android.material.card.MaterialCardView
         android:layout_width="0dp"
@@ -144,7 +171,7 @@
         app:layout_constraintEnd_toEndOf="@id/headingInputCardInAddEventFragment"
         app:cardCornerRadius="15dp"
         android:id="@+id/linkInputCardInAddEventFragment"
-        app:layout_constraintVertical_bias="0.08"
+        app:layout_constraintVertical_bias="0.4"
         app:layout_constraintHeight_percent="0.17">
 
         <com.google.android.material.textfield.TextInputLayout

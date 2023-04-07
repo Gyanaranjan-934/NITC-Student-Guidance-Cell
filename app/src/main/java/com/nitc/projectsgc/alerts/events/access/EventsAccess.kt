@@ -30,7 +30,7 @@ class EventsAccess(
             val reference = database.reference.child("events")
             val eventID = reference.push().key.toString()
             event.id = eventID
-            reference.child(eventID).setValue(event).addOnCompleteListener { task ->
+            reference.child(event.type).child(eventID).setValue(event).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     continuation.resume(true)
                 } else continuation.resume(false)
@@ -49,6 +49,45 @@ class EventsAccess(
             }
         }
     }
+    suspend fun getTypeEvents(isStudent:Boolean,eventType:String):ArrayList<Event>?{
+        return suspendCoroutine {continuation->
+            val eventsLive = MutableLiveData<ArrayList<Event>>()
+            val events = arrayListOf<Event>()
+            val calendar = Calendar.getInstance()
+            val today = calendar.time
+            val database = FirebaseDatabase.getInstance()
+            val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+            val reference = database.reference.child("events").child(eventType)
+            reference.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (ds in snapshot.children) {
+                            val event = ds.getValue(Event::class.java)
+                            if (event != null) {
+                                var publishDate =
+                                    SimpleDateFormat("dd-MM-yyyy").parse(event.eventDate)
+                                if (isStudent) {
+                                    if (publishDate.after(today) || publishDate == today) {
+                                        events.add(event)
+                                    }
+                                } else events.add(event)
+                            }else continuation.resume(null)
+
+
+                    }
+                    val sortedEvents =
+                        events.sortedBy { LocalDate.parse(it.publishDate, formatter) }
+                            .toCollection(ArrayList<Event>())
+                    continuation.resume(sortedEvents)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    continuation.resume(null)
+                }
+
+            })
+        }
+    }
+
 
     suspend fun getEvents(isStudent:Boolean):ArrayList<Event>?{
         return suspendCoroutine {continuation->
@@ -62,16 +101,19 @@ class EventsAccess(
             reference.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (ds in snapshot.children) {
-                        val event = ds.getValue(Event::class.java)
-                        if (event != null) {
-                            var publishDate =
-                                SimpleDateFormat("dd-MM-yyyy").parse(event.eventDate)
-                            if (isStudent) {
-                                if (publishDate.after(today) || publishDate == today) {
-                                    events.add(event)
-                                }
-                            } else events.add(event)
-                        }else continuation.resume(null)
+                        for (eventName in ds.children){
+                            val event = eventName.getValue(Event::class.java)
+                            if (event != null) {
+                                var publishDate =
+                                    SimpleDateFormat("dd-MM-yyyy").parse(event.eventDate)
+                                if (isStudent) {
+                                    if (publishDate.after(today) || publishDate == today) {
+                                        events.add(event)
+                                    }
+                                } else events.add(event)
+                            }else continuation.resume(null)
+                        }
+
                     }
                     val sortedEvents =
                         events.sortedBy { LocalDate.parse(it.publishDate, formatter) }

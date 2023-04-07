@@ -4,4 +4,10 @@
         <item>Male</item>
         <item>Female</item>
     </array>
+    <array name="event_types">
+        <item>Conference</item>
+        <item>Seminar</item>
+        <item>Webinar</item>
+        <item>Fest</item>
+    </array>
 </resources>

@@ -1,8 +1,10 @@
 package com.nitc.projectsgc.alerts.events.fragments
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
+import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -25,6 +27,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class AddEventFragment: Fragment() {
 
@@ -85,6 +88,32 @@ class AddEventFragment: Fragment() {
             },hour,minute,true).show()
         }
 
+        var selectedTypeOfEvent = "NA"
+        binding.typeOfEventButtonInAddEventFragment.setOnClickListener {
+            val newTypes = resources.getStringArray(com.nitc.projectsgc.R.array.event_types)
+            val availableTypesOfEvents: ArrayList<String> = ArrayList(newTypes.filterNotNull())
+            val eventTypeDialog = AlertDialog.Builder(context)
+            eventTypeDialog.setTitle("Select the type of Event")
+            eventTypeDialog.setSingleChoiceItems(
+                availableTypesOfEvents.toTypedArray(),-1
+            ) { dialog,selectedIndex->
+                selectedTypeOfEvent = availableTypesOfEvents[selectedIndex]
+                binding.typeOfEventButtonInAddEventFragment.text = selectedTypeOfEvent
+                availableTypesOfEvents.clear()
+                dialog.dismiss()
+            }
+            eventTypeDialog.setPositiveButton("Ok"){dialog,which->
+                selectedTypeOfEvent = availableTypesOfEvents[0]
+                binding.typeOfEventButtonInAddEventFragment.text = selectedTypeOfEvent
+                availableTypesOfEvents.clear()
+                dialog.dismiss()
+            }
+
+            eventTypeDialog.create().show()
+
+
+        }
+
         binding.addEventButtonInAddEventFragment.setOnClickListener {
 
                 val headingInput = binding.headingInputInAddEventFragment.text.toString().trim()
@@ -141,6 +170,7 @@ class AddEventFragment: Fragment() {
                                     eventTime = selectedTime,
                                     eventDate = selectedDate,
                                     link = linkInput,
+                                    type = selectedTypeOfEvent,
                                     mentorName = sharedViewModel.currentMentor.name,
                                     publishDate = SimpleDateFormat("dd-MM-yyyy").format(Date())
                                 )

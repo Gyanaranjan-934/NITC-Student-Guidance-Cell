@@ -40,7 +40,6 @@
                 android:layout_height="wrap_content"
                 android:text="By : "
                 android:textColor="@color/black"
-                android:fontFamily="@font/inter_semibold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/mentorNameInEventCard"
                 app:layout_constraintHorizontal_bias="0.7"
@@ -48,11 +47,11 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/mentorNameInEventCard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/mentorNameInEventCard"
-                android:textColor="@color/black"
                 android:text="Dr. Sumit"
+                android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="@id/byText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/byText"
