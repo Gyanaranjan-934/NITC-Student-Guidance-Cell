@@ -8,6 +8,8 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.*
 import com.nitc.projectsgc.Appointment
 import com.nitc.projectsgc.Mentor
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class MentorsAccess(var context: Context) {
     fun getMentors():LiveData<ArrayList<Mentor>>{
@@ -110,41 +112,44 @@ class MentorsAccess(var context: Context) {
         })
         return mentorTypeLive
     }
-    fun deleteMentor(userName: String,mentorType:String):LiveData<Boolean>{
+    suspend fun deleteMentor(userName: String,mentorType:String):Boolean{
+        return suspendCoroutine {continuation->
+            var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+            var typeReference: DatabaseReference = database.reference.child("types")
+            var mentorPath = "$mentorType/$userName"
+            Log.d("deleteMentor", mentorPath)
+            typeReference.child(mentorPath)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        for (ds in snapshot.child("appointments").children) {
+                            for (timeSlot in ds.children) {
+                                var appointment = timeSlot.getValue(Appointment::class.java)!!
+                                var studentReference =
+                                    "students/${appointment.studentID}/appointments/${appointment.id}"
+                                Log.d("deleteMentor", studentReference)
+                                database.reference.child(studentReference).removeValue()
+                                    .addOnSuccessListener {
 
-        var deleteLive = MutableLiveData<Boolean>(false)
-        var database : FirebaseDatabase = FirebaseDatabase.getInstance()
-        var typeReference : DatabaseReference = database.reference.child("types")
-        var mentorPath = "$mentorType/$userName"
-        Log.d("deleteMentor",mentorPath)
-        typeReference.child(mentorPath).addListenerForSingleValueEvent(object:ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for(ds in snapshot.child("appointments").children){
-                    var appointment = ds.getValue(Appointment::class.java)!!
-                    var studentReference = "students/${appointment.studentID}/appointments/${appointment.id}"
-                    Log.d("deleteMentor",studentReference)
-                    database.reference.child(studentReference).removeValue().addOnSuccessListener {appointmentDeleted->
-                            deleteLive.postValue(true)
-                    }.addOnFailureListener {
-                        deleteLive.postValue(false)
+                                    }.addOnFailureListener {
+                                    continuation.resume(false)
+                                }
+                            }
+                        }
                     }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Toast.makeText(context, "Error : $error", Toast.LENGTH_LONG).show()
+                        continuation.resume(false)
+                    }
+
+                })
+            typeReference.child(mentorPath).removeValue().addOnSuccessListener { deletedMentor ->
+                continuation.resume(true)
+            }
+                .addOnFailureListener { error ->
+                    Toast.makeText(context, "Error : $error", Toast.LENGTH_LONG).show()
+                    continuation.resume(false)
                 }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context,"Error : $error",Toast.LENGTH_LONG).show()
-                deleteLive.postValue(false)
-            }
-
-        })
-        typeReference.child(mentorPath).removeValue().addOnSuccessListener {deletedMentor->
-            deleteLive.postValue(true)
         }
-            .addOnFailureListener {error->
-                Toast.makeText(context,"Error : $error",Toast.LENGTH_LONG).show()
-                deleteLive.postValue(false)
-            }
-
-        return deleteLive
     }
 }

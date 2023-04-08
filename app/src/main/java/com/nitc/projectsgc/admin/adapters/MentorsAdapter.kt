@@ -1,7 +1,10 @@
 package com.nitc.projectsgc.admin.adapters
 
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +21,10 @@ import com.nitc.projectsgc.R
 import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.admin.access.MentorsAccess
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 class MentorsAdapter(
     var context: Context,
@@ -52,18 +59,37 @@ class MentorsAdapter(
         holder.typeText.text = mentors[position].type
         holder.emailText.text = mentors[position].email
 
+        val loadingDialog = Dialog(context)
+        loadingDialog.setContentView(parentFragment.requireActivity().layoutInflater.inflate(R.layout.loading_dialog,null))
+        loadingDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         holder.deleteButton.setOnClickListener {
             var confirmDeleteBuilder = AlertDialog.Builder(context)
             confirmDeleteBuilder.setTitle("Are you sure ?")
                 .setMessage("You want to delete this mentor?")
                 .setPositiveButton("Yes"){dialog,which->
                     Log.d("deleteMentor","username = ${mentors[position].userName.toString()}")
-                    var deletedLive = MentorsAccess(context).deleteMentor(mentors[position].userName.toString(),mentors[position].type.toString())
-                    deletedLive.observe(parentFragment.viewLifecycleOwner){deleted->
-                        if(deleted){
-                            Toast.makeText(context,"Mentor deleted", Toast.LENGTH_SHORT).show()
+                    var deleteCoroutineScope = CoroutineScope(Dispatchers.Main)
+                    loadingDialog.create()
+                    loadingDialog.show()
+                    deleteCoroutineScope.launch {
+                        var deleted = MentorsAccess(context).deleteMentor(
+                            mentors[position].userName.toString(),
+                            mentors[position].type.toString()
+                        )
+                        if (deleted) {
+                            Toast.makeText(context, "Mentor deleted", Toast.LENGTH_SHORT).show()
                             mentors.removeAt(position)
-                            notifyItemChanged(position)
+                            loadingDialog.cancel()
+                            deleteCoroutineScope.cancel()
+                            notifyDataSetChanged()
+                        } else {
+                            Toast.makeText(
+                                context,
+                                "Some error occurred. Try again",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            loadingDialog.cancel()
+                            deleteCoroutineScope.cancel()
                         }
                     }
                     dialog.dismiss()

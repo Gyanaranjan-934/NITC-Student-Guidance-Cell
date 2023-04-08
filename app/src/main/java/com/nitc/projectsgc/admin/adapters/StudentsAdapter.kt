@@ -1,7 +1,10 @@
 package com.nitc.projectsgc.admin.adapters
 
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +20,10 @@ import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.Student
 import com.nitc.projectsgc.admin.access.StudentsAccess
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 class StudentsAdapter(
     var context: Context,
@@ -48,6 +55,10 @@ class StudentsAdapter(
         holder.dobText.text = students[position].dateOfBirth.toString()
         holder.phoneText.text = students[position].phoneNumber.toString()
         holder.rollText.text = students[position].rollNo.toString()
+
+        val loadingDialog = Dialog(context)
+        loadingDialog.setContentView(parentFragment.requireActivity().layoutInflater.inflate(R.layout.loading_dialog,null))
+        loadingDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         if(students[position].gender == "Male"){
             holder.personImage.setImageDrawable(ResourcesCompat.getDrawable(parentFragment.resources,R.drawable.boy_face,null))
         }
@@ -74,11 +85,25 @@ class StudentsAdapter(
             confirmDeleteBuilder.setTitle("Are you sure ?")
                 .setMessage("You want to delete this student?")
                 .setPositiveButton("Yes"){dialog,which->
-                    var deletedLive = StudentsAccess(context,parentFragment).deleteStudent(students[position].rollNo.toString(),students[position].emailId.toString())
-                    deletedLive.observe(parentFragment.viewLifecycleOwner){deleted->
-                        if(deleted){
-                            Toast.makeText(context,"Student deleted",Toast.LENGTH_SHORT).show()
+                    var deleteCoroutineScope = CoroutineScope(Dispatchers.Main)
+                    deleteCoroutineScope.launch {
+                        loadingDialog.create()
+                        loadingDialog.show()
+                        var deleted = StudentsAccess(
+                            context,
+                            parentFragment
+                        ).deleteStudent(
+                            students[position].rollNo.toString(),
+                            students[position].emailId.toString()
+                        )
+                        loadingDialog.cancel()
+                        deleteCoroutineScope.cancel()
+                        if (deleted) {
+                            Toast.makeText(context, "Student deleted", Toast.LENGTH_SHORT).show()
+                            students.removeAt(position)
                             notifyDataSetChanged()
+                        }else{
+                            Toast.makeText(context,"Some error occurred. Try again",Toast.LENGTH_SHORT).show()
                         }
                     }
                     dialog.dismiss()

@@ -45,7 +45,6 @@ class LoginAccess(
                     if(verification==true){
                         var sharedPreferences = parentFragment.activity?.getSharedPreferences("sgcLogin",Context.MODE_PRIVATE)
                         val editor = sharedPreferences?.edit()
-
                             sharedViewModel.currentUserID = username
                             sharedViewModel.userType = userType
                             when(userType){
@@ -61,6 +60,15 @@ class LoginAccess(
                                                 auth.currentUser!!.delete().addOnCompleteListener {deleteTask->
                                                     if(deleteTask.isSuccessful){
                                                         Toast.makeText(context,"Your account has been removed by admin",Toast.LENGTH_SHORT).show()
+                                                        if (editor != null) {
+                                                            editor.remove("loggedIn")
+                                                            editor.remove("password")
+                                                            editor.remove("userType")
+                                                            editor.remove("mentorType")
+                                                            editor.remove("email")
+                                                            editor.remove("username")
+                                                            editor.apply()
+                                                        }
                                                         loginLive.postValue(false)
                                                     }else{
                                                         loginLive.postValue(false)
@@ -88,6 +96,15 @@ class LoginAccess(
                                                     auth.currentUser!!.delete().addOnCompleteListener {deleteTask->
                                                         if(deleteTask.isSuccessful){
                                                             Toast.makeText(context,"Your account has been removed by admin",Toast.LENGTH_SHORT).show()
+                                                            if (editor != null) {
+                                                                editor.remove("loggedIn")
+                                                                editor.remove("password")
+                                                                editor.remove("userType")
+                                                                editor.remove("mentorType")
+                                                                editor.remove("email")
+                                                                editor.remove("username")
+                                                                editor.apply()
+                                                            }
                                                             loginLive.postValue(false)
                                                         }else{
                                                             loginLive.postValue(false)
