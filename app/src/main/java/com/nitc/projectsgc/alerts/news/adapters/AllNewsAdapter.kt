@@ -39,7 +39,10 @@ class AllNewsAdapter(
         holder.binding.mentorNameInNewsCard.text = news[position].mentorName.toString()
         holder.binding.newsTextInNewsCard.text = news[position].news.toString()
         holder.binding.dateTextInNewsCard.text = news[position].publishDate.toString()
-        if(sharedViewModel.userType == "Mentor") holder.binding.deleteButtonInNewsCard.visibility = View.VISIBLE
+        if(sharedViewModel.userType == "Mentor") {
+            if(sharedViewModel.currentMentor.userName == news[position].mentorID) holder.binding.deleteButtonInNewsCard.visibility = View.VISIBLE
+            else holder.binding.deleteButtonInNewsCard.visibility = View.GONE
+        }
         else holder.binding.deleteButtonInNewsCard.visibility = View.GONE
         holder.binding.deleteButtonInNewsCard.setOnClickListener {
             var coroutineScope = CoroutineScope(Dispatchers.Main)

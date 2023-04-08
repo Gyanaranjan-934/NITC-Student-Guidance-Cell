@@ -54,6 +54,15 @@ class AllEventsAdapter(
             holder.binding.linkLayoutInEventCard.visibility = View.VISIBLE
             holder.binding.linkTextInEventCard.text = events[position].link.toString()
         }
+        if(events[position].mentorID == sharedViewModel.currentMentor.userName){
+            holder.binding.deleteButtonInEventCard.visibility = View.VISIBLE
+            holder.binding.updateButtonInEventCard.visibility = View.VISIBLE
+        }else{
+            holder.binding.deleteButtonInEventCard.visibility = View.GONE
+            holder.binding.updateButtonInEventCard.visibility = View.GONE
+        }
+        if(events[position].eventTime == " ") holder.binding.timeLayoutInEventCard.visibility =View.GONE
+        else holder.binding.timeLayoutInEventCard.visibility = View.VISIBLE
         if(isStudent){
             holder.binding.updateButtonInEventCard.visibility = View.GONE
             holder.binding.deleteButtonInEventCard.visibility = View.GONE
