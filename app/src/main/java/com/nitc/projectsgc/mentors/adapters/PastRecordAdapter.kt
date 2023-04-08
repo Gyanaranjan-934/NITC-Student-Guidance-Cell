@@ -44,8 +44,8 @@ class PastRecordAdapter(
         holder.binding.remarksTextInBookedAppointmentsCard.text = pastRecord[position].remarks
 
         holder.binding.imageInBookedAppointmentCard.setOnClickListener {
-                sharedViewModel.profileForMentorID = pastRecord[position].mentorID.toString()
-                sharedViewModel.profileForMentorType = pastRecord[position].mentorType.toString()
+                sharedViewModel.mentorIDForProfile = pastRecord[position].mentorID.toString()
+                sharedViewModel.mentorTypeForProfile = pastRecord[position].mentorType.toString()
                 parentFragment.findNavController().navigate(R.id.mentorProfileFragment)
 
         }

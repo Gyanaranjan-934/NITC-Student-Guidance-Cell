@@ -1,7 +1,9 @@
 package com.nitc.projectsgc.Login
 
 import android.app.AlertDialog
+import android.app.Dialog
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,6 +20,10 @@ import com.nitc.projectsgc.R
 import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.admin.access.MentorsAccess
 import com.nitc.projectsgc.databinding.FragmentLoginBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
 
@@ -38,6 +44,10 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val loadingDialog = Dialog(requireContext())
+        loadingDialog.setContentView(requireActivity().layoutInflater.inflate(R.layout.loading_dialog,null))
+        loadingDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        loadingDialog.create()
 
         binding.adminLoginTypeButtonInLoginFragment.setOnClickListener {
             binding.adminLoginTypeImageInLoginFragment.setBackgroundResource(R.drawable.login_type_card_blue_bg)
@@ -120,18 +130,24 @@ class LoginFragment : Fragment() {
                 if(emailDomain != "nitc.ac.in"){
                     Toast.makeText(context,"User should login with NITC email id",Toast.LENGTH_SHORT).show()
                 }else{
-                    val loginLive = context?.let { it1 -> LoginAccess(it1,this,sharedViewModel).login(emailInput,passwordInput,userType,rollNo,"NA") }
 
-                    loginLive!!.observe(viewLifecycleOwner){loginSuccess->
-                        if(loginSuccess){
-                            sharedViewModel.currentUserID = rollNo
-                            sharedViewModel.userType = "Student"
-                            Log.d("loginSuccess",loginSuccess.toString())
-                            findNavController().navigate(R.id.studentDashBoardFragment)
-                        }else{
-                            Toast.makeText(context,"Some error occurred",Toast.LENGTH_SHORT).show()
+
+                        val loginCoroutineScope = CoroutineScope(Dispatchers.Main)
+                        loginCoroutineScope.launch {
+                            loadingDialog.show()
+                            val loginSuccess = context?.let { it1 -> LoginAccess(it1,this@LoginFragment,sharedViewModel).login(emailInput,passwordInput,userType,rollNo,"NA") }
+                            loadingDialog.cancel()
+                            loginCoroutineScope.cancel()
+                            if (loginSuccess == true) {
+                                sharedViewModel.currentUserID = rollNo
+                                sharedViewModel.userType = "Student"
+                                Log.d("loginSuccess", loginSuccess.toString())
+                                findNavController().navigate(R.id.studentDashBoardFragment)
+                            } else {
+                                Toast.makeText(context, "Some error occurred", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
                         }
-                    }
                 }
 
             }
@@ -152,10 +168,14 @@ class LoginFragment : Fragment() {
                 if(emailDomain != "nitc.ac.in"){
                     Toast.makeText(context,"Mentor should login with NITC email id",Toast.LENGTH_SHORT).show()
                 }else{
-                    val loginLive = context?.let { it1 -> LoginAccess(it1,this,sharedViewModel).login(emailInput,passwordInput,userType,userName,mentorTypeSelected) }
 
-                    loginLive!!.observe(viewLifecycleOwner){loginSuccess->
-                        if(loginSuccess){
+                    val loginCoroutineScope = CoroutineScope(Dispatchers.Main)
+                    loginCoroutineScope.launch {
+                        loadingDialog.show()
+                        val loginSuccess = context?.let { it1 -> LoginAccess(it1,this@LoginFragment,sharedViewModel).login(emailInput,passwordInput,userType,userName,mentorTypeSelected) }
+                        loadingDialog.cancel()
+                        loginCoroutineScope.cancel()
+                        if(loginSuccess == true){
                             sharedViewModel.currentUserID = userName
                             sharedViewModel.userType = "Mentor"
                             findNavController().navigate(R.id.mentorDashboardFragment)

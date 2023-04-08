@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/mentorDashboardSwipeLayout"
+    android:background="@color/mint_cream">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/headingTextInMentorAppointmentsFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Appointments"
+            app:layout_constraintHorizontal_bias="0.05"
+            android:textSize="20sp"
+            android:fontFamily="@font/inter_semibold"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/selectDateInMentorAppointmentsFragment"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.03"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/headingTextInMentorAppointmentsFragment"
+            app:layout_constraintBottom_toBottomOf="@id/headingTextInMentorAppointmentsFragment"
+            app:layout_constraintHeight_percent="0.075"
+            app:layout_constraintWidth_percent="0.35"
+            android:backgroundTint="@color/navy_blue"
+            android:textSize="16sp"
+            app:cornerRadius="15dp"
+            android:id="@+id/selectDateInMentorAppointmentsFragment"
+            android:fontFamily="@font/inter_semibold"
+            app:layout_constraintHorizontal_bias="0.05"
+            android:text="Date"
+            android:textAllCaps="false"
+            android:letterSpacing="0"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No appointments"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textColor="@color/black"
+            android:fontFamily="@font/inter_semibold"
+            android:textSize="20sp"
+            android:id="@+id/noAppointmentsTVInMentorAppointmentsFragment"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/appointmentRecyclerViewInMentorDashboard"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.92"
+            app:layout_constraintVertical_bias="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/headingTextInMentorAppointmentsFragment" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

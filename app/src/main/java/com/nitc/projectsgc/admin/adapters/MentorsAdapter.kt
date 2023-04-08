@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -102,8 +101,8 @@ class MentorsAdapter(
         }
 
         holder.personImage.setOnClickListener {
-                sharedViewModel.profileForMentorID = mentors[position].userName.toString()
-                sharedViewModel.profileForMentorType = mentors[position].type.toString()
+                sharedViewModel.mentorIDForProfile = mentors[position].userName.toString()
+                sharedViewModel.mentorTypeForProfile = mentors[position].type.toString()
                 parentFragment.findNavController().navigate(R.id.mentorProfileFragment)
 
         }

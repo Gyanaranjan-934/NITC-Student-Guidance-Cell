@@ -14,6 +14,8 @@ import com.nitc.projectsgc.Appointment
 import com.nitc.projectsgc.SharedViewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class AppointmentsAccess(
     var context: Context,
@@ -21,60 +23,69 @@ class AppointmentsAccess(
     var sharedViewModel: SharedViewModel
 ) {
 
-    fun getBookedAppointments():LiveData<ArrayList<Appointment>>{
-        Log.d("appointment","class called")
-        var bookedLive = MutableLiveData<ArrayList<Appointment>>(null)
-        var appointments = arrayListOf<Appointment>()
-        var database = FirebaseDatabase.getInstance()
-        var studentReference = database.reference.child("students")
-        Log.d("appointment",sharedViewModel.currentUserID.toString())
-        studentReference.child(sharedViewModel.currentUserID).addListenerForSingleValueEvent(object:ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for(ds in snapshot.child("appointments").children){
-                    Log.d("appointment",ds.toString())
-                    var appointment = ds.getValue(Appointment::class.java)
-                    if (appointment != null && appointment.completed == false) {
-                        appointments.add(appointment)
+    suspend fun getBookedAppointments():ArrayList<Appointment>?{
+        return suspendCoroutine { continuation ->
+            Log.d("appointment", "class called")
+            var bookedLive = MutableLiveData<ArrayList<Appointment>>(null)
+            var appointments = arrayListOf<Appointment>()
+            var database = FirebaseDatabase.getInstance()
+            var studentReference = database.reference.child("students")
+            Log.d("appointment", sharedViewModel.currentUserID.toString())
+            studentReference.child(sharedViewModel.currentUserID)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        for (ds in snapshot.child("appointments").children) {
+                            Log.d("appointment", ds.toString())
+                            var appointment = ds.getValue(Appointment::class.java)
+                            if (appointment != null && appointment.completed == false) {
+                                appointments.add(appointment)
+                            }
+                        }
+                        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+                        val sortedAppointments =
+                            appointments.sortedBy { LocalDate.parse(it.date, formatter) }
+                                .toCollection(ArrayList<Appointment>())
+                        continuation.resume(sortedAppointments)
                     }
-                }
-                val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
-                val sortedAppointments = appointments.sortedBy { LocalDate.parse(it.date, formatter) }.toCollection(ArrayList<Appointment>())
-                bookedLive.postValue(sortedAppointments)
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context,"Error : $error",Toast.LENGTH_LONG).show()
-            }
+                    override fun onCancelled(error: DatabaseError) {
+                        Toast.makeText(context, "Error : $error", Toast.LENGTH_LONG).show()
+                        continuation.resume(null)
+                    }
 
-        })
-
-        return bookedLive
+                })
+        }
     }
 
-    fun getCompletedAppointments():LiveData<ArrayList<Appointment>>{
+    suspend fun getCompletedAppointments():ArrayList<Appointment>?{
+        return suspendCoroutine { continuation ->
         var completedLive = MutableLiveData<ArrayList<Appointment>>(null)
         var appointments = arrayListOf<Appointment>()
         var database = FirebaseDatabase.getInstance()
         var studentReference = database.reference.child("students")
-        studentReference.child(sharedViewModel.currentUserID).addListenerForSingleValueEvent(object:ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for(ds in snapshot.child("appointments").children){
-                    var appointment = ds.getValue(Appointment::class.java)
-                    if(appointment != null){
-                        if(appointment.completed) appointments.add(appointment)
+        studentReference.child(sharedViewModel.currentUserID)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (ds in snapshot.child("appointments").children) {
+                        var appointment = ds.getValue(Appointment::class.java)
+                        if (appointment != null) {
+                            if (appointment.completed) appointments.add(appointment)
+                        }
                     }
+                    val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+                    val sortedAppointments =
+                        appointments.sortedBy { LocalDate.parse(it.date, formatter) }
+                            .toCollection(ArrayList<Appointment>())
+                    continuation.resume(sortedAppointments)
                 }
-                val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
-                val sortedAppointments = appointments.sortedBy { LocalDate.parse(it.date, formatter) }.toCollection(ArrayList<Appointment>())
-                completedLive.postValue(sortedAppointments)
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context,"Error : $error",Toast.LENGTH_LONG).show()
-            }
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(context, "Error : $error", Toast.LENGTH_LONG).show()
+                    continuation.resume(null)
+                }
 
-        })
-        return completedLive
+            })
+    }
     }
 
 

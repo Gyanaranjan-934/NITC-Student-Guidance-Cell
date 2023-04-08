@@ -1,25 +1,17 @@
 package com.nitc.projectsgc.Login.access
 
 import android.content.Context
-import android.provider.ContactsContract.Profile
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.nitc.projectsgc.Mentor
-import com.nitc.projectsgc.ProfileAccess
 import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.Student
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
-import kotlin.math.log
 
 class LoginAccess(
     var context: Context,
@@ -248,7 +240,7 @@ class LoginAccess(
             editor.putBoolean("loggedIn",false)
             editor.apply()
             sharedViewModel.rescheduling = false
-            sharedViewModel.profileForMentorType = "NA"
+            sharedViewModel.mentorTypeForProfile = "NA"
             sharedViewModel.viewAppointmentStudentID = "NA"
             sharedViewModel.pastRecordStudentID = "NA"
             logoutLive = true

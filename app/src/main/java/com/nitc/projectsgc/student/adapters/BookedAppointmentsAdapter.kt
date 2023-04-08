@@ -75,8 +75,8 @@ class BookedAppointmentsAdapter(
 //            holder.binding.cancelAppointmentInBookedAppointmentCard.visibility = View.GONE
 //        }else holder.binding.cancelAppointmentInBookedAppointmentCard.visibility = View.VISIBLE
         holder.binding.imageInBookedAppointmentCard.setOnClickListener {
-            sharedViewModel.profileForMentorID = appointments[position].mentorID.toString()
-            sharedViewModel.profileForMentorType = appointments[position].mentorType.toString()
+            sharedViewModel.mentorIDForProfile = appointments[position].mentorID.toString()
+            sharedViewModel.mentorTypeForProfile = appointments[position].mentorType.toString()
             parentFragment.findNavController().navigate(R.id.mentorProfileFragment)
         }
         holder.binding.dateOfAppointmentInBookedAppointmentCard.text = appointments[position].date.toString()

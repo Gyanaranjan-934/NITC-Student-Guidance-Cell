@@ -52,8 +52,8 @@ class CompletedAppointmentsAdapter(
             holder.binding.rescheduleButtonInUpcomingCard.visibility = View.GONE
         }
         holder.binding.imageInBookedAppointmentCard.setOnClickListener {
-            sharedViewModel.profileForMentorID = appointments[position].mentorID.toString()
-            sharedViewModel.profileForMentorType = appointments[position].mentorType.toString()
+            sharedViewModel.mentorIDForProfile = appointments[position].mentorID.toString()
+            sharedViewModel.mentorTypeForProfile = appointments[position].mentorType.toString()
             parentFragment.findNavController().navigate(R.id.mentorProfileFragment)
         }
         holder.binding.typeInBookedAppointmentCard.text = appointments[position].mentorType.toString()

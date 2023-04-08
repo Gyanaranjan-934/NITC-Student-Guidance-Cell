@@ -43,7 +43,9 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
             val emailInput = registerBinding.emailFieldInRegisterFragment.text.toString()
             val passwordInput = registerBinding.passwordFieldInRegisterFragment.text.toString()
             var phoneNumber = registerBinding.phoneNumberInRegisterFragment.text.toString()
-            val dateOfBirth = registerBinding.dateOfBirthInRegisterFragment.dayOfMonth.toString()+"/"+registerBinding.dateOfBirthInRegisterFragment.month.toString()+"/"+registerBinding.dateOfBirthInRegisterFragment.year.toString()
+            var monthNumber = registerBinding.dateOfBirthInRegisterFragment.month.toString().toInt()
+            if(monthNumber/10 == 0) monthNumber = "0${monthNumber.toString()}".toInt()
+            val dateOfBirth = registerBinding.dateOfBirthInRegisterFragment.dayOfMonth.toString()+"/"+monthNumber.toString()+"/"+registerBinding.dateOfBirthInRegisterFragment.year.toString()
 
             if(nameInput.isEmpty()){
                 registerBinding.nameFieldInRegisterFragment.error = "Name field cannot be empty"

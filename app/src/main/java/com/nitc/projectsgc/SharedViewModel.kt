@@ -6,8 +6,8 @@ class SharedViewModel:ViewModel() {
 
     lateinit var currentMentor: Mentor
     lateinit var currentStudent: Student
-    lateinit var profileForMentorID:String
-    lateinit var profileForMentorType:String
+    lateinit var mentorIDForProfile:String
+    lateinit var mentorTypeForProfile:String
     var currentUserID = "NA"
     var userType = "Student"
     var rescheduling:Boolean = false
