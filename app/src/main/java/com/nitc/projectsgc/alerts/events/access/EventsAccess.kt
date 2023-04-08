@@ -42,13 +42,26 @@ class EventsAccess(
         return suspendCoroutine { continuation ->
             val database = FirebaseDatabase.getInstance()
             val reference = database.reference.child("events")
-            reference.child(eventID).setValue(event).addOnCompleteListener { task ->
+            reference.child(event.type).child(eventID).setValue(event).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     continuation.resume(true)
                 } else continuation.resume(false)
             }
         }
     }
+
+    suspend fun deleteEvent(event: Event):Boolean{
+        return suspendCoroutine {continuation->
+            val database = FirebaseDatabase.getInstance()
+            val reference = database.reference.child("events")
+            reference.child(event.type).child(event.id).removeValue().addOnCompleteListener { task->
+                if(task.isSuccessful) continuation.resume(true)
+                else continuation.resume(false)
+            }
+        }
+    }
+
+
     suspend fun getTypeEvents(isStudent:Boolean,eventType:String):ArrayList<Event>?{
         return suspendCoroutine {continuation->
             val eventsLive = MutableLiveData<ArrayList<Event>>()

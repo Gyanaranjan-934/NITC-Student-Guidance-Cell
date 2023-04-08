@@ -1,16 +1,25 @@
 package com.nitc.projectsgc.alerts.events.adapters
 
+import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.nitc.projectsgc.Event
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.SharedViewModel
+import com.nitc.projectsgc.alerts.events.access.EventsAccess
 import com.nitc.projectsgc.databinding.EventCardBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 class AllEventsAdapter(
     var context: Context,
@@ -53,6 +62,29 @@ class AllEventsAdapter(
             sharedViewModel.isUpdatingEvent = true
             sharedViewModel.updatingOldEvent = events[position]
             parentFragment.findNavController().navigate(R.id.addEventFragment)
+        }
+
+        holder.binding.deleteButtonInEventCard.setOnClickListener {
+            val deleteCoroutineScope = CoroutineScope(Dispatchers.Main)
+            val loadingDialog = Dialog(context)
+            loadingDialog.setContentView(parentFragment.requireActivity().layoutInflater.inflate(R.layout.loading_dialog,null))
+            loadingDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            deleteCoroutineScope.launch {
+                loadingDialog.create()
+                loadingDialog.show()
+                val deleted = EventsAccess(context, sharedViewModel, parentFragment).deleteEvent(events[position])
+                if(deleted){
+                    events.removeAt(position)
+                    loadingDialog.cancel()
+                    deleteCoroutineScope.cancel()
+                    notifyDataSetChanged()
+                }else{
+                    Toast.makeText(context,"Some error occurred. Try again",Toast.LENGTH_SHORT).show()
+                    loadingDialog.cancel()
+                    deleteCoroutineScope.cancel()
+                }
+
+            }
         }
     }
 

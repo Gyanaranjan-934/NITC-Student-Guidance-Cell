@@ -35,6 +35,7 @@ class AddEventFragment: Fragment() {
     private val sharedViewModel:SharedViewModel by activityViewModels()
     var selectedDate:String = " "
     var selectedTime = " "
+    var selectedTypeOfEvent = "NA"
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -57,6 +58,8 @@ class AddEventFragment: Fragment() {
             }
             binding.addEventButtonInAddEventFragment.text = "Update"
             selectedDate = sharedViewModel.updatingOldEvent.eventDate.toString()
+            selectedTypeOfEvent = sharedViewModel.updatingOldEvent.type.toString()
+            binding.typeOfEventButtonInAddEventFragment.visibility = View.GONE
         }
         val calendar = Calendar.getInstance()
         binding.dateButtonInAddEventFragment.setOnClickListener {
@@ -88,7 +91,6 @@ class AddEventFragment: Fragment() {
             },hour,minute,true).show()
         }
 
-        var selectedTypeOfEvent = "NA"
         binding.typeOfEventButtonInAddEventFragment.setOnClickListener {
             val newTypes = resources.getStringArray(com.nitc.projectsgc.R.array.event_types)
             val availableTypesOfEvents: ArrayList<String> = ArrayList(newTypes.filterNotNull())
@@ -141,6 +143,7 @@ class AddEventFragment: Fragment() {
                                     heading = headingInput,
                                     venue = venueInput,
                                     eventTime = selectedTime,
+                                    type=selectedTypeOfEvent,
                                     eventDate = selectedDate,
                                     link = linkInput,
                                     mentorName = sharedViewModel.currentMentor.name,

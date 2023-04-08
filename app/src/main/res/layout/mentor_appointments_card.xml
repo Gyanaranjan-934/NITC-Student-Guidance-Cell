@@ -89,6 +89,19 @@
             app:layout_constraintTop_toBottomOf="@id/nameInMentorAppointmentsCard"
             app:layout_constraintStart_toStartOf="@id/nameInMentorAppointmentsCard"/>
 
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2-3"
+            android:textColor="@color/black"
+            android:fontFamily="@font/inter_semibold"
+            app:layout_constraintStart_toStartOf="@id/dobLayoutInMentorAppointmentsCard"
+            app:layout_constraintEnd_toEndOf="@id/dobLayoutInMentorAppointmentsCard"
+            app:layout_constraintTop_toTopOf="@id/rollNoInMentorAppointmentsCard"
+            app:layout_constraintBottom_toBottomOf="@id/rollNoInMentorAppointmentsCard"
+            android:id="@+id/timeTextInMentorAppointmentsCard"/>
+
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"

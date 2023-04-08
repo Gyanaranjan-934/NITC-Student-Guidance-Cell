@@ -3,7 +3,6 @@ package com.nitc.projectsgc.mentors.access
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.DataSnapshot
@@ -87,8 +86,8 @@ class MentorAppointmentsAccess(
                 for(ds in snapshot.children){
                     var appointment = ds.getValue(Appointment::class.java)
                     if (appointment != null) {
-                        if(appointment.mentorID != sharedViewModel.currentUserID && appointment.completed == true){
-                            appointments.add(appointment)
+                        if (appointment.mentorID != sharedViewModel.currentUserID && appointment.completed == true) {
+                             appointments.add(appointment)
                         }
                     }
                 }
@@ -111,7 +110,7 @@ class MentorAppointmentsAccess(
         var database = FirebaseDatabase.getInstance()
         var refString = "students/${appointment.studentID}/appointments"
         var studentReference = database.reference.child(refString)
-        studentReference.child(appointment.id.toString()).setValue(appointment).addOnCompleteListener {task->
+        studentReference.child(appointment.id.toString()).setValue(appointment).addOnCompleteListener { task->
             if(task.isSuccessful){
                 var mentorRefString = "types/${sharedViewModel.currentMentor.type}/${sharedViewModel.currentUserID}/appointments/${appointment.date}/${appointment.timeSlot}"
                 var mentorReference = database.reference.child(mentorRefString)

@@ -33,7 +33,8 @@ class BookingAccess(var context: Context,var sharedViewModel: SharedViewModel) {
     }
     fun rescheduleAppointment(appointment: Appointment):LiveData<Boolean>{
         var oldAppointment = sharedViewModel.reschedulingAppointment
-        oldAppointment.status = "Rescheduled"
+        oldAppointment.status = "Rescheduled to "+appointment.date+" "+appointment.timeSlot
+        oldAppointment.rescheduled = true
         var bookingLive = MutableLiveData<Boolean>()
         val database : FirebaseDatabase = FirebaseDatabase.getInstance()
         var reference : DatabaseReference = database.reference

@@ -5,9 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
+import com.nitc.projectsgc.R
 import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.databinding.FragmentAllAlertsBinding
 
@@ -35,6 +38,17 @@ class AllAlertsFragment:Fragment() {
                 1-> tab.text = "News"
             }
         }.attach()
+        val backCallback = object : OnBackPressedCallback(true /* enabled by default */) {
+            override fun handleOnBackPressed() {
+                // Call a method in your Fragment to handle the navigation
+                when(sharedViewModel.userType){
+                    "Student"-> findNavController().navigate(R.id.studentDashBoardFragment)
+                    "Mentor"-> findNavController().navigate(R.id.mentorDashboardFragment)
+                    "Admin"-> findNavController().navigate(R.id.adminDashboardFragment)
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,backCallback)
 
         return binding.root
     }

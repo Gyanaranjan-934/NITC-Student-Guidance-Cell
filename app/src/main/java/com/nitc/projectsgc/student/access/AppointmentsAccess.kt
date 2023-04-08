@@ -85,7 +85,7 @@ class AppointmentsAccess(
         var typeReference = database.reference.child("types")
         studentReference.child(sharedViewModel.currentUserID+"/appointments").child(appointment.id.toString()).setValue(appointment).addOnCompleteListener { studentTask->
             if(studentTask.isSuccessful){
-                typeReference.child(appointment.mentorType.toString()+"/${appointment.mentorID}/appointments/${appointment.date}/${appointment.timeSlot}").setValue(appointment).addOnCompleteListener {mentorTask->
+                typeReference.child(appointment.mentorType.toString()+"/${appointment.mentorID}/appointments/${appointment.date}/${appointment.timeSlot}").setValue(appointment).addOnCompleteListener { mentorTask->
                     if(mentorTask.isSuccessful) deletedLive.postValue(true)
                     else deletedLive.postValue(false)
                 }

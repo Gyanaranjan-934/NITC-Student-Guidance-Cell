@@ -20,10 +20,6 @@ import com.nitc.projectsgc.student.access.BookingAccess
 import com.nitc.projectsgc.databinding.FragmentBookingBinding
 import java.util.*
 import com.nitc.projectsgc.R
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
 
 class BookingFragment : Fragment() {
     lateinit var binding : FragmentBookingBinding
@@ -236,15 +232,15 @@ class BookingFragment : Fragment() {
                     BookingAccess(it1,sharedViewModel).rescheduleAppointment(Appointment(
                         date = selectedDate,
                         timeSlot = selectedTimeSlot,
+                        mentorType = mentorTypeSelected,
                         mentorID = mentorID,
                         studentID = sharedViewModel.currentUserID,
                         mentorName = mentorNameSelected,
                         completed = false,
-                        expanded = false,
-                        remarks = "NA",
-                        mentorType = mentorTypeSelected,
-                        cancelled = false,
                         status = "Rescheduled",
+                        remarks = "NA",
+                        cancelled = false,
+                        expanded = false,
                         problemDescription = problemDescription
                     ))
                 }
@@ -252,6 +248,7 @@ class BookingFragment : Fragment() {
                     rescheduledLive.observe(viewLifecycleOwner){rescheduled->
                         if(rescheduled != null){
                             if(rescheduled){
+                                sharedViewModel.rescheduling =false
                                 findNavController().navigate(R.id.studentDashBoardFragment)
                             }else{
                                 Toast.makeText(context,"Some error occurred.",Toast.LENGTH_SHORT).show()
@@ -268,15 +265,15 @@ class BookingFragment : Fragment() {
                     BookingAccess(it1,sharedViewModel).bookAppointment(Appointment(
                         date = selectedDate,
                         timeSlot = selectedTimeSlot,
+                        mentorType = mentorTypeSelected,
                         mentorID = mentorID,
                         studentID = sharedViewModel.currentUserID,
                         mentorName = mentorNameSelected,
                         completed = false,
-                        expanded = false,
-                        remarks = "NA",
-                        mentorType = mentorTypeSelected,
-                        cancelled = false,
                         status = "Booked",
+                        remarks = "NA",
+                        cancelled = false,
+                        expanded = false,
                         problemDescription = problemDescription
                     ))
                 }

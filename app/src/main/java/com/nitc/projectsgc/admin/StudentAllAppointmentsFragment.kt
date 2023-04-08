@@ -22,7 +22,7 @@ class StudentAllAppointmentsFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentPastRecordBinding.inflate(inflater,container,false)
-
+        binding.headingTVInPastRecordFragment.text = "All Appointments"
         var studentLive = context?.let { StudentsAccess(it,this).getStudent(sharedViewModel.viewAppointmentStudentID) }
         if(studentLive != null){
             studentLive.observe(viewLifecycleOwner){student->

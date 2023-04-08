@@ -4,6 +4,7 @@ data class Appointment(
     var date:String? = null,
     var timeSlot:String? = null,
     var mentorType:String? = null,
+    var rescheduled:Boolean = false,
     var mentorID:String? = null,
     var studentID:String? = null,
     var mentorName:String? = null,

@@ -1,13 +1,11 @@
 package com.nitc.projectsgc.mentors.adapters
 
-import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
@@ -16,14 +14,9 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.nitc.projectsgc.Appointment
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.SharedViewModel
-import com.nitc.projectsgc.Student
 import com.nitc.projectsgc.admin.access.StudentsAccess
 import com.nitc.projectsgc.mentors.access.MentorAppointmentsAccess
 import de.hdodenhof.circleimageview.CircleImageView
@@ -40,6 +33,7 @@ class MentorAppointmentsAdapter(
         var dobText = itemView.findViewById<TextView>(R.id.dobInMentorAppointmentsCard)
         var phoneText = itemView.findViewById<TextView>(R.id.phoneInMentorAppointmentsCard)
         var rollText = itemView.findViewById<TextView>(R.id.rollNoInMentorAppointmentsCard)
+        var timeText = itemView.findViewById<TextView>(R.id.timeTextInMentorAppointmentsCard)
         var viewPastRecord = itemView.findViewById<Button>(R.id.viewPastRecordButtonInMentorAppointmentsCard)
         var cancelButton = itemView.findViewById<Button>(R.id.cancelButtonInMentorAppointmentsCard)
         var statusCard = itemView.findViewById<CardView>(R.id.statusCardInMentorAppointmentsCard)
@@ -66,9 +60,15 @@ class MentorAppointmentsAdapter(
 
     override fun onBindViewHolder(holder: MentorAppointmentsViewHolder, position: Int) {
 
-
+        holder.timeText.text = appointments[position].timeSlot
         holder.statusCard.visibility = View.VISIBLE
         holder.statusText.text = appointments[position].status
+        if(appointments[position].rescheduled){
+            holder.cancelButton.visibility = View.GONE
+            holder.viewPastRecord.visibility = View.GONE
+            holder.completeButton.visibility = View.GONE
+            holder.remarksLayout.visibility = View.GONE
+        }
         if(appointments[position].cancelled) {
             holder.cancelButton.visibility = View.GONE
             holder.viewPastRecord.visibility = View.GONE
