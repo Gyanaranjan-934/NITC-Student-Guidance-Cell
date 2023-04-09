@@ -10,8 +10,10 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.nitc.projectsgc.R
+import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.Student
 import com.nitc.projectsgc.databinding.FragmentRegisterBinding
 import com.nitc.projectsgc.register.access.RegisterAccess
@@ -19,6 +21,7 @@ import com.nitc.projectsgc.register.access.RegisterAccess
 class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
     lateinit var registerBinding: FragmentRegisterBinding
     lateinit var studentGender:Spinner
+    private val sharedViewModel:SharedViewModel by activityViewModels()
     lateinit var selectedGenderTextView: String
 
 //    creating database reference object
@@ -104,7 +107,8 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
             registerSuccess!!.observe(viewLifecycleOwner){success->
                 if(success){
-                    findNavController().navigate(R.id.loginFragment)
+                    if(sharedViewModel.userType == "Admin") findNavController().navigate(R.id.adminDashboardFragment)
+                    else findNavController().navigate(R.id.loginFragment)
                 }else{
                     Toast.makeText(context,"Failed",Toast.LENGTH_SHORT).show()
                 }
@@ -135,9 +139,6 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
         return  true
     }
 
-    fun addStudentsToDatabase(){
-
-    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

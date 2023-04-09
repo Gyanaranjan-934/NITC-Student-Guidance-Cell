@@ -12,35 +12,36 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 class MentorsAccess(var context: Context) {
-    fun getMentors():LiveData<ArrayList<Mentor>>{
-        var mentorLive = MutableLiveData<ArrayList<Mentor>>(null)
-        var database : FirebaseDatabase = FirebaseDatabase.getInstance()
-        var reference : DatabaseReference = database.reference.child("types")
-        reference.addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                var typeList = arrayListOf<String>()
-                var mentorList = arrayListOf<Mentor>()
-                for (typeOfMentor in snapshot.children){
-                    typeList.add(typeOfMentor.key.toString())
-                }
-                for (typeOfMentor in typeList){
-                    for (mentor in snapshot.child(typeOfMentor).children){
-                        Log.d("mentorCheck",mentor.toString())
-                        var thisMentor = mentor.getValue(Mentor::class.java)
-                        if (thisMentor != null) {
-                            mentorList.add(thisMentor)
+    suspend fun getMentors():ArrayList<Mentor>?{
+        return suspendCoroutine { continuation ->
+            var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+            var reference: DatabaseReference = database.reference.child("types")
+            reference.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var typeList = arrayListOf<String>()
+                    var mentorList = arrayListOf<Mentor>()
+                    for (typeOfMentor in snapshot.children) {
+                        typeList.add(typeOfMentor.key.toString())
+                    }
+                    for (typeOfMentor in typeList) {
+                        for (mentor in snapshot.child(typeOfMentor).children) {
+                            Log.d("mentorCheck", mentor.toString())
+                            var thisMentor = mentor.getValue(Mentor::class.java)
+                            if (thisMentor != null) {
+                                mentorList.add(thisMentor)
+                            }
                         }
                     }
+                    continuation.resume(mentorList)
                 }
-                mentorLive.postValue(mentorList)
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context,"Error : $error",Toast.LENGTH_LONG).show()
-            }
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(context, "Error : $error", Toast.LENGTH_LONG).show()
+                    continuation.resume(null)
+                }
 
-        })
-        return mentorLive
+            })
+        }
     }
 
     fun getMentor(mentorType:String,mentorID:String):LiveData<Mentor>{

@@ -1,6 +1,8 @@
 package com.nitc.projectsgc.admin
 
+import android.app.Dialog
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +13,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.tabs.TabLayoutMediator
 import com.nitc.projectsgc.Login.access.LoginAccess
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.SharedViewModel
@@ -18,7 +21,11 @@ import com.nitc.projectsgc.admin.adapters.MentorsAdapter
 import com.nitc.projectsgc.admin.adapters.StudentsAdapter
 import com.nitc.projectsgc.admin.access.MentorsAccess
 import com.nitc.projectsgc.admin.access.StudentsAccess
+import com.nitc.projectsgc.admin.adapters.AdminDashboardPagerAdapter
 import com.nitc.projectsgc.databinding.FragmentAdminDashboardBinding
+import com.nitc.projectsgc.mentors.adapters.MentorAppointmentsPagerAdapter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 
 class AdminDashboardFragment : Fragment() {
     lateinit var binding : FragmentAdminDashboardBinding
@@ -36,34 +43,21 @@ class AdminDashboardFragment : Fragment() {
         binding =  FragmentAdminDashboardBinding.inflate(inflater, container, false)
 
 
-        binding.studentRecyclerViewInAdminDashboardFragment.layoutManager = LinearLayoutManager(context)
-        binding.mentorRecyclerViewInAdminDashboardFragment.layoutManager = LinearLayoutManager(context)
-        getStudents()
-        binding.mentorLoginTypeButtonInAdminDashboardFragment.setOnClickListener {
-            binding.mentorLoginTypeImageInAdminDashboardFragment.setBackgroundResource(R.drawable.login_type_card_blue_bg)
-            binding.mentorLoginTypeButtonInAdminDashboardFragment.setTextColor(Color.WHITE)
-            binding.studentLoginTypeImageInAdminDashboardFragment.setBackgroundResource(R.drawable.login_type_card_transparent_bg)
-            binding.studentLoginTypeButtonInAdminDashboardFragment.setTextColor(Color.BLACK)
-            binding.studentLoginTypeImageInAdminDashboardFragment.setBackgroundResource(R.drawable.login_type_card_transparent_bg)
-            binding.studentLoginTypeButtonInAdminDashboardFragment.setTextColor(Color.BLACK)
-            userType = "Mentor"
-            getMentors()
-        }
-        binding.studentLoginTypeButtonInAdminDashboardFragment.setOnClickListener {
-            binding.mentorLoginTypeImageInAdminDashboardFragment.setBackgroundResource(R.drawable.login_type_card_transparent_bg)
-            binding.mentorLoginTypeButtonInAdminDashboardFragment.setTextColor(Color.BLACK)
-            binding.studentLoginTypeImageInAdminDashboardFragment.setBackgroundResource(R.drawable.login_type_card_blue_bg)
-            binding.studentLoginTypeButtonInAdminDashboardFragment.setTextColor(Color.WHITE)
-            binding.mentorLoginTypeImageInAdminDashboardFragment.setBackgroundResource(R.drawable.login_type_card_transparent_bg)
-            binding.mentorLoginTypeButtonInAdminDashboardFragment.setTextColor(Color.BLACK)
-            userType = "Student"
-            getStudents()
-        }
+        binding.tabLayoutInAdminDashboard.addTab(binding.tabLayoutInAdminDashboard.newTab().setText("Students"))
+        binding.tabLayoutInAdminDashboard.addTab(binding.tabLayoutInAdminDashboard.newTab().setText("Mentors"))
+        binding.viewPagerInAdminDashboardFragment.adapter = AdminDashboardPagerAdapter(childFragmentManager,lifecycle)
 
 
-        binding.addStudentButtonInAdminDashboard.setOnClickListener {
-            findNavController().navigate(R.id.registerFragment)
-        }
+        TabLayoutMediator(binding.tabLayoutInAdminDashboard,binding.viewPagerInAdminDashboardFragment){tab,position->
+            when(position){
+                0-> tab.text = "Students"
+                1-> tab.text = "Mentors"
+            }
+        }.attach()
+
+
+
+
 
         binding.logoutButtonInAdminDashboardFragment.setOnClickListener {
             var logoutSuccess = context?.let { it1 -> LoginAccess(it1,this,sharedViewModel).logout() }
@@ -77,9 +71,6 @@ class AdminDashboardFragment : Fragment() {
         }
 
 
-        binding.addMentorButtonInAdminDashboard.setOnClickListener{
-            findNavController().navigate(R.id.addMentorFragment)
-        }
 
         val backCallback = object : OnBackPressedCallback(true /* enabled by default */) {
             override fun handleOnBackPressed() {
@@ -91,59 +82,5 @@ class AdminDashboardFragment : Fragment() {
         return binding.root
     }
 
-    private fun getMentors() {
-        binding.mentorLayoutInAdminDashboardFragment.visibility = View.VISIBLE
-        binding.studentLayoutInAdminDashboardFragment.visibility = View.GONE
-        var mentorsLive = context?.let { MentorsAccess(it).getMentors() }
-        if (mentorsLive != null){
-            mentorsLive.observe(viewLifecycleOwner){mentors->
-                if (mentors==null){
-                    binding.noMentorsTVInAdminDashboardFragment.visibility = View.VISIBLE
-                    binding.mentorRecyclerViewInAdminDashboardFragment.visibility = View.GONE
-                }else{
-                    var mentorsAdapter = context?.let {
-                        MentorsAdapter(it,true,mentors = mentors,this,sharedViewModel)
-                    }
-                    binding.mentorRecyclerViewInAdminDashboardFragment.adapter = mentorsAdapter
-                    binding.mentorRecyclerViewInAdminDashboardFragment.visibility = View.VISIBLE
-                    binding.noMentorsTVInAdminDashboardFragment.visibility = View.GONE
-                }
-            }
-        }else{
-            binding.noMentorsTVInAdminDashboardFragment.visibility = View.GONE
-            binding.mentorRecyclerViewInAdminDashboardFragment.visibility = View.GONE
-            Toast.makeText(context,"Some error occurred. Try again later",Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun getStudents() {
-        binding.mentorLayoutInAdminDashboardFragment.visibility = View.GONE
-        binding.studentLayoutInAdminDashboardFragment.visibility = View.VISIBLE
-        var studentsLive = context?.let { StudentsAccess(it,this).getStudents() }
-        if(studentsLive != null){
-            studentsLive.observe(viewLifecycleOwner){students->
-                if(students == null){
-                    binding.noStudentsTVInAdminDashboardFragment.visibility = View.VISIBLE
-                    binding.studentRecyclerViewInAdminDashboardFragment.visibility = View.GONE
-                }else{
-                    var studentsAdapter = context?.let {
-                        StudentsAdapter(
-                            it,
-                            students = students,
-                            this,
-                            sharedViewModel
-                        )
-                    }
-                    binding.studentRecyclerViewInAdminDashboardFragment.adapter = studentsAdapter
-                    binding.studentRecyclerViewInAdminDashboardFragment.visibility = View.VISIBLE
-                    binding.noStudentsTVInAdminDashboardFragment.visibility = View.GONE
-                }
-            }
-        }else{
-            binding.noStudentsTVInAdminDashboardFragment.visibility = View.GONE
-            binding.studentRecyclerViewInAdminDashboardFragment.visibility = View.GONE
-            Toast.makeText(context,"Some error occurred. Try again later",Toast.LENGTH_SHORT).show()
-        }
-    }
 
 }

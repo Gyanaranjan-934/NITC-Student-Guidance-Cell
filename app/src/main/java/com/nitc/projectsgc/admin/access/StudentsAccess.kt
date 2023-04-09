@@ -32,29 +32,29 @@ class StudentsAccess(var context: Context,var parentFragment: Fragment) {
         })
         return studentLive
     }
-    fun getStudents(): LiveData<ArrayList<Student>> {
-        var studentLive = MutableLiveData<ArrayList<Student>>(null)
-        var database : FirebaseDatabase = FirebaseDatabase.getInstance()
-        var reference : DatabaseReference = database.reference.child("students")
-        reference.addListenerForSingleValueEvent(object:ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                var studentList = arrayListOf<Student>()
-                for(student in snapshot.children){
-                    var thisStudent = student.getValue(Student::class.java)
-                    if (thisStudent != null) {
-                        studentList.add(thisStudent)
+    suspend fun getStudents(): ArrayList<Student>? {
+        return suspendCoroutine { continuation ->
+            var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+            var reference: DatabaseReference = database.reference.child("students")
+            reference.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var studentList = arrayListOf<Student>()
+                    for (student in snapshot.children) {
+                        var thisStudent = student.getValue(Student::class.java)
+                        if (thisStudent != null) {
+                            studentList.add(thisStudent)
+                        }
                     }
+                    continuation.resume(studentList)
                 }
-                studentLive.postValue(studentList)
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context,"Error : $error",Toast.LENGTH_LONG).show()
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(context, "Error : $error", Toast.LENGTH_LONG).show()
+                    continuation.resume(null)
+                }
 
-            }
-
-        })
-        return studentLive
+            })
+        }
     }
 
     suspend fun deleteStudent(rollNo: String,email:String):Boolean{
