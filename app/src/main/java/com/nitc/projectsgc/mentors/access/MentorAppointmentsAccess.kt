@@ -61,8 +61,9 @@ class MentorAppointmentsAccess(
         var database = FirebaseDatabase.getInstance()
         var refString = "types/${sharedViewModel.currentMentor.type}/${sharedViewModel.currentUserID}/appointments/${appointment.date}/${appointment.timeSlot}"
         Log.d("refString",refString)
-        var reference = database.reference.child(refString)
-        reference.setValue(appointment).addOnCompleteListener {cancelTask->
+        var mentorReference = database.reference.child(refString)
+        var reference = database.reference
+        mentorReference.setValue(appointment).addOnCompleteListener {cancelTask->
             if(cancelTask.isSuccessful){
                 var studentRefString = "students/${appointment.studentID}/appointments/${appointment.id}"
                 reference.child(studentRefString).setValue(appointment).addOnCompleteListener {studentTask->
