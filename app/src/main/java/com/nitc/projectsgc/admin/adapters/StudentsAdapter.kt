@@ -85,6 +85,7 @@ class StudentsAdapter(
             confirmDeleteBuilder.setTitle("Are you sure ?")
                 .setMessage("You want to delete this student?")
                 .setPositiveButton("Yes"){dialog,which->
+                    dialog.dismiss()
                     var deleteCoroutineScope = CoroutineScope(Dispatchers.Main)
                     deleteCoroutineScope.launch {
                         loadingDialog.create()
@@ -106,7 +107,6 @@ class StudentsAdapter(
                             Toast.makeText(context,"Some error occurred. Try again",Toast.LENGTH_SHORT).show()
                         }
                     }
-                    dialog.dismiss()
 
                 }
                 .setNegativeButton("No"){dialog,which->

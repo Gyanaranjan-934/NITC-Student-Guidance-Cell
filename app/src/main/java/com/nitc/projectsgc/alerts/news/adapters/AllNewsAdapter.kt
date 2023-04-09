@@ -1,5 +1,6 @@
 package com.nitc.projectsgc.alerts.news.adapters
 
+import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -45,11 +46,21 @@ class AllNewsAdapter(
         }
         else holder.binding.deleteButtonInNewsCard.visibility = View.GONE
         holder.binding.deleteButtonInNewsCard.setOnClickListener {
-            var coroutineScope = CoroutineScope(Dispatchers.Main)
-            coroutineScope.launch {
-                deleteNews(position)
-                coroutineScope.cancel()
-            }
+            var confirmDeleteBuilder = AlertDialog.Builder(context)
+            confirmDeleteBuilder.setTitle("Are you sure ?")
+                .setMessage("You want to delete this News?")
+                .setPositiveButton("Delete") { dialog, which ->
+                    dialog.dismiss()
+                    var coroutineScope = CoroutineScope(Dispatchers.Main)
+                    coroutineScope.launch {
+                        deleteNews(position)
+                        coroutineScope.cancel()
+                    }
+                }
+                .setNegativeButton("Cancel"){dialog,which->
+                    dialog.dismiss()
+                }
+                .create().show()
         }
     }
 

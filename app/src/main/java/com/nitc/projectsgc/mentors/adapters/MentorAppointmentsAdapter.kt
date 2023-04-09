@@ -1,5 +1,6 @@
 package com.nitc.projectsgc.mentors.adapters
 
+import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -113,33 +114,52 @@ class MentorAppointmentsAdapter(
             }
         }
         holder.cancelButton.setOnClickListener {
+
             holder.cancelLayout.visibility = View.VISIBLE
             holder.reactLayout.visibility = View.GONE
             holder.dontCancel.visibility = View.VISIBLE
             holder.completeButton.visibility = View.GONE
             holder.submitCancelNote.setOnClickListener {
-                var cancelNoteInput = holder.cancelNoteInput.text.toString()
-                if(cancelNoteInput.isEmpty()){
-                    Toast.makeText(context,"Add some cancel note first",Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
-                }else {
-                    var cancelAppointment = appointments[position]
-                    cancelAppointment.cancelled = true
-                    cancelAppointment.status = "Cancelled by mentor"+"\n"+cancelNoteInput
-                    var cancelLive = MentorAppointmentsAccess(
-                        context,
-                        sharedViewModel = sharedViewModel
-                    ).cancelAppointment(appointment = cancelAppointment)
-                    if (cancelLive != null) {
-                        cancelLive.observe(parentFragment.viewLifecycleOwner) { cancelSuccess ->
-                            if (cancelSuccess) {
-                                Toast.makeText(context, "Cancelled", Toast.LENGTH_SHORT).show()
-                                appointments[position] = cancelAppointment
-                                notifyItemChanged(position)
+
+                var confirmDeleteBuilder = AlertDialog.Builder(context)
+                confirmDeleteBuilder.setTitle("Are you sure ?")
+                    .setMessage("You want to cancel this appointment?")
+                    .setPositiveButton("Yes") { dialog, which ->
+                        dialog.dismiss()
+                        var cancelNoteInput = holder.cancelNoteInput.text.toString()
+                        if (cancelNoteInput.isEmpty()) {
+                            Toast.makeText(
+                                context,
+                                "Add some cancel note first",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                        } else {
+                            var cancelAppointment = appointments[position]
+                            cancelAppointment.cancelled = true
+                            cancelAppointment.status =
+                                "Cancelled by mentor" + "\n" + cancelNoteInput
+                            var cancelLive = MentorAppointmentsAccess(
+                                context,
+                                sharedViewModel = sharedViewModel
+                            ).cancelAppointment(appointment = cancelAppointment)
+                            if (cancelLive != null) {
+                                cancelLive.observe(parentFragment.viewLifecycleOwner) { cancelSuccess ->
+                                    if (cancelSuccess) {
+                                        Toast.makeText(context, "Cancelled", Toast.LENGTH_SHORT)
+                                            .show()
+                                        appointments[position] = cancelAppointment
+                                        notifyItemChanged(position)
+                                    }
+                                }
                             }
                         }
                     }
-                }
+                    .setNegativeButton("No"){dialog,which->
+                        dialog.dismiss()
+                    }
+                    confirmDeleteBuilder.create().show()
+
             }
         }
         holder.dontCancel.setOnClickListener {

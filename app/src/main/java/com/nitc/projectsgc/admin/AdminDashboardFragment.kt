@@ -47,6 +47,9 @@ class AdminDashboardFragment : Fragment() {
         binding.tabLayoutInAdminDashboard.addTab(binding.tabLayoutInAdminDashboard.newTab().setText("Mentors"))
         binding.viewPagerInAdminDashboardFragment.adapter = AdminDashboardPagerAdapter(childFragmentManager,lifecycle)
 
+        binding.notificationsButtonInAdminDashboardFragment.setOnClickListener {
+            findNavController().navigate(R.id.allAlertsFragment)
+        }
 
         TabLayoutMediator(binding.tabLayoutInAdminDashboard,binding.viewPagerInAdminDashboardFragment){tab,position->
             when(position){

@@ -1,5 +1,6 @@
 package com.nitc.projectsgc.student.adapters
 
+import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -88,18 +89,34 @@ class BookedAppointmentsAdapter(
             sharedViewModel.reschedulingMentorName = mentorName
         }
         holder.binding.cancelAppointmentInBookedAppointmentCard.setOnClickListener {
-            appointments[position].status = "Cancelled by student"
-            appointments[position].cancelled = true
-            var cancelLive = AppointmentsAccess(context,parentFragment, sharedViewModel).cancelAppointment(appointment = appointments[position])
-            cancelLive.observe(parentFragment.viewLifecycleOwner){cancelled->
-                if(cancelled != null){
-                    if(cancelled){
-                        Toast.makeText(context,"Cancelled",Toast.LENGTH_SHORT).show()
-                        holder.binding.statusTextInBookedAppointmentsCard.text = appointments[position].status
-                        notifyDataSetChanged()
+
+            var confirmDeleteBuilder = AlertDialog.Builder(context)
+            confirmDeleteBuilder.setTitle("Are you sure ?")
+                .setMessage("You want to cancel appointment?")
+                .setPositiveButton("Yes") { dialog, which ->
+                    dialog.dismiss()
+                    appointments[position].status = "Cancelled by student"
+                    appointments[position].cancelled = true
+                    var cancelLive = AppointmentsAccess(
+                        context,
+                        parentFragment,
+                        sharedViewModel
+                    ).cancelAppointment(appointment = appointments[position])
+                    cancelLive.observe(parentFragment.viewLifecycleOwner) { cancelled ->
+                        if (cancelled != null) {
+                            if (cancelled) {
+                                Toast.makeText(context, "Cancelled", Toast.LENGTH_SHORT).show()
+                                holder.binding.statusTextInBookedAppointmentsCard.text =
+                                    appointments[position].status
+                                notifyDataSetChanged()
+                            }
+                        }
                     }
                 }
-            }
+                .setNegativeButton("No"){dialog,which->
+                    dialog.dismiss()
+                }
+                .create().show()
         }
     }
 }

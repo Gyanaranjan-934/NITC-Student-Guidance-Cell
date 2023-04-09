@@ -1,5 +1,6 @@
 package com.nitc.projectsgc.alerts.events.adapters
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
@@ -74,26 +75,49 @@ class AllEventsAdapter(
         }
 
         holder.binding.deleteButtonInEventCard.setOnClickListener {
-            val deleteCoroutineScope = CoroutineScope(Dispatchers.Main)
-            val loadingDialog = Dialog(context)
-            loadingDialog.setContentView(parentFragment.requireActivity().layoutInflater.inflate(R.layout.loading_dialog,null))
-            loadingDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            deleteCoroutineScope.launch {
-                loadingDialog.create()
-                loadingDialog.show()
-                val deleted = EventsAccess(context, sharedViewModel, parentFragment).deleteEvent(events[position])
-                if(deleted){
-                    events.removeAt(position)
-                    loadingDialog.cancel()
-                    deleteCoroutineScope.cancel()
-                    notifyDataSetChanged()
-                }else{
-                    Toast.makeText(context,"Some error occurred. Try again",Toast.LENGTH_SHORT).show()
-                    loadingDialog.cancel()
-                    deleteCoroutineScope.cancel()
-                }
 
-            }
+            var confirmDeleteBuilder = AlertDialog.Builder(context)
+            confirmDeleteBuilder.setTitle("Are you sure ?")
+                .setMessage("You want to delete this Event?")
+                .setPositiveButton("Delete") { dialog, which ->
+                    dialog.dismiss()
+                    val deleteCoroutineScope = CoroutineScope(Dispatchers.Main)
+                    val loadingDialog = Dialog(context)
+                    loadingDialog.setContentView(
+                        parentFragment.requireActivity().layoutInflater.inflate(
+                            R.layout.loading_dialog,
+                            null
+                        )
+                    )
+                    loadingDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                    deleteCoroutineScope.launch {
+                        loadingDialog.create()
+                        loadingDialog.show()
+                        val deleted =
+                            EventsAccess(context, sharedViewModel, parentFragment).deleteEvent(
+                                events[position]
+                            )
+                        if (deleted) {
+                            events.removeAt(position)
+                            loadingDialog.cancel()
+                            deleteCoroutineScope.cancel()
+                            notifyDataSetChanged()
+                        } else {
+                            Toast.makeText(
+                                context,
+                                "Some error occurred. Try again",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            loadingDialog.cancel()
+                            deleteCoroutineScope.cancel()
+                        }
+
+                    }
+                }
+                .setNegativeButton("Cancel"){dialog,which->
+                    dialog.dismiss()
+                }
+                .create().show()
         }
     }
 
