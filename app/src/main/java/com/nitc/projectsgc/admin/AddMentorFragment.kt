@@ -1,5 +1,8 @@
 package com.nitc.projectsgc.admin
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +14,10 @@ import com.nitc.projectsgc.Mentor
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.admin.access.AddMentorAccess
 import com.nitc.projectsgc.databinding.FragmentAddMentorBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 class AddMentorFragment : Fragment() {
 //    var database : FirebaseDatabase =
@@ -110,14 +117,27 @@ class AddMentorFragment : Fragment() {
                 passwordOfMentor,
                 userName
             )
-            val addMentorSuccess = context?.let { it1 -> AddMentorAccess(it1).addMentor(mentor) }
 
-            addMentorSuccess!!.observe(viewLifecycleOwner){success->
-                if(success){
+            val coroutineScope = CoroutineScope(Dispatchers.Main)
+            val loadingDialog = Dialog(requireContext())
+            loadingDialog.setContentView(
+                requireActivity().layoutInflater.inflate(
+                    R.layout.loading_dialog,
+                    null
+                )
+            )
+            loadingDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            coroutineScope.launch {
+                loadingDialog.create()
+                loadingDialog.show()
+                val addMentorSuccess =
+                    AddMentorAccess(requireContext()).addMentor(mentor)
+
+                loadingDialog.cancel()
+                coroutineScope.cancel()
+                if(addMentorSuccess){
                     findNavController().navigate(R.id.adminDashboardFragment)
-                    Toast.makeText(context,"adding success of $nameOfMentor",Toast.LENGTH_SHORT).show()
-                }else{
-                    Toast.makeText(context,success.toString(),Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,"Added",Toast.LENGTH_SHORT).show()
                 }
             }
 

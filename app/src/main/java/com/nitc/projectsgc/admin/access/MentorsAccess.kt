@@ -16,7 +16,7 @@ class MentorsAccess(var context: Context) {
         return suspendCoroutine { continuation ->
             var database: FirebaseDatabase = FirebaseDatabase.getInstance()
             var reference: DatabaseReference = database.reference.child("types")
-            reference.addValueEventListener(object : ValueEventListener {
+            reference.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     var typeList = arrayListOf<String>()
                     var mentorList = arrayListOf<Mentor>()
