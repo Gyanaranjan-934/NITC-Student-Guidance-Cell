@@ -55,6 +55,10 @@ class StudentsAdapter(
         holder.dobText.text = students[position].dateOfBirth.toString()
         holder.phoneText.text = students[position].phoneNumber.toString()
         holder.rollText.text = students[position].rollNo.toString()
+        holder.personImage.setOnClickListener {
+            sharedViewModel.idForStudentProfile = students[position].rollNo
+            parentFragment.findNavController().navigate(R.id.studentProfileFragment)
+        }
 
         val loadingDialog = Dialog(context)
         loadingDialog.setContentView(parentFragment.requireActivity().layoutInflater.inflate(R.layout.loading_dialog,null))
@@ -74,6 +78,8 @@ class StudentsAdapter(
                             sharedViewModel.viewAppointmentStudentID = students[position].rollNo
                             parentFragment.findNavController()
                                 .navigate(R.id.studentAllAppointmentsFragment)
+                        }else{
+                            Toast.makeText(context,"No Appointments yet",Toast.LENGTH_SHORT).show()
                         }
                     }
                 }

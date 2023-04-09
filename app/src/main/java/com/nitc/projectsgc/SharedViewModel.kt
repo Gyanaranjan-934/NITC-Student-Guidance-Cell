@@ -6,6 +6,7 @@ class SharedViewModel:ViewModel() {
 
     lateinit var currentMentor: Mentor
     lateinit var currentStudent: Student
+    lateinit var idForStudentProfile:String
     lateinit var mentorIDForProfile:String
     lateinit var mentorTypeForProfile:String
     var currentUserID = "NA"

@@ -104,4 +104,8 @@
         android:id="@+id/addNewsFragment"
         android:name="com.nitc.projectsgc.alerts.news.fragments.AddNewsFragment"
         android:label="AddNewsFragment" />
+    <fragment
+        android:id="@+id/studentProfileFragment"
+        android:name="com.nitc.projectsgc.student.fragments.StudentProfileFragment"
+        android:label="StudentProfileFragment" />
 </navigation>
