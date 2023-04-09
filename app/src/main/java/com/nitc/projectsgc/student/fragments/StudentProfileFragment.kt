@@ -14,25 +14,29 @@ class StudentProfileFragment: Fragment() {
     lateinit var binding:FragmentStudentProfileBinding
     private val sharedViewModel:SharedViewModel by activityViewModels()
 
-    var changesMade = false
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentStudentProfileBinding.inflate(inflater,container,false)
-        binding.headingTVStudentProfileFragment.text = sharedViewModel.currentStudent.name
-        binding.nameFieldStudentProfileFragment.setText(sharedViewModel.currentStudent.name)
-        binding.emailFieldStudentProfileFragment.setText(sharedViewModel.currentStudent.emailId)
-        binding.phoneNumberStudentProfileFragment.setText(sharedViewModel.currentStudent.phoneNumber)
-        binding.passwordFieldStudentProfileFragment.setText(sharedViewModel.currentStudent.password)
-        binding.nameInputLayoutInStudentProfileFragment.isEnabled = false
+        if(sharedViewModel.userType == "Student" || sharedViewModel.userType == "Admin") {
+            binding.headingTVStudentProfileFragment.text = sharedViewModel.currentStudent.name
+            binding.nameFieldStudentProfileFragment.setText(sharedViewModel.currentStudent.name)
+            binding.emailFieldStudentProfileFragment.setText(sharedViewModel.currentStudent.emailId)
+            binding.phoneNumberStudentProfileFragment.setText(sharedViewModel.currentStudent.phoneNumber)
+            binding.passwordFieldStudentProfileFragment.setText(sharedViewModel.currentStudent.password)
+            binding.emailFieldStudentProfileFragment.isEnabled = false
 
-        binding.updateButtonStudentProfileFragment.visibility = View.GONE
-        binding.phoneCardStudentProfileFragment.setOnClickListener {
-            binding.updateButtonStudentProfileFragment.visibility = View.VISIBLE
+        }else{
+            binding.passwordInputCardStudentProfileFragment.visibility = View.GONE
+            binding.updateButtonStudentProfileFragment.visibility = View.GONE
+
         }
+        binding.updateButtonStudentProfileFragment.visibility = View.VISIBLE
+
+
+        binding.updateButtonStudentProfileFragment
 
         return binding.root
     }

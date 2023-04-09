@@ -32,7 +32,6 @@ class LoginAccess(
         var database: FirebaseDatabase = FirebaseDatabase.getInstance()
         var reference: DatabaseReference = database.reference
         var auth: FirebaseAuth = FirebaseAuth.getInstance()
-        var loginLive = MutableLiveData<Boolean>()
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener() { task ->
             if (task.isSuccessful) {
                 var verification = auth.currentUser?.isEmailVerified
@@ -154,6 +153,7 @@ class LoginAccess(
                                                         }
                                                         continuation.resume(false)
                                                     } else {
+                                                        Toast.makeText(context,"Some error occurred. Try again",Toast.LENGTH_SHORT).show()
                                                         continuation.resume(false)
                                                     }
                                                 }
@@ -190,7 +190,8 @@ class LoginAccess(
 
 
             } else {
-                loginLive.postValue(false)
+                Toast.makeText(context,"Wrong credentials entered. Try again",Toast.LENGTH_SHORT).show()
+                continuation.resume(false)
             }
         }
     }

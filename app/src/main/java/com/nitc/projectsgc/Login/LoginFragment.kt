@@ -130,8 +130,6 @@ class LoginFragment : Fragment() {
                 if(emailDomain != "nitc.ac.in"){
                     Toast.makeText(context,"User should login with NITC email id",Toast.LENGTH_SHORT).show()
                 }else{
-
-
                         val loginCoroutineScope = CoroutineScope(Dispatchers.Main)
                         loginCoroutineScope.launch {
                             loadingDialog.show()
@@ -143,9 +141,6 @@ class LoginFragment : Fragment() {
                                 sharedViewModel.userType = "Student"
                                 Log.d("loginSuccess", loginSuccess.toString())
                                 findNavController().navigate(R.id.studentDashBoardFragment)
-                            } else {
-                                Toast.makeText(context, "Some error occurred", Toast.LENGTH_SHORT)
-                                    .show()
                             }
                         }
                 }

@@ -131,7 +131,7 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun checkDomain(emailInput: String): Boolean {
         val domain : String = emailInput.substring(emailInput.indexOf("@")+1,emailInput.length)
-        if(domain != "nitc.ac.in")return false
+        if(domain != "nitc.ac.in") return false
         return  true
     }
 
