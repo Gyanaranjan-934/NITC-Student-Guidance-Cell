@@ -158,12 +158,14 @@ class LoginFragment : Fragment() {
                 }
             }
             else if(userType == "Mentor"){
+                if(mentorTypeSelected == "NA"){
+                    Toast.makeText(context,"Please select your type",Toast.LENGTH_SHORT).show()
+                }
                 val emailDomain = emailInput.substring(emailInput.indexOf("@")+1,emailInput.length)
                 val userName = emailInput.substring(0,emailInput.indexOf("@"))
                 if(emailDomain != "nitc.ac.in"){
                     Toast.makeText(context,"Mentor should login with NITC email id",Toast.LENGTH_SHORT).show()
                 }else{
-
                     val loginCoroutineScope = CoroutineScope(Dispatchers.Main)
                     loginCoroutineScope.launch {
                         loadingDialog.show()

@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -101,6 +102,12 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
             val rollNo = emailInput.substring(emailInput.indexOf("_") + 1, emailInput.indexOf("@"))
 
+            if(!verifyRollNO(rollNo)){
+                registerBinding.emailFieldInRegisterFragment.error = "You have entered the roll no. in email incorrectly"
+                registerBinding.emailFieldInRegisterFragment.requestFocus()
+                return@setOnClickListener
+            }
+
             val student = Student(rollNo,nameInput,dateOfBirth,emailInput,selectedGenderTextView,passwordInput,phoneNumber)
 
             val registerSuccess = context?.let { it1 -> RegisterAccess(it1).register(student) }
@@ -131,6 +138,15 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
     requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,backCallback)
         // Inflate the layout for this fragment
         return registerBinding.root
+    }
+
+    private fun verifyRollNO(rollNo: String): Boolean {
+        if(rollNo.length != 9)return false
+        if(rollNo[0]!='p' && rollNo[0]!='m' && rollNo[0]!='b')return false
+        val streamId = rollNo.substring(7)
+        if(streamId.isDigitsOnly())return false
+        if(streamId != streamId.lowercase())return false
+        return true
     }
 
     private fun checkDomain(emailInput: String): Boolean {

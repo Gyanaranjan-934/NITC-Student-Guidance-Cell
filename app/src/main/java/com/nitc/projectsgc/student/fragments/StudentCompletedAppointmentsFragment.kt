@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.databinding.FragmentStudentCompletedAppointmentsBinding
@@ -29,6 +30,7 @@ class StudentCompletedAppointmentsFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentStudentCompletedAppointmentsBinding.inflate(inflater, container, false)
+        binding.completedAppointmentsRecyclerViewInStudentDashboard.layoutManager = LinearLayoutManager(context)
         binding.swipeLayoutInStudentCompletedAppointmentsFragment.setOnRefreshListener {
             getCompletedAppointments()
             binding.swipeLayoutInStudentCompletedAppointmentsFragment.isRefreshing = false

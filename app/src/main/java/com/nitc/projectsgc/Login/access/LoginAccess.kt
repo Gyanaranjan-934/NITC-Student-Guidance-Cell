@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.database.*
 import com.nitc.projectsgc.Mentor
 import com.nitc.projectsgc.SharedViewModel
@@ -190,8 +191,16 @@ class LoginAccess(
 
 
             } else {
-                Toast.makeText(context,"Wrong credentials entered. Try again",Toast.LENGTH_SHORT).show()
-                continuation.resume(false)
+                val errorCode = (task.exception as FirebaseAuthException).errorCode
+                if (errorCode == "ERROR_USER_NOT_FOUND") {
+                    // Show error message to the user
+                    Toast.makeText(context, "Email address not found", Toast.LENGTH_SHORT).show()
+                    continuation.resume(false)
+                } else {
+                    Toast.makeText(context,"Wrong credentials entered. Try again",Toast.LENGTH_SHORT).show()
+                    continuation.resume(false)
+                }
+
             }
         }
     }

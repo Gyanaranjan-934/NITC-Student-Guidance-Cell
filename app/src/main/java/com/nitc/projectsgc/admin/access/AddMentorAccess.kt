@@ -75,26 +75,40 @@ class AddMentorAccess(
                 if (task.isSuccessful) {
                     Log.d("accessAddMentor", "here in addMentor access")
                     if(mentor.password != oldPassword) {
-                        auth.signInWithEmailAndPassword(mentor.email, oldPassword)
-                            .addOnCompleteListener { loggedIn ->
-                                if (loggedIn.isSuccessful) {
-                                    auth.currentUser?.delete()?.addOnCompleteListener { deleted ->
-                                        if (!deleted.isSuccessful) continuation.resume(false)
-                                        else {
-                                            auth.createUserWithEmailAndPassword(
-                                                mentor.email,
-                                                mentor.password
-                                            ).addOnCompleteListener { authTask ->
-                                                if (authTask.isSuccessful) {
-                                                    continuation.resume(true)
-                                                } else {
-                                                    continuation.resume(false)
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
+//                        auth.signInWithEmailAndPassword(mentor.email, oldPassword)
+//                            .addOnCompleteListener { loggedIn ->
+//                                if (loggedIn.isSuccessful) {
+//                                    auth.currentUser?.delete()?.addOnCompleteListener { deleted ->
+//                                        if (!deleted.isSuccessful) continuation.resume(false)
+//                                        else {
+//                                            auth.createUserWithEmailAndPassword(
+//                                                mentor.email,
+//                                                mentor.password
+//                                            ).addOnCompleteListener { authTask ->
+//                                                if (authTask.isSuccessful) {
+//                                                    continuation.resume(true)
+//                                                } else {
+//                                                    continuation.resume(false)
+//                                                }
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
+                        val currentUser = FirebaseAuth.getInstance().currentUser
+
+// Update the password in the Authentication Database
+                        currentUser?.updatePassword(mentor.password)?.addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                // Show success message to the user
+                                Toast.makeText(context, "Password updated successfully", Toast.LENGTH_SHORT).show()
+                                continuation.resume(true)
+                            } else {
+                                // Password update failed, show error message to the user
+                                Toast.makeText(context, "Password update failed", Toast.LENGTH_SHORT).show()
+                                continuation.resume(false)
                             }
+                        }
                     }else{
                         continuation.resume(true)
                     }

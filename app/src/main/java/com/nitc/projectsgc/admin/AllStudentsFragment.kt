@@ -39,8 +39,6 @@ class AllStudentsFragment:Fragment() {
             getStudents()
             binding.swipeLayoutInAllStudentsFragment.isRefreshing = false
         }
-
-
         binding.addStudentButtonInAdminDashboard.setOnClickListener {
             findNavController().navigate(R.id.registerFragment)
         }

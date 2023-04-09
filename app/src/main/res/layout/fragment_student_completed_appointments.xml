@@ -13,7 +13,7 @@
                 android:id="@+id/completedAppointmentsRecyclerViewInStudentDashboard"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="invisible"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_percent="0.9"
                 app:layout_constraintTop_toTopOf="parent"

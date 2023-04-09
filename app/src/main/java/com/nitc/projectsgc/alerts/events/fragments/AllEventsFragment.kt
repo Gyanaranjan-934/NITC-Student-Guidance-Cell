@@ -60,7 +60,8 @@ class AllEventsFragment:Fragment() {
             findNavController().navigate(R.id.addEventFragment)
         }
 
-        var selectedTypeOfEvent = "NA"
+        var selectedTypeOfEvent = "All"
+        var selectedIndexGlobal = 0
         binding.selectTypeButtonInAllEventsFragment.setOnClickListener {
             val newTypes = resources.getStringArray(com.nitc.projectsgc.R.array.event_types)
             val availableTypesOfEvents: ArrayList<String> = ArrayList(newTypes.filterNotNull())
@@ -68,9 +69,10 @@ class AllEventsFragment:Fragment() {
             val eventTypeDialog = AlertDialog.Builder(context)
             eventTypeDialog.setTitle("Select the type of Event")
             eventTypeDialog.setSingleChoiceItems(
-                availableTypesOfEvents.toTypedArray(),0
+                availableTypesOfEvents.toTypedArray(),selectedIndexGlobal
             ) { dialog,selectedIndex->
                 selectedTypeOfEvent = availableTypesOfEvents[selectedIndex]
+                selectedIndexGlobal = selectedIndex
                 binding.selectTypeButtonInAllEventsFragment.text = selectedTypeOfEvent
                 availableTypesOfEvents.clear()
                 val loadingDialog = Dialog(requireContext())
@@ -91,7 +93,7 @@ class AllEventsFragment:Fragment() {
                 dialog.dismiss()
             }
             eventTypeDialog.setPositiveButton("Ok"){dialog,which->
-                selectedTypeOfEvent = availableTypesOfEvents[0]
+                selectedTypeOfEvent = availableTypesOfEvents[selectedIndexGlobal]
                 binding.selectTypeButtonInAllEventsFragment.text = selectedTypeOfEvent
                 availableTypesOfEvents.clear()
                 loadingDialog.setContentView(requireActivity().layoutInflater.inflate(R.layout.loading_dialog,null))
