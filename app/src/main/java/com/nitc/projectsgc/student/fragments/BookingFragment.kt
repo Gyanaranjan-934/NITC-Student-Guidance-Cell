@@ -296,6 +296,10 @@ class BookingFragment : Fragment() {
             }
         }
 
+        binding.cancelButtonInBookingFragment.setOnClickListener {
+            findNavController().navigate(R.id.studentDashBoardFragment)
+        }
+
         return binding.root
     }
 
