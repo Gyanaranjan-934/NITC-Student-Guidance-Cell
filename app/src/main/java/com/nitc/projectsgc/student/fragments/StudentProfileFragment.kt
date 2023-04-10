@@ -118,7 +118,12 @@ class StudentProfileFragment : Fragment() {
                             val database: FirebaseDatabase = FirebaseDatabase.getInstance()
                             val reference: DatabaseReference = database.reference.child("students")
                             val auth: FirebaseAuth = FirebaseAuth.getInstance()
-                            reference.child(student.rollNo).setValue(student)
+                            val updates = mapOf<String,String>(
+                                "name" to student.name,
+                                "password" to student.password,
+                                "phone" to student.phoneNumber
+                            )
+                            reference.child(student.rollNo).updateChildren(updates)
                                 .addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
                                         if (student.password != oldPassword) {
