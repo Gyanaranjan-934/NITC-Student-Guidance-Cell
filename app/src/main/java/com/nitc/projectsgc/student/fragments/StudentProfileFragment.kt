@@ -121,7 +121,7 @@ class StudentProfileFragment : Fragment() {
                             val updates = mapOf<String,String>(
                                 "name" to student.name,
                                 "password" to student.password,
-                                "phone" to student.phoneNumber
+                                "phoneNumber" to student.phoneNumber
                             )
                             reference.child(student.rollNo).updateChildren(updates)
                                 .addOnCompleteListener { task ->
