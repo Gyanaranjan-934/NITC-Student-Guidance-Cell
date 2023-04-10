@@ -50,38 +50,54 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingHorizontal="20dp"
-            android:paddingTop="10dp"
+            android:paddingVertical="10dp"
             android:weightSum="25">
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                app:cardCornerRadius="15dp"
                 android:layout_weight="4"
-                app:boxBackgroundColor="#E6FFFFFF">
+                app:cardElevation="5dp"
+                app:cardBackgroundColor="@color/lavender">
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:boxBackgroundColor="@color/lavender">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/nameFieldInUpdateProfileFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:fontFamily="@font/inter"
                     android:hint="Name"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            </com.google.android.material.card.MaterialCardView>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="4"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    app:cardCornerRadius="15dp"
                     android:layout_weight="5"
-                    app:boxBackgroundColor="#E6FFFFFF">
+                    app:cardElevation="5dp"
+                    app:cardBackgroundColor="@color/lavender">
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:boxBackgroundColor="@color/lavender">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/phoneNumberInUpdateProfileFragment"
@@ -92,6 +108,7 @@
                         android:textColor="@color/black"
                         android:textColorHint="@color/black" />
                 </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.card.MaterialCardView>
 
                 <Spinner
                     android:id="@+id/gender_spinnerInUpdateProfileFragment"
@@ -100,19 +117,23 @@
                     android:layout_weight="3" />
             </LinearLayout>
 
-            <LinearLayout
+
+
+
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                app:cardCornerRadius="15dp"
                 android:layout_weight="4"
-                android:orientation="horizontal">
-
-
-
+                app:cardElevation="5dp"
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="@color/lavender">
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="0dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="9">
+                    android:layout_weight="9"
+                    app:boxBackgroundColor="@color/lavender">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/emailFieldInUpdateProfileFragment"
@@ -124,15 +145,23 @@
                         android:textColorHint="@color/black" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+            </com.google.android.material.card.MaterialCardView>
 
-            </LinearLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                app:cardCornerRadius="15dp"
                 android:layout_weight="4"
-                app:boxBackgroundColor="#E6FFFFFF">
+                app:cardElevation="5dp"
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="@color/lavender">
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                app:boxBackgroundColor="@color/lavender">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/passwordFieldInUpdateProfileFragment"
@@ -143,12 +172,15 @@
                     android:textColor="@color/black"
                     android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
-
+            </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Date of Birth" />
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="@color/black"
+                android:layout_marginTop="20dp"
+                android:text="Date of Birth" />
 
             <DatePicker
                 android:id="@+id/dateOfBirthInUpdateProfileFragment"

@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ivory"
+    android:background="@color/light_gray"
     android:padding="10dp"
     tools:context="Login.LoginFragment">
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/textView"
+        android:id="@+id/headingTVInLoginFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter_semibold"
@@ -34,15 +34,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.68"
-        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintVertical_bias="0.3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/headingTVInLoginFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/loginLayoutInLoginFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#E9F3FF"
+            android:background="@color/light_blue"
             android:orientation="vertical"
             android:padding="20dp"
             android:weightSum="20">
@@ -64,7 +64,7 @@
                     app:layout_constraintVertical_bias="0.03"
                     app:layout_constraintWidth_percent="0.97"
                     app:cardCornerRadius="25dp">
-                
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -192,7 +192,7 @@
                 app:layout_constraintHeight_percent="0.12"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="5dp"
-                app:strokeWidth="1dp"
+                app:strokeWidth="0dp"
                 app:strokeColor="@color/black"
                 app:layout_constraintVertical_bias="0.15"
                 app:layout_constraintStart_toStartOf="parent"
@@ -288,7 +288,7 @@
                     android:backgroundTint="#00000000"
                     android:text="Forgot Password ?"
                     android:textAllCaps="false"
-                    android:textColor="#673AB7"
+                    android:textColor="@color/purple_500"
                     app:cornerRadius="10dp" />
 
 
@@ -306,7 +306,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:backgroundTint="@color/navy_blue"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintWidth_percent="0.9"
+                app:layout_constraintWidth_percent="0.8"
                 android:text="Login"
                 android:textColor="@color/white" />
 
@@ -318,15 +318,17 @@
         android:id="@+id/signUpButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:backgroundTint="@color/sky_blue"
+        android:backgroundTint="@color/ivory"
         android:fontFamily="@font/inter_semibold"
         android:textAllCaps="false"
         android:letterSpacing="0.03"
+        android:elevation="5dp"
         app:cornerRadius="15dp"
         android:text="Register"
         app:layout_constraintHeight_percent="0.075"
         app:layout_constraintWidth_percent="0.4"
         app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintVertical_bias="0.8"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/loginCardInLoginFragment"

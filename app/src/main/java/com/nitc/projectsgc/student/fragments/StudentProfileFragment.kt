@@ -171,7 +171,6 @@ class StudentProfileFragment : Fragment() {
         } else {
             binding.passwordInputCardStudentProfileFragment.visibility = View.GONE
             binding.updateButtonStudentProfileFragment.visibility = View.GONE
-
         }
         binding.updateButtonStudentProfileFragment.visibility = View.VISIBLE
 
