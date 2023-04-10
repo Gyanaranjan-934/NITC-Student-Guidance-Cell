@@ -56,6 +56,11 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 registerBinding.nameFieldInRegisterFragment.requestFocus()
                 return@setOnClickListener
             }
+            if(!isAlphabetic(nameInput)){
+                registerBinding.nameFieldInRegisterFragment.error = "Name field shouldn't contain numbers"
+                registerBinding.nameFieldInRegisterFragment.requestFocus()
+                return@setOnClickListener
+            }
             if(emailInput.isEmpty()){
                 registerBinding.emailFieldInRegisterFragment.error = "Email field cannot be empty"
                 registerBinding.emailFieldInRegisterFragment.requestFocus()
@@ -164,6 +169,10 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
     fun isDigitsOnly(str: String): Boolean {
         return str.matches(Regex("[0-9]+"))
     }
+    fun isAlphabetic(name: String): Boolean {
+        return name.matches("[a-zA-Z]+".toRegex())
+    }
+
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         if (parent != null) {
             selectedGenderTextView = parent.getItemAtPosition(position).toString()
