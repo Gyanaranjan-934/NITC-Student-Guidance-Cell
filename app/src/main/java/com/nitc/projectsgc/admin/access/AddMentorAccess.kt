@@ -71,7 +71,13 @@ class AddMentorAccess(
             val database: FirebaseDatabase = FirebaseDatabase.getInstance()
             val reference: DatabaseReference = database.reference.child("types").child(mentor.type)
             val auth: FirebaseAuth = FirebaseAuth.getInstance()
-            reference.child(mentor.userName).setValue(mentor).addOnCompleteListener { task ->
+            val updates = mapOf<String,String>(
+                "name" to mentor.name,
+                "password" to mentor.password,
+                "phone" to mentor.phone
+            )
+
+            reference.child(mentor.userName).updateChildren(updates).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d("accessAddMentor", "here in addMentor access")
                     if(mentor.password != oldPassword) {
