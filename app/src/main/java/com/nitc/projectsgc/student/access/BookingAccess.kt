@@ -42,7 +42,7 @@ class BookingAccess(var context: Context,var sharedViewModel: SharedViewModel) {
         var appointmentID = mentorNewReference.push().key.toString()
         appointment.id = appointmentID
         var mentorOldReference = reference.child("types/${oldAppointment.mentorType}/${oldAppointment.mentorID}/appointments/${oldAppointment.date}/${oldAppointment.timeSlot}")
-        mentorOldReference.setValue(oldAppointment).addOnCompleteListener { oldMentorTask ->
+        mentorOldReference.removeValue().addOnCompleteListener { oldMentorTask ->
             if (oldMentorTask.isSuccessful) {
                 reference.child("students/${oldAppointment.studentID}/appointments/${oldAppointment.id}").removeValue().addOnCompleteListener { oldStudentTask ->
                     if(oldStudentTask.isSuccessful) {
