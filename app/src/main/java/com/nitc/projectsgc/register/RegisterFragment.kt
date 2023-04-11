@@ -1,6 +1,10 @@
 package com.nitc.projectsgc.register
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +22,11 @@ import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.Student
 import com.nitc.projectsgc.databinding.FragmentRegisterBinding
 import com.nitc.projectsgc.register.access.RegisterAccess
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import java.util.Calendar
 
 class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
     lateinit var registerBinding: FragmentRegisterBinding
@@ -41,15 +50,29 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         studentGender.adapter = arrayAdapter
         studentGender.onItemSelectedListener = this
+        var dateOfBirth = ""
+        val calendar = Calendar.getInstance()
 
+        registerBinding.dateOfBirthInRegisterFragment.init(
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        ){view,year,monthOfYear,dayOfMonth->
+            var monthNumber = monthOfYear + 1
+            Log.d("monthNumber","month number before = "+monthNumber)
+            if(monthNumber/10 == 0) monthNumber = "0${monthNumber.toString()}".toInt()
+            Log.d("monthNumber","month numbe = "+monthNumber.toString())
+            if(monthNumber < 10) dateOfBirth = "${registerBinding.dateOfBirthInRegisterFragment.dayOfMonth.toString()}/0${monthNumber.toString()}/${registerBinding.dateOfBirthInRegisterFragment.year.toString()}"
+            else dateOfBirth = "${registerBinding.dateOfBirthInRegisterFragment.dayOfMonth.toString()}/${monthNumber.toString()}/${registerBinding.dateOfBirthInRegisterFragment.year.toString()}"
+            Log.d("monthNumber","date of birth = "+dateOfBirth)
+
+        }
         registerBinding.signUpButtonInRegisterFragment.setOnClickListener{
             val nameInput = registerBinding.nameFieldInRegisterFragment.text.toString()
             val emailInput = registerBinding.emailFieldInRegisterFragment.text.toString()
             val passwordInput = registerBinding.passwordFieldInRegisterFragment.text.toString()
             var phoneNumber = registerBinding.phoneNumberInRegisterFragment.text.toString()
-            var monthNumber = registerBinding.dateOfBirthInRegisterFragment.month.toString().toInt()
-            if(monthNumber/10 == 0) monthNumber = "0${monthNumber.toString()}".toInt()
-            val dateOfBirth = registerBinding.dateOfBirthInRegisterFragment.dayOfMonth.toString()+"/"+monthNumber.toString()+"/"+registerBinding.dateOfBirthInRegisterFragment.year.toString()
+
 
             if(nameInput.isEmpty()){
                 registerBinding.nameFieldInRegisterFragment.error = "Name field cannot be empty"
@@ -113,18 +136,26 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 return@setOnClickListener
             }
 
-            val student = Student(rollNo,nameInput,dateOfBirth,emailInput,selectedGenderTextView,passwordInput,phoneNumber)
-
-            val registerSuccess = context?.let { it1 -> RegisterAccess(it1).register(student) }
-
-            registerSuccess!!.observe(viewLifecycleOwner){success->
-                if(success){
+            val loadingDialog = Dialog(requireContext())
+            loadingDialog.setContentView(requireActivity().layoutInflater.inflate(R.layout.loading_dialog,null))
+            loadingDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            Log.d("today","this called")
+            val registerCoroutineScope = CoroutineScope(Dispatchers.Main)
+            registerCoroutineScope.launch {
+                val student = Student(rollNo,nameInput,dateOfBirth,emailInput,selectedGenderTextView,passwordInput,phoneNumber)
+                loadingDialog.create()
+                loadingDialog.show()
+                val registerSuccess = RegisterAccess(requireContext()).register(student)
+                loadingDialog.cancel()
+                registerCoroutineScope.cancel()
+                if(registerSuccess){
                     if(sharedViewModel.userType == "Admin") findNavController().navigate(R.id.adminDashboardFragment)
                     else findNavController().navigate(R.id.loginFragment)
-                }else{
-                    Toast.makeText(context,"Failed",Toast.LENGTH_SHORT).show()
                 }
             }
+
+
+
 
 //            findNavController().navigate(R.id.bookingFragment)
 
