@@ -33,7 +33,7 @@
             app:layout_constraintTop_toTopOf="@id/headingTextInMentorAppointmentsFragment"
             app:layout_constraintBottom_toBottomOf="@id/headingTextInMentorAppointmentsFragment"
             app:layout_constraintHeight_percent="0.077"
-            app:layout_constraintWidth_percent="0.35"
+            app:layout_constraintWidth_percent="0.4"
             android:backgroundTint="@color/navy_blue"
             android:textSize="16sp"
             app:cornerRadius="15dp"
