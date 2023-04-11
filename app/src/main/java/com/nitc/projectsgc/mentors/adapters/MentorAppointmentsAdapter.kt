@@ -15,6 +15,8 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.RemoteMessage
 import com.nitc.projectsgc.Appointment
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.SharedViewModel
@@ -25,6 +27,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MentorAppointmentsAdapter(
     var context : Context,
@@ -154,6 +158,27 @@ class MentorAppointmentsAdapter(
                             if (cancelLive != null) {
                                 cancelLive.observe(parentFragment.viewLifecycleOwner) { cancelSuccess ->
                                     if (cancelSuccess) {
+                                        val studentCoroutineScope = CoroutineScope(Dispatchers.Main)
+                                        studentCoroutineScope.launch {
+                                            val student =
+                                                StudentsAccess(context, parentFragment).getStudent(
+                                                    stdId
+                                                )
+                                            if(student != null) {
+                                                val message =
+                                                    RemoteMessage.Builder(student.fcmToken)
+                                                        .setMessageId(UUID.randomUUID().toString())
+                                                        .setData(
+                                                            mapOf(
+                                                                "title" to "Appointment Cancelled",
+                                                                "body" to "Appointment with ${sharedViewModel.currentMentor.name} on ${appointments[position].date} is cancelled"
+                                                            )
+                                                        )
+                                                        .build()
+                                                FirebaseMessaging.getInstance().send(message)
+                                            }
+                                            studentCoroutineScope.cancel()
+                                        }
                                         Toast.makeText(context, "Cancelled", Toast.LENGTH_SHORT)
                                             .show()
                                         appointments[position] = cancelAppointment

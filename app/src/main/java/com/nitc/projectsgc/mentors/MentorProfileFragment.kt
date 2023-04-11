@@ -140,6 +140,7 @@ class MentorProfileFragment: Fragment() {
                                         "Successfully updated",
                                         Toast.LENGTH_SHORT
                                     ).show()
+
                                 } else {
                                     Toast.makeText(context,"Some error occurred. Try again", Toast.LENGTH_SHORT).show()
                                 }

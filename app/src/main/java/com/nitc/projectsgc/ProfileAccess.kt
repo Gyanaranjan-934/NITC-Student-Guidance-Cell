@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -53,6 +54,7 @@ class ProfileAccess(var context: Context,var sharedViewModel: SharedViewModel,va
                                                                     "sharedP",
                                                                     "current student got"
                                                                 )
+
                                                                 if(snapshot.hasChild(username)) {
                                                                     sharedViewModel.userType = userType
                                                                     sharedViewModel.currentStudent =
@@ -61,6 +63,7 @@ class ProfileAccess(var context: Context,var sharedViewModel: SharedViewModel,va
                                                                     profileLive.postValue(true)
                                                                     Log.d("sharedP", "return statement")
 //                                                                callback(true)
+                                                                    saveFCM(userType,"NA",username)
                                                                     continuation.resume(true)
                                                                     return
                                                                 }else{
@@ -110,6 +113,7 @@ class ProfileAccess(var context: Context,var sharedViewModel: SharedViewModel,va
                                                                                 userType
                                                                             profileLive.postValue(true)
                                                                             sharedViewModel.currentUserID = username
+                                                                            saveFCM(userType,mentorType,username)
                                                                             continuation.resume(true)
                                                                             return
                                                                         }else {
@@ -173,6 +177,48 @@ class ProfileAccess(var context: Context,var sharedViewModel: SharedViewModel,va
             }else{
                 continuation.resume(false)
             }
+        }
+    }
+
+    fun saveFCM(userType:String,mentorType:String,username:String){
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("FCM", "Fetching FCM registration token failed", task.exception)
+                return@addOnCompleteListener
+            }
+
+            // Get the FCM token
+            val token = task.result
+            val database = FirebaseDatabase.getInstance()
+            if(userType == "Mentor") {
+                val reference = database.reference.child("types/$mentorType/$username")
+                val updates = mapOf<String, String>(
+                    "fcmToken" to token
+                )
+                reference.updateChildren(updates).addOnCompleteListener {fcmTask->
+                    if(fcmTask.isSuccessful){
+                        Log.d("fcm","successfully stored")
+                    }else{
+                        Log.d("fcm","not stored")
+                    }
+                }
+            }
+            else{
+                val reference = database.reference.child("students/$username")
+                val updates = mapOf<String, String>(
+                    "fcmToken" to token
+                )
+                reference.updateChildren(updates).addOnCompleteListener {fcmTask->
+                    if(fcmTask.isSuccessful){
+                        Log.d("fcm","successfully stored")
+                    }else{
+                        Log.d("fcm","not stored")
+                    }
+                }
+            }
+
+            // Do something with the token (e.g., store it in a database, send it to a server, etc.)
+            Log.d("FCM", "FCM registration token: $token")
         }
     }
 

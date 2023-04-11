@@ -79,7 +79,15 @@ class RegisterFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 registerBinding.nameFieldInRegisterFragment.requestFocus()
                 return@setOnClickListener
             }
-            if(!isAlphabetic(nameInput)){
+            var names = nameInput.toString().trim().split(" ")
+            var nameValid = true
+            for (name in names){
+                if(!isAlphabetic(name)){
+                    nameValid = false
+                    break
+                }
+            }
+            if(!nameValid){
                 registerBinding.nameFieldInRegisterFragment.error = "Name field shouldn't contain numbers"
                 registerBinding.nameFieldInRegisterFragment.requestFocus()
                 return@setOnClickListener

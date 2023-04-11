@@ -34,6 +34,7 @@ class StudentProfileFragment : Fragment() {
     lateinit var binding: FragmentStudentProfileBinding
     var studentLive: MutableLiveData<Student?> = MutableLiveData()
     var oldPassword = "NA"
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -59,13 +60,21 @@ class StudentProfileFragment : Fragment() {
             }
 
             if (studentLive != null) {
-                binding.headingTVStudentProfileFragment.text = sharedViewModel.currentStudent.name
-                binding.nameFieldStudentProfileFragment.setText(sharedViewModel.currentStudent.name)
-                binding.emailFieldStudentProfileFragment.setText(sharedViewModel.currentStudent.emailId)
-                binding.phoneNumberStudentProfileFragment.setText(sharedViewModel.currentStudent.phoneNumber)
-                binding.passwordFieldStudentProfileFragment.setText(sharedViewModel.currentStudent.password)
+                studentLive.observe(viewLifecycleOwner){student->
+                    if(student != null) {
+                        binding.headingTVStudentProfileFragment.text = student.name
+                        binding.nameFieldStudentProfileFragment.setText(student.name)
+                        binding.emailFieldStudentProfileFragment.setText(student.emailId)
+                        binding.phoneNumberStudentProfileFragment.setText(student.phoneNumber)
+                        binding.passwordFieldStudentProfileFragment.setText(student.password)
+
+                    }else{
+                        Toast.makeText(context,"Student not found. Try again",Toast.LENGTH_SHORT).show()
+                    }
+                    studentLive.removeObservers(viewLifecycleOwner)
+
+                }
                 binding.emailFieldStudentProfileFragment.isEnabled = false
-                oldPassword = sharedViewModel.currentStudent.password
 
             }
             binding.updateButtonStudentProfileFragment.setOnClickListener {
@@ -120,55 +129,64 @@ class StudentProfileFragment : Fragment() {
 
                     if (studentLive != null) {
 //                val updatedMentor = BasicStudentAccess(requireContext()).updateStudent(student,oldPassword)
-                        var student = Student(sharedViewModel.currentStudent.rollNo,studentName,sharedViewModel.currentStudent.dateOfBirth,sharedViewModel.currentStudent.emailId,sharedViewModel.currentStudent.gender,studentPassword,studentPhone)
-                            val database: FirebaseDatabase = FirebaseDatabase.getInstance()
-                            val reference: DatabaseReference = database.reference.child("students")
-                            val auth: FirebaseAuth = FirebaseAuth.getInstance()
-                            val updates = mapOf<String,String>(
-                                "name" to student.name,
-                                "password" to student.password,
-                                "phoneNumber" to student.phoneNumber
-                            )
-                            reference.child(student.rollNo).updateChildren(updates)
-                                .addOnCompleteListener { task ->
-                                    if (task.isSuccessful) {
-                                        if (student.password != oldPassword) {
-                                            auth.currentUser?.updatePassword(student.password)
-                                                ?.addOnCompleteListener { task ->
-                                                    if (task.isSuccessful) {
-                                                        Toast.makeText(
-                                                            context,
-                                                            "Password updated successfully",
-                                                            Toast.LENGTH_SHORT
-                                                        ).show()
-                                                    } else {
-                                                        Toast.makeText(
-                                                            context,
-                                                            "Password update failed",
-                                                            Toast.LENGTH_SHORT
-                                                        ).show()
+                        studentLive.observe(viewLifecycleOwner) { student ->
+                            if(student!=null) {
+
+                                val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+                                val reference: DatabaseReference =
+                                    database.reference.child("students")
+                                val auth: FirebaseAuth = FirebaseAuth.getInstance()
+                                val updates = mapOf<String, String>(
+                                    "name" to studentName,
+                                    "password" to studentPassword,
+                                    "phoneNumber" to studentPhone
+                                )
+                                reference.child(student.rollNo).updateChildren(updates)
+                                    .addOnCompleteListener { task ->
+                                        if (task.isSuccessful) {
+                                            if (student.password != studentPassword) {
+                                                auth.currentUser?.updatePassword(student.password)
+                                                    ?.addOnCompleteListener { task ->
+                                                        if (task.isSuccessful) {
+                                                            Toast.makeText(
+                                                                context,
+                                                                "Password updated successfully",
+                                                                Toast.LENGTH_SHORT
+                                                            ).show()
+                                                        } else {
+                                                            Toast.makeText(
+                                                                context,
+                                                                "Password update failed",
+                                                                Toast.LENGTH_SHORT
+                                                            ).show()
+                                                        }
                                                     }
-                                                }
+                                            }
+                                            Toast.makeText(
+                                                context,
+                                                "Profile updated successfully",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                            binding.headingTVStudentProfileFragment.text =
+                                                studentName
+                                        } else {
+                                            Toast.makeText(
+                                                context,
+                                                "Update failed please try after some time",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
                                         }
-                                        Toast.makeText(
-                                            context,
-                                            "Profile updated successfully",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                        binding.headingTVStudentProfileFragment.text = studentName
-                                    } else {
-                                        Toast.makeText(
-                                            context,
-                                            "Update failed please try after some time",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
                                     }
-                                }
 
-                            loadingDialog.cancel()
-                            updateCoroutineScope.cancel()
-
+                                loadingDialog.cancel()
+                                updateCoroutineScope.cancel()
+                            }else{
+                                Toast.makeText(context,"Student not found",Toast.LENGTH_SHORT).show()
+                                loadingDialog.cancel()
+                                updateCoroutineScope.cancel()
+                            }
                         }
+                    }
                 }
 
             }

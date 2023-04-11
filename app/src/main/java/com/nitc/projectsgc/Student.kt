@@ -6,5 +6,6 @@ data class Student(val rollNo:String = "",
                    val emailId:String = "",
                    val gender:String = "",
                    val password:String = "",
-                   val phoneNumber:String = "") {
+                   val phoneNumber:String = "",
+                    var fcmToken:String = "") {
 }

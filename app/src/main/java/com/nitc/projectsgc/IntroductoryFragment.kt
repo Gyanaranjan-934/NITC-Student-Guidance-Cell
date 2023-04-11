@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.messaging.FirebaseMessaging
 import com.nitc.projectsgc.student.fragments.StudentDashboardFragment
 import kotlinx.coroutines.*
 import java.util.concurrent.Executors
@@ -46,6 +47,8 @@ class IntroductoryFragment : Fragment() {
                     val studentDashboard = StudentDashboardFragment()
                     when (sharedViewModel.userType) {
                         "Student" -> {
+
+
                             coroutineScope.cancel()
 //                        var ft = parentFragmentManager.beginTransaction()
 //                        ft.replace(R.id.navHostFragment,studentDashboard)
