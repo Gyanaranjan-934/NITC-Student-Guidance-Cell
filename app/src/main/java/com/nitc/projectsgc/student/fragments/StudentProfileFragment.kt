@@ -32,7 +32,7 @@ class StudentProfileFragment : Fragment() {
 
     private val sharedViewModel: SharedViewModel by activityViewModels()
     lateinit var binding: FragmentStudentProfileBinding
-    lateinit var studentLive: MutableLiveData<Student?>
+    var studentLive: MutableLiveData<Student?> = MutableLiveData()
     var oldPassword = "NA"
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -186,10 +186,7 @@ class StudentProfileFragment : Fragment() {
         return binding.root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        if (this::studentLive.isInitialized) studentLive.removeObservers(viewLifecycleOwner)
-    }
+
 
     private fun isDigitsOnly(str: String): Boolean {
         return str.matches(Regex("[0-9]+"))
