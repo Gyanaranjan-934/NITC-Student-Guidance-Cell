@@ -42,21 +42,16 @@ class AdminDashboardFragment : Fragment() {
         // Inflate the layout for this fragment
         binding =  FragmentAdminDashboardBinding.inflate(inflater, container, false)
 
+        loadViewPager()
+        binding.swipeLayoutAdminDashboardFragment.setOnRefreshListener {
+            loadViewPager()
+        }
 
-        binding.tabLayoutInAdminDashboard.addTab(binding.tabLayoutInAdminDashboard.newTab().setText("Students"))
-        binding.tabLayoutInAdminDashboard.addTab(binding.tabLayoutInAdminDashboard.newTab().setText("Mentors"))
-        binding.viewPagerInAdminDashboardFragment.adapter = AdminDashboardPagerAdapter(childFragmentManager,lifecycle)
 
         binding.notificationsButtonInAdminDashboardFragment.setOnClickListener {
             findNavController().navigate(R.id.allAlertsFragment)
         }
 
-        TabLayoutMediator(binding.tabLayoutInAdminDashboard,binding.viewPagerInAdminDashboardFragment){tab,position->
-            when(position){
-                0-> tab.text = "Students"
-                1-> tab.text = "Mentors"
-            }
-        }.attach()
 
 
 
@@ -83,6 +78,20 @@ class AdminDashboardFragment : Fragment() {
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,backCallback)
         return binding.root
+    }
+
+    private fun loadViewPager() {
+
+        binding.tabLayoutInAdminDashboard.addTab(binding.tabLayoutInAdminDashboard.newTab().setText("Students"))
+        binding.tabLayoutInAdminDashboard.addTab(binding.tabLayoutInAdminDashboard.newTab().setText("Mentors"))
+        binding.viewPagerInAdminDashboardFragment.adapter = AdminDashboardPagerAdapter(childFragmentManager,lifecycle)
+        TabLayoutMediator(binding.tabLayoutInAdminDashboard,binding.viewPagerInAdminDashboardFragment){tab,position->
+            when(position){
+                0-> tab.text = "Students"
+                1-> tab.text = "Mentors"
+            }
+        }.attach()
+        binding.swipeLayoutAdminDashboardFragment.isRefreshing = false
     }
 
 

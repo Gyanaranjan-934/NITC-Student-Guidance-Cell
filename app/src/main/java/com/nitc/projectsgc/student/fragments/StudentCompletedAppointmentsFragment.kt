@@ -31,10 +31,10 @@ class StudentCompletedAppointmentsFragment: Fragment() {
     ): View? {
         binding = FragmentStudentCompletedAppointmentsBinding.inflate(inflater, container, false)
         binding.completedAppointmentsRecyclerViewInStudentDashboard.layoutManager = LinearLayoutManager(context)
-        binding.swipeLayoutInStudentCompletedAppointmentsFragment.setOnRefreshListener {
-            getCompletedAppointments()
-            binding.swipeLayoutInStudentCompletedAppointmentsFragment.isRefreshing = false
-        }
+//        binding.swipeLayoutInStudentCompletedAppointmentsFragment.setOnRefreshListener {
+//            getCompletedAppointments()
+//            binding.swipeLayoutInStudentCompletedAppointmentsFragment.isRefreshing = false
+//        }
 
 
         getCompletedAppointments()

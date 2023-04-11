@@ -36,10 +36,10 @@ class AllMentorsFragment:Fragment() {
 
         binding.mentorRecyclerViewInAllMentorsFragment.layoutManager = LinearLayoutManager(context)
 
-        binding.swipeLayoutInAllMentorsFragment.setOnRefreshListener {
-            getMentors()
-            binding.swipeLayoutInAllMentorsFragment.isRefreshing = false
-        }
+//        binding.swipeLayoutInAllMentorsFragment.setOnRefreshListener {
+//            getMentors()
+//            binding.swipeLayoutInAllMentorsFragment.isRefreshing = false
+//        }
         getMentors()
 
         binding.addMentorButtonInAllMentorsFragment.setOnClickListener{

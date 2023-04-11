@@ -36,6 +36,8 @@ class AllEventsFragment:Fragment() {
     ): View? {
         binding = FragmentAllEventsBinding.inflate(inflater,container,false)
 
+
+
         val loadingDialog = Dialog(requireContext())
         binding.recyclerViewInAllEventsFragment.layoutManager = LinearLayoutManager(context)
         loadingDialog.setContentView(requireActivity().layoutInflater.inflate(R.layout.loading_dialog,null))
@@ -110,20 +112,20 @@ class AllEventsFragment:Fragment() {
             }
             eventTypeDialog.create().show()
         }
-        binding.allEventsSwipeLayout.setOnRefreshListener {
-            var swipeCoroutineScope = CoroutineScope(Dispatchers.Main)
-            swipeCoroutineScope.launch {
-                loadingDialog.show()
-                if(selectedTypeOfEvent == "NA" || selectedTypeOfEvent == "All"){
-                    getEvents()
-                }else{
-                    getSpecificEvents(selectedTypeOfEvent)
-                }
-                swipeCoroutineScope.cancel()
-                loadingDialog.cancel()
-                binding.allEventsSwipeLayout.isRefreshing = false
-            }
-        }
+//        binding.allEventsSwipeLayout.setOnRefreshListener {
+//            var swipeCoroutineScope = CoroutineScope(Dispatchers.Main)
+//            swipeCoroutineScope.launch {
+//                loadingDialog.show()
+//                if(selectedTypeOfEvent == "NA" || selectedTypeOfEvent == "All"){
+//                    getEvents()
+//                }else{
+//                    getSpecificEvents(selectedTypeOfEvent)
+//                }
+//                swipeCoroutineScope.cancel()
+//                loadingDialog.cancel()
+//                binding.allEventsSwipeLayout.isRefreshing = false
+//            }
+//        }
         return binding.root
     }
     private suspend fun getSpecificEvents(eventType:String) {

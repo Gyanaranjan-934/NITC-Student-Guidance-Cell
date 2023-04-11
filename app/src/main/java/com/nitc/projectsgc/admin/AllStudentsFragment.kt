@@ -35,10 +35,10 @@ class AllStudentsFragment:Fragment() {
         binding = FragmentAllStudentsBinding.inflate(inflater,container,false)
 
         binding.studentRecyclerViewInAllStudentsFragment.layoutManager = LinearLayoutManager(context)
-        binding.swipeLayoutInAllStudentsFragment.setOnRefreshListener {
-            getStudents()
-            binding.swipeLayoutInAllStudentsFragment.isRefreshing = false
-        }
+//        binding.swipeLayoutInAllStudentsFragment.setOnRefreshListener {
+//            getStudents()
+//            binding.swipeLayoutInAllStudentsFragment.isRefreshing = false
+//        }
         binding.addStudentButtonInAdminDashboard.setOnClickListener {
             findNavController().navigate(R.id.registerFragment)
         }

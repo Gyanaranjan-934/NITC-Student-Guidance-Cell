@@ -42,14 +42,20 @@ class StudentProfileFragment : Fragment() {
         binding = FragmentStudentProfileBinding.inflate(inflater, container, false)
         if (sharedViewModel.userType == "Student" || sharedViewModel.userType == "Admin") {
 
-            if (sharedViewModel.userType == "Admin") {
-                studentLive = StudentsAccess(
-                    requireContext(),
-                    this
-                ).getStudent(sharedViewModel.idForStudentProfile)
-            } else {
-                studentLive =
-                    StudentsAccess(requireContext(), this).getStudent(sharedViewModel.currentUserID)
+            var coroutineScope = CoroutineScope(Dispatchers.Main)
+            coroutineScope.launch {
+                if (sharedViewModel.userType == "Admin") {
+                    studentLive.value =
+                        StudentsAccess(
+                            requireContext(),
+                            this@StudentProfileFragment
+                        ).getStudent(sharedViewModel.idForStudentProfile)
+                } else {
+                    studentLive.value = StudentsAccess(
+                            requireContext(),
+                            this@StudentProfileFragment
+                        ).getStudent(sharedViewModel.currentUserID)
+                }
             }
 
             if (studentLive != null) {

@@ -26,18 +26,16 @@ class AllAlertsFragment:Fragment() {
     ): View? {
         binding = FragmentAllAlertsBinding.inflate(inflater,container,false)
 
-        binding.viewPagerInAllAlertsFragment.adapter = AllAlertsAdapter(childFragmentManager,lifecycle)
-        binding.tabLayoutInAllAlertsFragment.addTab(binding.tabLayoutInAllAlertsFragment.newTab().setText("Events"))
-        binding.tabLayoutInAllAlertsFragment.addTab(binding.tabLayoutInAllAlertsFragment.newTab().setText("News"))
+
+        loadViewPager()
+        binding.swipeLayoutAllAlertsFragment.setOnRefreshListener {
+            loadViewPager()
+
+        }
 
         Log.d("userType","in alerts user type = "+sharedViewModel.userType)
 //        binding.tabLayoutInStudentDashboard.addTab(binding.tabLayoutInStudentDashboard.newTab().setText("Profile"))
-        TabLayoutMediator(binding.tabLayoutInAllAlertsFragment,binding.viewPagerInAllAlertsFragment){tab,position->
-            when(position){
-                0-> tab.text = "Events"
-                1-> tab.text = "News"
-            }
-        }.attach()
+
         val backCallback = object : OnBackPressedCallback(true /* enabled by default */) {
             override fun handleOnBackPressed() {
                 // Call a method in your Fragment to handle the navigation
@@ -51,6 +49,20 @@ class AllAlertsFragment:Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,backCallback)
 
         return binding.root
+    }
+
+    private fun loadViewPager() {
+
+        binding.viewPagerInAllAlertsFragment.adapter = AllAlertsAdapter(childFragmentManager,lifecycle)
+        binding.tabLayoutInAllAlertsFragment.addTab(binding.tabLayoutInAllAlertsFragment.newTab().setText("Events"))
+        binding.tabLayoutInAllAlertsFragment.addTab(binding.tabLayoutInAllAlertsFragment.newTab().setText("News"))
+        TabLayoutMediator(binding.tabLayoutInAllAlertsFragment,binding.viewPagerInAllAlertsFragment){tab,position->
+            when(position){
+                0-> tab.text = "Events"
+                1-> tab.text = "News"
+            }
+        }.attach()
+        binding.swipeLayoutAllAlertsFragment.isRefreshing = false
     }
 
 }

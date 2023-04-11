@@ -14,23 +14,25 @@ import kotlin.coroutines.suspendCoroutine
 class StudentsAccess(var context: Context,var parentFragment: Fragment) {
 
 
-    fun getStudent(rollNo: String): MutableLiveData<Student?> {
-        var studentLive = MutableLiveData<Student?>(null)
-        var database : FirebaseDatabase = FirebaseDatabase.getInstance()
-        var reference : DatabaseReference = database.reference.child("students")
-        reference.addListenerForSingleValueEvent(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                var student = snapshot.child(rollNo).getValue(Student::class.java)
-                if(student == null) studentLive.postValue(null)
-                else studentLive.postValue(student)
-            }
+    suspend fun getStudent(rollNo: String): Student? {
+        return suspendCoroutine {continuation->
+            var studentLive = MutableLiveData<Student?>(null)
+            var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+            var reference: DatabaseReference = database.reference.child("students")
+            reference.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var student = snapshot.child(rollNo).getValue(Student::class.java)
+                    if (student == null) continuation.resume(null)
+                    else continuation.resume(student)
+                }
 
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context,"Error : $error",Toast.LENGTH_LONG).show()
-            }
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(context, "Error : $error", Toast.LENGTH_LONG).show()
+                    continuation.resume(null)
+                }
 
-        })
-        return studentLive
+            })
+        }
     }
     suspend fun getStudents(): ArrayList<Student>? {
         return suspendCoroutine { continuation ->

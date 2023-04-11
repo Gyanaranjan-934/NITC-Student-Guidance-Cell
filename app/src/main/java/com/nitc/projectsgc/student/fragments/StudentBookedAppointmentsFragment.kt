@@ -10,7 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.SimpleItemAnimator
+import com.nitc.projectsgc.Appointment
 import com.nitc.projectsgc.R
 import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.databinding.FragmentStudentBookedAppointmentsBinding
@@ -22,6 +25,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class StudentBookedAppointmentsFragment: Fragment() {
 
@@ -38,29 +42,36 @@ class StudentBookedAppointmentsFragment: Fragment() {
 
         binding.bookedAppointmentsRecyclerViewStudentDashboard.layoutManager = LinearLayoutManager(context)
 
-        binding.swipeLayoutInStudentBookedAppointmentsFragment.setOnRefreshListener {
-            getBookedAppointments()
-            binding.swipeLayoutInStudentBookedAppointmentsFragment.isRefreshing = false
-        }
+//        binding.swipeLayoutInStudentBookedAppointmentsFragment.setOnRefreshListener {
+//            getBookedAppointments()
+//        }
         getBookedAppointments()
 
 
         return binding.root
     }
     fun getBookedAppointments() {
+        var bookedAppointmentsLive = MutableLiveData<ArrayList<Appointment>>()
         val loadingDialog = Dialog(requireContext())
         loadingDialog.setContentView(requireActivity().layoutInflater.inflate(R.layout.loading_dialog,null))
         loadingDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         Log.d("today","this called")
         val bookedCoroutineScope = CoroutineScope(Dispatchers.Main)
         bookedCoroutineScope.launch {
-            var appointmentAccess = context?.let { AppointmentsAccess(it,this@StudentBookedAppointmentsFragment,sharedViewModel) }
+            var appointmentAccess = context?.let {
+                AppointmentsAccess(
+                    it,
+                    this@StudentBookedAppointmentsFragment,
+                    sharedViewModel
+                )
+            }
             loadingDialog.create()
             loadingDialog.show()
-            var bookedAppointments = appointmentAccess?.getBookedAppointments()
+            bookedAppointmentsLive.postValue(appointmentAccess?.getBookedAppointments())
             loadingDialog.cancel()
-            bookedCoroutineScope.cancel()
+                bookedAppointmentsLive.observe(viewLifecycleOwner) { bookedAppointments ->
                     if (bookedAppointments != null && bookedAppointments.size != 0) {
+//                        (binding.bookedAppointmentsRecyclerViewStudentDashboard.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
                         var bookedAppointmentsAdapter = context?.let {
                             BookedAppointmentsAdapter(
                                 it,
@@ -70,13 +81,14 @@ class StudentBookedAppointmentsFragment: Fragment() {
                                 false
                             )
                         }
+                        binding.bookedAppointmentsRecyclerViewStudentDashboard.isNestedScrollingEnabled = false
                         binding.bookedAppointmentsRecyclerViewStudentDashboard.adapter =
                             bookedAppointmentsAdapter
 //                    binding.completedAppointmentsRecyclerViewInStudentDashboard.visibility = View.GONE
                         binding.bookedAppointmentsRecyclerViewStudentDashboard.visibility =
                             View.VISIBLE
                         binding.noBookingsTVInStudentDashboardFragment.visibility = View.GONE
-                    } else {
+                    }else {
                         binding.noBookingsTVInStudentDashboardFragment.visibility = View.VISIBLE
                         binding.bookedAppointmentsRecyclerViewStudentDashboard.visibility =
                             View.GONE
@@ -84,7 +96,11 @@ class StudentBookedAppointmentsFragment: Fragment() {
 //                    binding.noCompletedTVInStudentDashboardFragment.visibility = View.GONE
                     }
                 }
-    }
+
+            bookedCoroutineScope.cancel()
+        }
+                }
+
 
 
 }

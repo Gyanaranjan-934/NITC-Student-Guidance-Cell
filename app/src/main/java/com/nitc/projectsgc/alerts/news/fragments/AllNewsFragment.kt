@@ -50,16 +50,16 @@ class AllNewsFragment:Fragment() {
             loadingDialog.cancel()
 
         }
-        binding.allNewsSwipeLayout.setOnRefreshListener {
-            var swipeCoroutineScope = CoroutineScope(Dispatchers.Main)
-            swipeCoroutineScope.launch {
-                loadingDialog.show()
-                getNews()
-                swipeCoroutineScope.cancel()
-                loadingDialog.cancel()
-                binding.allNewsSwipeLayout.isRefreshing = false
-            }
-        }
+//        binding.allNewsSwipeLayout.setOnRefreshListener {
+//            var swipeCoroutineScope = CoroutineScope(Dispatchers.Main)
+//            swipeCoroutineScope.launch {
+//                loadingDialog.show()
+//                getNews()
+//                swipeCoroutineScope.cancel()
+//                loadingDialog.cancel()
+//                binding.allNewsSwipeLayout.isRefreshing = false
+//            }
+//        }
         binding.addNewsButtonInAllNewsFragment.setOnClickListener {
             findNavController().navigate(R.id.addNewsFragment)
         }

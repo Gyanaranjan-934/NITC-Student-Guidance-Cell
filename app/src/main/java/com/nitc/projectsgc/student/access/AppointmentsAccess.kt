@@ -45,6 +45,8 @@ class AppointmentsAccess(
                         val sortedAppointments =
                             appointments.sortedBy { LocalDate.parse(it.date, formatter) }
                                 .toCollection(ArrayList<Appointment>())
+//                        val appointmentsLive = MutableLiveData<ArrayList<Appointment>>()
+//                        appointmentsLive.value = sortedAppointments
                         continuation.resume(sortedAppointments)
                     }
 

@@ -21,6 +21,10 @@ import com.nitc.projectsgc.SharedViewModel
 import com.nitc.projectsgc.admin.access.StudentsAccess
 import com.nitc.projectsgc.mentors.access.MentorAppointmentsAccess
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 class MentorAppointmentsAdapter(
     var context : Context,
@@ -61,6 +65,7 @@ class MentorAppointmentsAdapter(
 
     override fun onBindViewHolder(holder: MentorAppointmentsViewHolder, position: Int) {
 
+        holder.nameOfTheStudent.text = appointments[position].studentName
         holder.timeText.text = appointments[position].timeSlot
         holder.statusCard.visibility = View.VISIBLE
         holder.statusText.text = appointments[position].status
@@ -87,9 +92,11 @@ class MentorAppointmentsAdapter(
 
         var stdId = appointments[position].studentID.toString()
 
-        var studentLive = StudentsAccess(context,parentFragment).getStudent(stdId)
-        studentLive.observe(parentFragment.viewLifecycleOwner){student->
-            if(student != null) {
+        var coroutineScope = CoroutineScope(Dispatchers.Main)
+        coroutineScope.launch {
+            var student = StudentsAccess(context, parentFragment).getStudent(stdId)
+            coroutineScope.cancel()
+            if (student != null) {
                 holder.nameOfTheStudent.text = student.name.toString()
                 holder.dobText.text = student.dateOfBirth.toString()
                 holder.phoneText.text = student.phoneNumber.toString()
@@ -113,6 +120,7 @@ class MentorAppointmentsAdapter(
                 }
             }
         }
+
         holder.cancelButton.setOnClickListener {
 
             holder.cancelLayout.visibility = View.VISIBLE
@@ -175,8 +183,10 @@ class MentorAppointmentsAdapter(
                 appointmentsLive.observe(parentFragment.viewLifecycleOwner){pastAppointments->
                     if(pastAppointments == null || pastAppointments.isEmpty()){
                         Toast.makeText(context,"No past record found",Toast.LENGTH_SHORT).show()
+                        appointmentsLive.removeObservers(parentFragment.viewLifecycleOwner)
                     }else{
                         sharedViewModel.pastRecordStudentID = appointments[position].studentID.toString()
+                        appointmentsLive.removeObservers(parentFragment.viewLifecycleOwner)
                         parentFragment.findNavController().navigate(R.id.pastRecordFragment)
                     }
                 }

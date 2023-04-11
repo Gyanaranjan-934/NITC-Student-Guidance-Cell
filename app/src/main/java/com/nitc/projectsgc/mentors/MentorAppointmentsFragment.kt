@@ -52,16 +52,16 @@ class MentorAppointmentsFragment: Fragment() {
             loadingDialog.cancel()
             coroutineScope.cancel()
         }
-        binding.mentorDashboardSwipeLayout.setOnRefreshListener {
-            var swipeCoroutineScope = CoroutineScope(Dispatchers.Main)
-            swipeCoroutineScope.launch {
-                loadingDialog.show()
-                getAppointments(selectedDate)
-                loadingDialog.cancel()
-                swipeCoroutineScope.cancel()
-                binding.mentorDashboardSwipeLayout.isRefreshing = false
-            }
-        }
+//        binding.mentorDashboardSwipeLayout.setOnRefreshListener {
+//            var swipeCoroutineScope = CoroutineScope(Dispatchers.Main)
+//            swipeCoroutineScope.launch {
+//                loadingDialog.show()
+//                getAppointments(selectedDate)
+//                loadingDialog.cancel()
+//                swipeCoroutineScope.cancel()
+//                binding.mentorDashboardSwipeLayout.isRefreshing = false
+//            }
+//        }
 
         binding.selectDateInMentorAppointmentsFragment.setOnClickListener {
             val calendar = Calendar.getInstance()

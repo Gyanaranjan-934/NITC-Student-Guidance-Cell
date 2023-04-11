@@ -54,18 +54,11 @@ class StudentDashboardFragment: Fragment() {
 //            }
 //        }
 
-        binding.viewPagerInStudentDashboard.adapter = StudentAppointmentsPagerAdapter(childFragmentManager,lifecycle)
-        binding.tabLayoutInStudentDashboard.addTab(binding.tabLayoutInStudentDashboard.newTab().setText("Booked"))
-        binding.tabLayoutInStudentDashboard.addTab(binding.tabLayoutInStudentDashboard.newTab().setText("Completed"))
-
-//        binding.tabLayoutInStudentDashboard.addTab(binding.tabLayoutInStudentDashboard.newTab().setText("Profile"))
-        TabLayoutMediator(binding.tabLayoutInStudentDashboard,binding.viewPagerInStudentDashboard){tab,position->
-            when(position){
-                0-> tab.text = "Booked"
-                1-> tab.text = "Completed"
-                2-> tab.text = "Profile"
-            }
-        }.attach()
+//        binding.viewPagerInStudentDashboard.isUserInputEnabled = false
+        loadViewPager()
+        binding.swipeLayoutInStudentDashboardFragment.setOnRefreshListener {
+            loadViewPager()
+        }
         binding.logoutButtonInStudentDashboardFragment.setOnClickListener {
             var logoutSuccess = context?.let { it1 -> LoginAccess(it1,this,sharedViewModel).logout() }
 //            logoutLive!!.observe(viewLifecycleOwner){logoutSuccess->
@@ -95,6 +88,21 @@ class StudentDashboardFragment: Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,backCallback)
 
         return binding.root
+    }
+
+    private fun loadViewPager() {
+        binding.viewPagerInStudentDashboard.adapter = StudentAppointmentsPagerAdapter(childFragmentManager,lifecycle)
+//        binding.viewPagerInStudentDashboard.isNestedScrollingEnabled = false
+//        binding.tabLayoutInStudentDashboard.addTab(binding.tabLayoutInStudentDashboard.newTab().setText("Profile"))
+        TabLayoutMediator(binding.tabLayoutInStudentDashboard,binding.viewPagerInStudentDashboard){tab,position->
+            when(position){
+                0-> tab.text = "Booked"
+                1-> tab.text = "Completed"
+                2-> tab.text = "Profile"
+            }
+        }.attach()
+
+        binding.swipeLayoutInStudentDashboardFragment.isRefreshing = false
     }
 //    private fun getCompletedAppointments() {
 //        var appointmentAccess = context?.let { AppointmentsAccess(it,this,sharedViewModel) }

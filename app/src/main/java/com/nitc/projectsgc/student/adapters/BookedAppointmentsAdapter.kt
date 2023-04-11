@@ -30,8 +30,6 @@ class BookedAppointmentsAdapter(
 
     class BookedAppointmentsViewHolder(val binding: BookedAppointmentCardBinding):RecyclerView.ViewHolder(binding.root) {
 
-        var database = FirebaseDatabase.getInstance()
-        var reference = database.reference.child("types")
     }
 
     override fun onCreateViewHolder(
@@ -47,6 +45,8 @@ class BookedAppointmentsAdapter(
     }
 
     override fun onBindViewHolder(holder: BookedAppointmentsViewHolder, position: Int) {
+        var database = FirebaseDatabase.getInstance()
+        var reference = database.reference.child("types")
         if(isAdmin){
             holder.binding.rescheduleButtonInUpcomingCard.visibility = View.GONE
             holder.binding.cancelAppointmentInBookedAppointmentCard.visibility = View.GONE

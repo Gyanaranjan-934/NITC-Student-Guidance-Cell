@@ -8,6 +8,7 @@ data class Appointment(
     var mentorID:String? = null,
     var studentID:String? = null,
     var mentorName:String? = null,
+    var studentName:String? = null,
     var completed:Boolean = false,
     var status:String? = null,
     var remarks:String? = null,
@@ -15,5 +16,4 @@ data class Appointment(
     var expanded:Boolean = false,
     var id:String? = null,
     var problemDescription:String? = null
-) {
-}
+)

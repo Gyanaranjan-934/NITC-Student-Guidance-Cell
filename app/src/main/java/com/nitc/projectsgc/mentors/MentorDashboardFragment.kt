@@ -48,17 +48,12 @@ class MentorDashboardFragment : Fragment() {
     ): View? {
         binding = FragmentMentorDashboardBinding.inflate(inflater, container, false)
 
-        binding.tabLayoutInMentorDashboard.addTab(binding.tabLayoutInMentorDashboard.newTab().setText("Appointments"))
-        binding.tabLayoutInMentorDashboard.addTab(binding.tabLayoutInMentorDashboard.newTab().setText("Profile"))
-        binding.viewPagerInMentorDashboard.adapter = MentorAppointmentsPagerAdapter(childFragmentManager,lifecycle)
+        loadViewPager()
+        binding.swipeLayoutMentorDashboardFragment.setOnRefreshListener {
+            loadViewPager()
+        }
 
 
-        TabLayoutMediator(binding.tabLayoutInMentorDashboard,binding.viewPagerInMentorDashboard){tab,position->
-            when(position){
-                0-> tab.text = "Appointments"
-                1-> tab.text = "Profile"
-            }
-        }.attach()
 
 
         binding.notificationsButtonInMentorDashboardFragment.setOnClickListener {
@@ -85,5 +80,20 @@ class MentorDashboardFragment : Fragment() {
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,backCallBack)
         return binding.root
+    }
+
+    private fun loadViewPager() {
+        binding.tabLayoutInMentorDashboard.addTab(binding.tabLayoutInMentorDashboard.newTab().setText("Appointments"))
+        binding.tabLayoutInMentorDashboard.addTab(binding.tabLayoutInMentorDashboard.newTab().setText("Profile"))
+        binding.viewPagerInMentorDashboard.adapter = MentorAppointmentsPagerAdapter(childFragmentManager,lifecycle)
+
+
+        TabLayoutMediator(binding.tabLayoutInMentorDashboard,binding.viewPagerInMentorDashboard){tab,position->
+            when(position){
+                0-> tab.text = "Appointments"
+                1-> tab.text = "Profile"
+            }
+        }.attach()
+        binding.swipeLayoutMentorDashboardFragment.isRefreshing = false
     }
 }
